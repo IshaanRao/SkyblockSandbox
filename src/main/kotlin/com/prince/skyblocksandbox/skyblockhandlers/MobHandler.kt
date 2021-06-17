@@ -1,0 +1,107 @@
+package com.prince.skyblocksandbox.skyblockhandlers
+
+import com.prince.skyblocksandbox.SkyblockSandbox
+import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
+import org.bukkit.entity.*
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import java.awt.SystemColor.text
+import java.math.BigInteger
+import java.util.*
+import kotlin.collections.ArrayList
+
+
+class MobHandler(val sbInstance:SkyblockSandbox) : Listener {
+    var mobs = ArrayList<SkyblockMob>();
+    fun registerMob(mob: SkyblockMob) {
+        mobs.add(mob)
+    }
+    fun Entity.isSkyblockMob(): SkyblockMob?{
+        for(mob in mobs){
+            if(mob.entity==this){
+                return mob
+            }
+        }
+        return null
+    }
+    init {
+        Thread {
+            while (sbInstance.isEnabled) {
+                try {
+                    Thread.sleep(50)
+                } catch (ignored: InterruptedException) {
+
+                }
+                val mobsToRemove = ArrayList<SkyblockMob>()
+                for (mob in mobs) {
+                    if(mob.hasSpawned) {
+                        if (mob.currentHealth <= BigInteger.valueOf(0)||mob.entity!!.isDead) {
+                            mobsToRemove.add(mob)
+                            mob.entity!!.health = 0.0
+                        }else{
+                            mob.loadName()
+                        }
+                    }
+                }
+                mobs.removeAll(mobsToRemove)
+            }
+        }.start()
+    }
+
+    @EventHandler
+    fun onDamage(e:EntityDamageEvent){
+        if(!e.entity.isDead){
+            val mob = e.entity.isSkyblockMob()
+            if(mob != null){
+                if(e.cause!=EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                    e.isCancelled = true
+                }
+
+            }
+        }
+    }
+    @EventHandler
+    fun onDamage(e:EntityDamageByEntityEvent){
+        if(!e.entity.isDead){
+            val mob = e.entity.isSkyblockMob()
+            if(mob==null){
+                return
+            }
+            if(e.damager is Player){
+                e.damage = 0.0
+                mob.currentHealth-= BigInteger.valueOf(1000)
+                mob.loadName()
+                var living = e.entity as LivingEntity
+                val dmgHolo: ArmorStand = living.location.getWorld().spawnEntity(living.location.add(0.0,1.0,0.0), EntityType.ARMOR_STAND) as ArmorStand
+
+                dmgHolo.setGravity(false)
+                dmgHolo.canPickupItems = false
+                dmgHolo.customName = "§71000"
+                dmgHolo.isCustomNameVisible = true
+                dmgHolo.isVisible = false
+                dmgHolo.isMarker = true
+                Thread{
+                    Thread.sleep(500)
+                    dmgHolo.remove()
+                }.start()
+
+            }else if(e.damager !is Player && e.damager !is Arrow){
+                e.isCancelled = true
+            }
+        }
+    }
+
+    fun killAllMobs(){
+        for (mob in mobs) {
+            if(mob.hasSpawned) {
+                mob.entity!!.remove()
+
+            }
+        }
+        mobs.clear()
+    }
+
+
+}

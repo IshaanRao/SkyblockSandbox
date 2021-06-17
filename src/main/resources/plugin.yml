@@ -1,0 +1,7 @@
+main: com.prince.skyblocksandbox.SkyblockSandbox
+name: SkyblockSandbox
+version: 1.0
+description: Skyblock Sandbox main plugin
+api-version: 1.16
+author: Prince
+commands:
