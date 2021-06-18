@@ -1,5 +1,6 @@
 package com.prince.skyblocksandbox
 
+import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
@@ -21,9 +22,8 @@ class SkyblockSandbox : JavaPlugin() {
         println("--------------------------")
 
         println("--------------------------")
-        server.pluginManager.registerEvents(Vampire(mobHandler), this)
         server.pluginManager.registerEvents(mobHandler, this)
-
+        getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
     }
 
     override fun onDisable() {
@@ -32,15 +32,5 @@ class SkyblockSandbox : JavaPlugin() {
     fun loadVariables(){
         damageHandler = DamageHandler()
         mobHandler = MobHandler(this,damageHandler)
-    }
-    class Vampire(val mobHandler: MobHandler) : Listener {
-        init {
-            print("This thijgamsher has been registered")
-        }
-
-        @EventHandler
-        fun onHit(event: PlayerJoinEvent) {
-            SkyblockZombie(mobHandler, BigInteger.valueOf(6925)).spawn(event.player.location)
-        }
     }
 }

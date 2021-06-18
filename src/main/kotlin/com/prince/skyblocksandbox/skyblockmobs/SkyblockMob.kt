@@ -7,7 +7,8 @@ import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import java.math.BigInteger
 
-abstract class SkyblockMob(mobHandler :MobHandler){
+
+abstract class SkyblockMob(){
     var currentHealth: BigInteger =  BigInteger.valueOf(1)
     abstract var startingHealth: BigInteger
     abstract val level: Int
@@ -15,22 +16,8 @@ abstract class SkyblockMob(mobHandler :MobHandler){
     abstract val entityType: EntityType
     var hasSpawned = false
     var entity: LivingEntity? = null
-    init {
-        mobHandler.registerMob(this)
-    }
-    fun spawn(loc: Location){
-        if(!hasSpawned) {
-            hasSpawned = true
-            currentHealth = startingHealth
-            entity = loc.world.spawnEntity(loc, entityType) as LivingEntity?
-            defaultLoad()
-            load()
-            return
-        }
-        throw SkyblockMobSpawnException("Tried to spawn mob that has already been spawned")
 
-    }
-    private fun defaultLoad(){
+    fun defaultLoad(){
         if(hasSpawned){
             loadName()
             entity!!.isCustomNameVisible = true
