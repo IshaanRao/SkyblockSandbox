@@ -13,7 +13,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MobHandler(val sbInstance:SkyblockSandbox) : Listener {
+class MobHandler(val sbInstance:SkyblockSandbox,val dmgHandler: DamageHandler) : Listener {
     var mobs = ArrayList<SkyblockMob>();
     fun registerMob(mob: SkyblockMob) {
         mobs.add(mob)
@@ -71,22 +71,7 @@ class MobHandler(val sbInstance:SkyblockSandbox) : Listener {
             }
             if(e.damager is Player){
                 e.damage = 0.0
-                mob.currentHealth-= BigInteger.valueOf(1000)
-                mob.loadName()
-                var living = e.entity as LivingEntity
-                val dmgHolo: ArmorStand = living.location.getWorld().spawnEntity(living.location.add(0.0,1.0,0.0), EntityType.ARMOR_STAND) as ArmorStand
-
-                dmgHolo.setGravity(false)
-                dmgHolo.canPickupItems = false
-                dmgHolo.customName = "§71000"
-                dmgHolo.isCustomNameVisible = true
-                dmgHolo.isVisible = false
-                dmgHolo.isMarker = true
-                Thread{
-                    Thread.sleep(500)
-                    dmgHolo.remove()
-                }.start()
-
+                dmgHandler.swordDamage(mob,e.damager as Player)
             }else if(e.damager !is Player && e.damager !is Arrow){
                 e.isCancelled = true
             }

@@ -1,5 +1,6 @@
 package com.prince.skyblocksandbox
 
+import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
 import org.bukkit.entity.Arrow
@@ -14,6 +15,7 @@ import java.math.BigInteger
 
 class SkyblockSandbox : JavaPlugin() {
     lateinit var mobHandler: MobHandler
+    lateinit var damageHandler: DamageHandler
     override fun onEnable() {
         loadVariables()
         println("--------------------------")
@@ -28,7 +30,8 @@ class SkyblockSandbox : JavaPlugin() {
         mobHandler.killAllMobs()
     }
     fun loadVariables(){
-        mobHandler = MobHandler(this)
+        damageHandler = DamageHandler()
+        mobHandler = MobHandler(this,damageHandler)
     }
     class Vampire(val mobHandler: MobHandler) : Listener {
         init {
