@@ -2,15 +2,15 @@ package com.prince.skyblocksandbox.skyblockitems
 
 import com.google.gson.Gson
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
-import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.SwordStats
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getBukkit
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNbtTag
-import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
-import net.minecraft.server.v1_8_R3.NBTTagString
-import org.bukkit.inventory.ItemStack
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNms
+import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
+import net.minecraft.server.v1_8_R3.*
+import org.bukkit.inventory.ItemStack
+
 
 class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: AbilityTypes? = null) {
     var itemData:ItemData
@@ -56,6 +56,11 @@ class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: Abi
         val swordCompound = nmsSword.getNbtTag()
         println(gson.toJson(this))
         swordCompound.set("SkyblockSword",NBTTagString(gson.toJson(this)))
+        val modifiers = NBTTagList()
+        val damage = NBTTagCompound()
+        modifiers.add(damage)
+        val compound = NBTTagCompound()
+        swordCompound.set("AttributeModifiers",modifiers)
         nmsSword.tag = swordCompound
         sword = nmsSword.getBukkit()
         return sword
