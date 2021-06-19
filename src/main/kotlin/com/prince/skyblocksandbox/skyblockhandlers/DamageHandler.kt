@@ -6,6 +6,7 @@ import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import org.bukkit.event.player.PlayerInteractEvent
 import java.lang.StringBuilder
 import java.math.BigInteger
 
@@ -27,7 +28,6 @@ class DamageHandler {
                 sb.append(getColorFromIndex(index)).append(c)
             }
             damageString = sb.toString()
-            println(damageString)
         }else{
             damageString = "§7${damage.damage}"
         }
@@ -36,7 +36,7 @@ class DamageHandler {
     }
     fun getColorFromIndex(index:Int):String{
         val indexUsed = index%6
-        return when(index){
+        return when(indexUsed){
             0,1->"§f"
             2->"§e"
             3->"§6"

@@ -3,6 +3,7 @@ package com.prince.skyblocksandbox.skyblockutils
 import com.google.gson.Gson
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSwordData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockSword
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.UUID
 
@@ -12,12 +13,14 @@ object SkyblockStats {
         var str:Int = 0
         var dmg:Int = 0
         var cd:Int = 0
-        var cc:Int = 0
-        if(itemInHand.isSkyblockSword()){
-            dmg+=itemInHand.getSwordData().swordStats.damage
-            str+=itemInHand.getSwordData().swordStats.strength
-            cd+=itemInHand.getSwordData().swordStats.critDamage
-            cc+=itemInHand.getSwordData().swordStats.critChance
+        var cc:Int = 30
+        if(itemInHand.type!=Material.AIR) {
+            if (itemInHand.isSkyblockSword()) {
+                dmg += itemInHand.getSwordData().swordStats.damage
+                str += itemInHand.getSwordData().swordStats.strength
+                cd += itemInHand.getSwordData().swordStats.critDamage
+                cc += itemInHand.getSwordData().swordStats.critChance
+            }
         }
         return Stats(str,dmg,cd,cc,0)
     }

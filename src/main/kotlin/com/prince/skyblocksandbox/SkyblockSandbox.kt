@@ -1,6 +1,7 @@
 package com.prince.skyblocksandbox
 
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
+import com.prince.skyblocksandbox.skyblockhandlers.AbilityHandler
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
 import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
@@ -29,6 +30,7 @@ class SkyblockSandbox : JavaPlugin() {
 
         println("--------------------------")
         server.pluginManager.registerEvents(mobHandler, this)
+        server.pluginManager.registerEvents(AbilityHandler(),this)
         getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
     }
 

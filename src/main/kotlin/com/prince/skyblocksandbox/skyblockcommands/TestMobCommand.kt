@@ -1,5 +1,6 @@
 package com.prince.skyblocksandbox.skyblockcommands
 
+import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
 import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
@@ -33,13 +34,10 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
                             ),
                         SwordStats
                             (
-                        damage = 1000,
-                        strength = 10000,
-                        critDamage = 100,
-                            critChance = 23
-                            )
+                        damage = 100,
+                        strength = 100,
+                            ),abilityType = AbilityTypes.AOTE
                     ).createItem())
-                sender.getStats()
             }catch (e:Exception){
                 return true
             }
