@@ -25,6 +25,7 @@ class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: Abi
         val gson = Gson()
         var sword = ItemStack(itemData.material)
         val meta = sword.itemMeta
+        meta.spigot().isUnbreakable = true
         meta.displayName = "${itemData.rarity.getColor()}${itemData.name}"
         val lore = ArrayList<String>()
         if(swordStats.damage!=0){
@@ -54,13 +55,12 @@ class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: Abi
         sword.itemMeta = meta
         val nmsSword = sword.getNms()
         val swordCompound = nmsSword.getNbtTag()
-        println(gson.toJson(this))
         swordCompound.set("SkyblockSword",NBTTagString(gson.toJson(this)))
         val modifiers = NBTTagList()
         val damage = NBTTagCompound()
         modifiers.add(damage)
-        val compound = NBTTagCompound()
         swordCompound.set("AttributeModifiers",modifiers)
+        swordCompound.set("HideFlags",NBTTagInt(4))
         nmsSword.tag = swordCompound
         sword = nmsSword.getBukkit()
         return sword
