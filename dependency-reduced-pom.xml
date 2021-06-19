@@ -10,6 +10,12 @@
     <testSourceDirectory>src/test/kotlin</testSourceDirectory>
     <plugins>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <failOnError>false</failOnError>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
         <version>1.5.10</version>
@@ -61,6 +67,10 @@
       <id>papermc</id>
       <url>https://papermc.io/repo/repository/maven-public/</url>
     </repository>
+    <repository>
+      <id>spigot-repo</id>
+      <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
   </repositories>
   <dependencies>
     <dependency>
@@ -73,7 +83,18 @@
           <artifactId>kotlin-test</artifactId>
           <groupId>org.jetbrains.kotlin</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>junit</artifactId>
+          <groupId>junit</groupId>
+        </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.testpaper</groupId>
+      <artifactId>paper</artifactId>
+      <version>1.0.0</version>
+      <scope>system</scope>
+      <systemPath>/Users/ishaanrao/Desktop/devserver/cache/patched.jar</systemPath>
     </dependency>
   </dependencies>
   <properties>

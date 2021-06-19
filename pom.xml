@@ -10,7 +10,6 @@
     <packaging>jar</packaging>
 
     <name>SkyblockSandbox</name>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
@@ -18,6 +17,7 @@
     </properties>
 
     <repositories>
+
         <repository>
             <id>mavenCentral</id>
             <url>https://repo1.maven.org/maven2/</url>
@@ -26,12 +26,23 @@
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
     </repositories>
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -79,6 +90,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.7</version>
+        </dependency>
+        <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <version>1.5.10</version>
@@ -90,9 +106,11 @@
             <version>1.5.10</version>
         </dependency>
         <dependency>
-            <groupId>org.github.paperspigot</groupId>
-            <artifactId>paperspigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <groupId>com.testpaper</groupId>
+            <artifactId>paper</artifactId>
+            <version>1.0.0</version>
+            <scope>system</scope>
+            <systemPath>/Users/ishaanrao/Desktop/devserver/cache/patched.jar</systemPath>
         </dependency>
     </dependencies>
 

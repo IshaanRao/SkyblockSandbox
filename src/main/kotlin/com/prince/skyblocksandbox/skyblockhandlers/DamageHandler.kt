@@ -2,6 +2,7 @@ package com.prince.skyblocksandbox.skyblockhandlers
 
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
+import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -44,7 +45,13 @@ class DamageHandler {
         }
     }
     fun calculateDamage(mob:SkyblockMob,player: Player): DamageData{
-        return DamageData(true,BigInteger.valueOf(1234))
+        val stats = player.getStats()
+        var damage: BigInteger = (5+stats.damage).toBigInteger()*(1+(stats.str/100)).toBigInteger()*(1+(stats.extra/100)).toBigInteger()
+        val isCrit = (1..100).random()<=stats.critChance
+        if(isCrit) {
+            damage*=(1+(stats.critDmg/100)).toBigInteger()
+        }
+        return DamageData(isCrit,damage)
     }
-    data class DamageData(val isCrit:Boolean,val damage: BigInteger )
+    data class DamageData(val isCrit:Boolean,val damage:BigInteger)
 }
