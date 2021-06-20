@@ -40,6 +40,11 @@ class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: Abi
         if(swordStats.critDamage!=0){
             lore.add(generateCategory("Crit Damage","${swordStats.critDamage}%", SkyblockColors.RED))
         }
+
+        if(swordStats.intel!=0){
+            lore.add("")
+            lore.add(generateCategory("Intelligence",swordStats.intel,SkyblockColors.GREEN))
+        }
         if(abilityType!=null){
             lore.add(" ")
             lore.add("§6${abilityType!!.getAbility().prefix}: ${abilityType!!.getAbility().title} §e§l${abilityType!!.getAbility().action}")

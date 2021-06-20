@@ -4,5 +4,7 @@ version: 1.0
 description: Skyblock Sandbox main plugin
 api-version: 1.16
 author: Prince
+prefix: SkyblockSandbox
 commands:
   testmob:
+  createsword:

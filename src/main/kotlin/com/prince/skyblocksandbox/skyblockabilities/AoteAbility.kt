@@ -14,8 +14,11 @@ class AoteAbility : ItemAbility {
     override val title = "Instant Transmission"
     override val desc= listOf("§7Teleport §a8 Blocks §7ahead of","§7you and gain §a+50 §f✦ Speed","§7for §a3 seconds")
     override fun execute(e: PlayerInteractEvent) {
+        /*
         val loc = e.player.getTargetBlock(null as Set<Material?>?,8).location
         val tpLoc = Location(loc.world,loc.x,loc.y,loc.z,e.player.location.yaw,e.player.location.pitch)
         e.player.teleport(tpLoc)
+
+         */
     }
 }

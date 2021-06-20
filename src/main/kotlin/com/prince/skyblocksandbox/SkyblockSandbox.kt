@@ -1,44 +1,49 @@
 package com.prince.skyblocksandbox
 
+import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.AbilityHandler
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
+import com.prince.skyblocksandbox.skyblockinput.InputHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
-import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
-import com.prince.skyblocksandbox.skyblockitems.data.ItemData
-import com.prince.skyblocksandbox.skyblockitems.data.SwordStats
-import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
-import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
-import com.prince.skyblocksandbox.skyblockutils.SkyblockRarities
-import org.bukkit.Material
-import org.bukkit.entity.Arrow
-import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
-import java.math.BigInteger
 
 
 class SkyblockSandbox : JavaPlugin() {
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
     override fun onEnable() {
+        log("--------------------------")
         loadVariables()
-        println("--------------------------")
+        registerEvents()
+        loadCommands()
+        log("--------------------------")
 
-        println("--------------------------")
+
+    }
+    fun registerEvents(){
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
-        getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
+        server.pluginManager.registerEvents(InputHandler,this)
+        log("Registered Events")
     }
-
     override fun onDisable() {
         mobHandler.killAllMobs()
+    }
+    fun loadCommands(){
+        getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
+        getCommand("createsword").setExecutor(CreateSwordCommand())
+        log("Loaded commands")
     }
     fun loadVariables(){
         damageHandler = DamageHandler()
         mobHandler = MobHandler(this,damageHandler)
+        log("Loaded variables")
+    }
+    companion object {
+        @JvmStatic
+        fun log(msg:Any?) {
+            println("[SkyblockSandbox] $msg")
+        }
     }
 }

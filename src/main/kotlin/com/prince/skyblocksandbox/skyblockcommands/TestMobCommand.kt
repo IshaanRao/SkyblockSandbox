@@ -23,21 +23,6 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         if(args.size==1){
             try{
                 mobHandler.spawnMob(SkyblockZombie(BigInteger.valueOf(args[0].toLong())),sender.location)
-                sender.inventory.addItem(
-                    SkyblockSword(
-                        ItemData
-                            (
-                                "Aspect Of The End",
-                                SkyblockRarities.RARE,
-                                Material.DIAMOND_SWORD
-                                ,true
-                            ),
-                        SwordStats
-                            (
-                        damage = 100,
-                        strength = 100,
-                            ),abilityType = AbilityTypes.AOTE
-                    ).createItem())
             }catch (e:Exception){
                 return true
             }
