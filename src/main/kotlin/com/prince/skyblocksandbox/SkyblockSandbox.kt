@@ -13,6 +13,7 @@ class SkyblockSandbox : JavaPlugin() {
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
     override fun onEnable() {
+        instance = this
         log("--------------------------")
         loadVariables()
         registerEvents()
@@ -41,6 +42,7 @@ class SkyblockSandbox : JavaPlugin() {
         log("Loaded variables")
     }
     companion object {
+        lateinit var instance: SkyblockSandbox
         @JvmStatic
         fun log(msg:Any?) {
             println("[SkyblockSandbox] $msg")

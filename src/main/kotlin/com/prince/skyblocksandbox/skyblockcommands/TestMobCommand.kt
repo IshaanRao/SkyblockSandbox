@@ -22,7 +22,9 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         }
         if(args.size==1){
             try{
-                mobHandler.spawnMob(SkyblockZombie(BigInteger.valueOf(args[0].toLong())),sender.location)
+                for(i in 1..100) {
+                    mobHandler.spawnMob(SkyblockZombie(BigInteger.valueOf(args[0].toLong())), sender.location)
+                }
             }catch (e:Exception){
                 return true
             }

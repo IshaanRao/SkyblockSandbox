@@ -1,7 +1,7 @@
 package com.prince.skyblocksandbox.skyblockabilities
 
 enum class AbilityTypes(private var ability:ItemAbility){
-    AOTE(AoteAbility());
+    AOTE(AoteAbility()),WITHER_IMPACT(WitherImpact());
     fun getAbility() : ItemAbility{
         return ability
     }

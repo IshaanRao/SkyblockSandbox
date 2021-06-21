@@ -7,6 +7,7 @@ import org.bukkit.Location
 import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityCombustEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import java.awt.SystemColor.text
@@ -16,7 +17,7 @@ import kotlin.collections.ArrayList
 
 
 class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler) : Listener {
-    var mobs = ArrayList<SkyblockMob>();
+
     fun registerMob(mob: SkyblockMob) {
         mobs.add(mob)
     }
@@ -33,13 +34,16 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         throw SkyblockMobSpawnException("Tried to spawn mob that has already been spawned")
 
     }
-    fun Entity.isSkyblockMob(): SkyblockMob? {
-        for (mob in mobs) {
-            if (mob.entity == this) {
-                return mob
+    companion object {
+        var mobs = ArrayList<SkyblockMob>();
+        fun Entity.isSkyblockMob(): SkyblockMob? {
+            for (mob in mobs) {
+                if (mob.entity == this) {
+                    return mob
+                }
             }
+            return null
         }
-        return null
     }
 
     init {
@@ -92,6 +96,13 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
             } else if (e.damager !is Player && e.damager !is Arrow) {
                 e.isCancelled = true
             }
+        }
+    }
+
+    @EventHandler
+    fun onCombust(e:EntityCombustEvent){
+        if(e.entity.isSkyblockMob()!=null){
+            e.isCancelled=true
         }
     }
 

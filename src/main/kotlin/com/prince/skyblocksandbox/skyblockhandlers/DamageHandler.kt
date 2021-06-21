@@ -1,5 +1,8 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
+import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
+import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
+import com.prince.skyblocksandbox.skyblockabilities.SkyblockAbility
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
@@ -19,31 +22,50 @@ class DamageHandler {
             mob.loadName()
         }
     }
-    fun createDmgHolo(loc: Location, damage:DamageData){
-        val damageString : String;
-        if(damage.isCrit){
-            val string = "✧${damage.damage}✧"
-            val sb = StringBuilder()
-            string.forEachIndexed { index, c ->
-                sb.append(getColorFromIndex(index)).append(c)
+    companion object {
+        fun magicDamage(mob:SkyblockMob,player: Player,ability:ItemAbility): DamageData{
+            if(!mob.entity!!.isDead) {
+                val damage = calculateMagicDamage(player = player,mob = mob,skyblockAbility = ability.ability)
+                createDmgHolo(mob.entity!!.location,damage)
+                mob.currentHealth-=damage.damage
+                mob.loadName()
+                return damage
             }
-            damageString = sb.toString()
-        }else{
-            damageString = "§7${damage.damage}"
+            return DamageData(false, BigInteger.valueOf(0))
         }
-        SkyblockHolograms.createHologramAndDelete(loc.add(0.0,1.0,0.0),damageString,500)
+        fun createDmgHolo(loc: Location, damage: DamageData) {
+            val damageString: String;
+            if (damage.isCrit) {
+                val string = "✧${damage.damage}✧"
+                val sb = StringBuilder()
+                string.forEachIndexed { index, c ->
+                    sb.append(getColorFromIndex(index)).append(c)
+                }
+                damageString = sb.toString()
+            } else {
+                damageString = "§7${damage.damage}"
+            }
+            SkyblockHolograms.createHologramAndDelete(loc.add(0.0, 1.0, 0.0), damageString, 500)
 
-    }
-    fun getColorFromIndex(index:Int):String{
-        val indexUsed = index%6
-        return when(indexUsed){
-            0,1->"§f"
-            2->"§e"
-            3->"§6"
-            4,5->"§c"
-            else -> ""
+        }
+
+        fun getColorFromIndex(index:Int):String{
+            val indexUsed = index%6
+            return when(indexUsed){
+                0,1->"§f"
+                2->"§e"
+                3->"§6"
+                4,5->"§c"
+                else -> ""
+            }
+        }
+        fun calculateMagicDamage(mob:SkyblockMob,player: Player,skyblockAbility: SkyblockAbility): DamageData{
+            val stats = player.getStats()
+            val damage: Double = ((stats.abilityDamage+skyblockAbility.abilityDamage) * ((1+(stats.intel/100)) * skyblockAbility.multiplier))
+            return DamageData(false,BigInteger.valueOf(damage.toLong()))
         }
     }
+
     fun calculateDamage(mob:SkyblockMob,player: Player): DamageData{
         val stats = player.getStats()
         var damage: BigInteger = (5+stats.damage).toBigInteger()*(1+(stats.str/100)).toBigInteger()*(1+(stats.extra/100)).toBigInteger()

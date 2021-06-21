@@ -4,4 +4,5 @@ import com.prince.skyblocksandbox.skyblockenchants.EnchantGK
 
 object SBEnchants {
     val giantKiller = EnchantGK()
+    val titanKiller = EnchantTK()
 }
