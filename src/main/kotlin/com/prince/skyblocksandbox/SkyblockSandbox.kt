@@ -1,6 +1,7 @@
 package com.prince.skyblocksandbox
 
 import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
+import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.AbilityHandler
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
@@ -34,6 +35,7 @@ class SkyblockSandbox : JavaPlugin() {
     fun loadCommands(){
         getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
         getCommand("createsword").setExecutor(CreateSwordCommand())
+        getCommand("reforge").setExecutor(ReforgeCommand())
         log("Loaded commands")
     }
     fun loadVariables(){

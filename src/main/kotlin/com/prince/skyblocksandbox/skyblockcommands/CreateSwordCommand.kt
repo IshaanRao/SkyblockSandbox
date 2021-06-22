@@ -26,7 +26,7 @@ class CreateSwordCommand : CommandExecutor{
         Thread {
             try {
                 sender.sendMessage("§2Welcome to the Sword Creater type `cancel` at any time to cancel (Automatically cancels after 30 seconds without a response)")
-                val itemName:String = (ChatInput(sender,InputChecks.STRING,"§aPlease enter your weapon name (& is color code char)").start() as String).replace("&","§")
+                val itemName:String = (ChatInput(sender,InputChecks.STRING,"§aPlease enter your weapon name").start() as String)
                 sender.sendMessage("§6Set weapon name to `$itemName`")
                 val mat:Material = Material.valueOf((ChatInput(sender,InputChecks.MAT,"§aPlease enter your material, \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade").start() as String).uppercase(
                     Locale.getDefault()

@@ -8,3 +8,4 @@ prefix: SkyblockSandbox
 commands:
   testmob:
   createsword:
+  reforge:

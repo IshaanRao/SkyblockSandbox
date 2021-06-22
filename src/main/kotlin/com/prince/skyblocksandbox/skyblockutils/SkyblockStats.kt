@@ -19,11 +19,11 @@ object SkyblockStats {
         val abilityDamage:Double = 0.0
         if(itemInHand.type!=Material.AIR) {
             if (itemInHand.isSkyblockSword()) {
-                dmg += itemInHand.getSwordData().swordStats.damage
-                str += itemInHand.getSwordData().swordStats.strength
-                cd += itemInHand.getSwordData().swordStats.critDamage
-                cc += itemInHand.getSwordData().swordStats.critChance
-                intel += itemInHand.getSwordData().swordStats.intel
+                dmg += itemInHand.getSwordData().statswithreforge.damage
+                str += itemInHand.getSwordData().statswithreforge.strength
+                cd += itemInHand.getSwordData().statswithreforge.critDamage
+                cc += itemInHand.getSwordData().statswithreforge.critChance
+                intel += itemInHand.getSwordData().statswithreforge.intel
             }
         }
         return Stats(
