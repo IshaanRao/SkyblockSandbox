@@ -45,7 +45,7 @@
     <orderEntry type="module-library">
       <library name="Maven: com.testpaper:paper:1.0.0">
         <CLASSES>
-          <root url="jar://$USER_HOME$/Desktop/devserver/cache/patched.jar!/" />
+          <root url="jar://$MODULE_DIR$/../server/cache/patched.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

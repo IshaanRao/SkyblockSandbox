@@ -115,7 +115,7 @@
             <artifactId>paper</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/ishaanrao/Desktop/devserver/cache/patched.jar</systemPath>
+            <systemPath>/Users/aparep7474/Desktop/server/cache/patched.jar</systemPath>
         </dependency>
     </dependencies>
 

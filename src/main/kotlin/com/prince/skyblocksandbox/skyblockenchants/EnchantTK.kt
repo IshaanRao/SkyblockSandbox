@@ -1,12 +1,11 @@
 package com.prince.skyblocksandbox.skyblockenchants
 
 import org.bukkit.enchantments.EnchantmentTarget
-import com.prince.skyblocksandbox.skyblockenchants.SBEnchants
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 
-class EnchantTK : Enchantment(102) {
+class EnchantTK : Enchantment(109) {
     override fun getName(): String {
         return "Titan Killer"
     }

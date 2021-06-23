@@ -1,12 +1,11 @@
 package com.prince.skyblocksandbox.skyblockenchants
 
 import org.bukkit.enchantments.EnchantmentTarget
-import com.prince.skyblocksandbox.skyblockenchants.SBEnchants
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
 
-class EnchantGK : Enchantment(101) {
+class EnchantGK : Enchantment(106) {
     override fun getName(): String {
         return "Giant Killer"
     }
