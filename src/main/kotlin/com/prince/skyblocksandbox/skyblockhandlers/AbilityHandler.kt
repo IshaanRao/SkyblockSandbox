@@ -1,12 +1,11 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSwordData
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockSword
-import org.bukkit.Location
+import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
 class AbilityHandler : Listener{
@@ -15,14 +14,14 @@ class AbilityHandler : Listener{
         if(e.player.itemInHand.type==Material.AIR){
             return
         }
-        if(!e.player.itemInHand.isSkyblockSword()){
+        if(!e.player.itemInHand.isSkyblockItem()){
             return
         }
-        val sword = e.player.itemInHand.getSwordData()
-        if(sword.abilityType==null){
+        val item = e.player.itemInHand.getSkyblockData()
+        if(item.itemData.ability==AbilityTypes.NONE){
             return
         }
-        val ability = sword.abilityType!!.getAbility()
+        val ability = item.itemData.ability.getAbility()
         for (action in ability.actions){
             if(action==e.action){
                 return ability.execute(e)

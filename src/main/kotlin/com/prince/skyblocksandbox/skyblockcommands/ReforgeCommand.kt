@@ -1,13 +1,12 @@
 package com.prince.skyblocksandbox.skyblockcommands
 
 import com.google.gson.Gson
-import com.prince.skyblocksandbox.skyblockitems.data.SwordReforgeStats
-import com.prince.skyblocksandbox.skyblockitems.data.SwordStats
+import com.prince.skyblocksandbox.skyblockitems.data.ReforgeStats
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNbtTag
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNms
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSwordData
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockSword
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -26,31 +25,22 @@ class ReforgeCommand : CommandExecutor {
             sender.sendMessage("§cPlease hold a skyblock item")
             return true
         }
-        if(!item.isSkyblockSword()){
+        if(!item.isSkyblockItem()){
             sender.sendMessage("§cPlease hold a skyblock item")
             return true
         }
-        val sword = item.getSwordData()
-        val stats = sword.swordStats
-        val reforgeStats = SwordReforgeStats(
-            damage = SwordReforgeStats.createMap(100,100,100,100,100,100),
-            intel = SwordReforgeStats.createMap(100,100,100,100,100,100),
+        val sbItem = item.getSkyblockData()
+        if(!sbItem.itemData.reforgable){
+            sender.sendMessage("§cThis item isn't reforgeable")
+            return true
+        }
+        val reforgeStats = ReforgeStats(
+            damage = ReforgeStats.createMap(100,100,100,100,100,100),
+            intelligence = ReforgeStats.createMap(100,100,100,100,100,100),
             name = "Test"
         )
-        sword.swordStats = SwordStats(
-            damage = stats.damage,
-            strength = stats.strength,
-            critDamage = stats.critDamage,
-            critChance = stats.critChance,
-            intel = stats.intel,
-            reforge = reforgeStats
-        )
-        item = sword.setTags(item)
-        val meta = item.itemMeta
-        meta.lore = sword.generateLore()
-        meta.displayName ="${sword.itemData.rarity.getColor()}${reforgeStats.name} ${sword.itemData.name}"
-        item.itemMeta = meta
-        sender.inventory.itemInHand = item
+        sbItem.itemData.reforge = reforgeStats
+        sender.inventory.itemInHand = sbItem.createItem(sender)
         sender.updateInventory()
         return true
     }

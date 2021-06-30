@@ -86,10 +86,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
     @EventHandler
     fun onDamage(e: EntityDamageByEntityEvent) {
         if (!e.entity.isDead) {
-            val mob = e.entity.isSkyblockMob()
-            if (mob == null) {
-                return
-            }
+            val mob = e.entity.isSkyblockMob() ?: return
             if (e.damager is Player) {
                 e.damage = 0.0
                 dmgHandler.swordDamage(mob, e.damager as Player)

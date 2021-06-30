@@ -4,9 +4,7 @@ import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
 import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockenchants.SBEnchants
-import com.prince.skyblocksandbox.skyblockhandlers.AbilityHandler
-import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
-import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
+import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
@@ -29,11 +27,12 @@ class SkyblockSandbox : JavaPlugin() {
             registerEnchantment(enchantment)
         }
     }
-
     fun registerEvents(){
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
         server.pluginManager.registerEvents(InputHandler,this)
+        server.scheduler.scheduleSyncRepeatingTask(this,StatisticHandler,0,20)
+        ActionBarManager(this)
         log("Registered Events")
     }
 

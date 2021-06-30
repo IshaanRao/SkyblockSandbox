@@ -14,6 +14,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.code.style>official</kotlin.code.style>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
     </properties>
 
     <repositories>
@@ -38,13 +40,14 @@
 
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>src/test/kotlin</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
                 <configuration>
-                    <failOnError>false</failOnError>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -115,7 +118,7 @@
             <artifactId>paper</artifactId>
             <version>1.0.0</version>
             <scope>system</scope>
-            <systemPath>/Users/aparep7474/Desktop/server/cache/patched.jar</systemPath>
+            <systemPath>${project.basedir}/jar/paper.jar</systemPath>
         </dependency>
     </dependencies>
 

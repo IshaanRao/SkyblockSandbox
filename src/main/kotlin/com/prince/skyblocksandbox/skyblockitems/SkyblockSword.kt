@@ -1,93 +1,54 @@
 package com.prince.skyblocksandbox.skyblockitems
 
-import com.google.gson.Gson
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
-import com.prince.skyblocksandbox.skyblockitems.data.SwordStats
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getBukkit
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNbtTag
-import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNms
+import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
-import net.minecraft.server.v1_8_R3.*
-import org.bukkit.inventory.ItemStack
+import org.bukkit.entity.Player
 
+class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD) {
+    override val trueStats: ItemData
+        get() {
+            val data = statsWithReforge
+            data.damage = data.damage + (itemData.hpbs*2).toBigInteger()
+            data.strength = data.strength + (itemData.hpbs*2).toBigInteger()
+            return data
+        }
 
-class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: AbilityTypes? = null) {
-    var itemData:ItemData
-    var swordStats:SwordStats
-    var abilityType: AbilityTypes?
-    init{
-        this.itemData = itemData
-        this.swordStats = swordStats
-        this.abilityType = abilityType
-    }
-    fun createItem():ItemStack{
-        var sword = ItemStack(itemData.material)
-        val meta = sword.itemMeta
-        meta.spigot().isUnbreakable = true
-        meta.displayName = "${itemData.rarity.getColor()}${itemData.name}"
-        meta.lore = generateLore()
-        sword.itemMeta = meta
-        sword = setTags(sword)
-        return sword
-    }
-    fun setTags(sword:ItemStack) : ItemStack{
-        val gson = Gson()
-        val nmsSword = sword.getNms()
-        val swordCompound = nmsSword.getNbtTag()
-        swordCompound.set("SkyblockSword",NBTTagString(gson.toJson(this)))
-        val modifiers = NBTTagList()
-        val damage = NBTTagCompound()
-        modifiers.add(damage)
-        swordCompound.set("AttributeModifiers",modifiers)
-        swordCompound.set("HideFlags",NBTTagInt(4))
-        nmsSword.tag = swordCompound
-        return nmsSword.getBukkit()
-    }
-    fun generateCategory(catname:String,value:Any,color:SkyblockColors,reforge:Int):String{
-        if(reforge!=0) {
-            return "§7$catname: $color+$value §9(${this.swordStats.reforge.name} +$reforge)"
-        }else{
-            return "§7$catname: $color+$value"
-        }
-    }
-    val statswithreforge:SwordStats
-    get() {
-        if(swordStats.reforge==null){
-            return swordStats
-        }
-        return SwordStats(
-            damage = (swordStats.damage + swordStats.reforge.damage[itemData.rarity]!!),
-            strength = (swordStats.strength + swordStats.reforge.strength[itemData.rarity]!!),
-            critDamage = (swordStats.critDamage + swordStats.reforge.critDamage[itemData.rarity]!!),
-            critChance = (swordStats.critChance + swordStats.reforge.critChance[itemData.rarity]!!),
-            intel = (swordStats.intel + swordStats.reforge.intel[itemData.rarity]!!),
-        )
-    }
-    fun generateLore(): List<String> {
+    override fun createLore(p: Player): List<String> {
         val lore = ArrayList<String>()
-        if(statswithreforge.damage!=0){
-            lore.add(generateCategory("Damage",statswithreforge.damage, SkyblockColors.RED,swordStats.reforge.damage[itemData.rarity]!!))
+        if(trueStats.damage!=0.toBigInteger()){
+            lore.add(generateCategory("Damage",trueStats.damage, SkyblockColors.RED,trueStats.reforge.damage[itemData.rarity]!!, true))
         }
-        if(statswithreforge.strength!=0){
-            lore.add(generateCategory("Strength",statswithreforge.strength, SkyblockColors.RED,swordStats.reforge.strength[itemData.rarity]!!))
+        if(trueStats.strength!=0.toBigInteger()){
+            lore.add(generateCategory("Strength",trueStats.strength, SkyblockColors.RED,trueStats.reforge.strength[itemData.rarity]!!, true))
         }
-        if(statswithreforge.critChance!=0){
-            lore.add(generateCategory("Crit Chance","${statswithreforge.critChance}%", SkyblockColors.RED,swordStats.reforge.critChance[itemData.rarity]!!))
+        if(trueStats.critChance!=0){
+            lore.add(generateCategory("Crit Chance","${trueStats.critChance}%", SkyblockColors.RED,trueStats.reforge.critChance[itemData.rarity]!!))
         }
-        if(statswithreforge.critDamage!=0){
-            lore.add(generateCategory("Crit Damage","${statswithreforge.critDamage}%", SkyblockColors.RED,swordStats.reforge.critDamage[itemData.rarity]!!))
+        if(trueStats.critDamage!=0.toBigInteger()){
+            lore.add(generateCategory("Crit Damage","${trueStats.critDamage}%", SkyblockColors.RED,trueStats.reforge.critDamage[itemData.rarity]!!))
         }
-
-        if(statswithreforge.intel!=0){
+        if(trueStats.intelligence!=0.toBigInteger()||trueStats.speed!=0){
             lore.add("")
-            lore.add(generateCategory("Intelligence",statswithreforge.intel,SkyblockColors.GREEN,swordStats.reforge.intel[itemData.rarity]!!))
         }
-        if(abilityType!=null){
+        if(trueStats.health!=0.toBigInteger()){
+            lore.add(generateCategory("Health",trueStats.health, SkyblockColors.GREEN,trueStats.reforge.health[itemData.rarity]!!))
+        }
+        if(trueStats.defense!=0.toBigInteger()){
+            lore.add(generateCategory("Defense",trueStats.defense, SkyblockColors.GREEN,trueStats.reforge.defense[itemData.rarity]!!))
+        }
+        if(trueStats.speed!=0){
+            lore.add(generateCategory("Speed",trueStats.intelligence, SkyblockColors.GREEN,trueStats.reforge.speed[itemData.rarity]!!))
+        }
+        if(trueStats.intelligence!=0.toBigInteger()){
+            lore.add(generateCategory("Intelligence",trueStats.intelligence, SkyblockColors.GREEN,trueStats.reforge.intelligence[itemData.rarity]!!))
+        }
+        if(itemData.ability!=AbilityTypes.NONE){
             lore.add(" ")
-            lore.add("§6${abilityType!!.getAbility().prefix}: ${abilityType!!.getAbility().title} §e§l${abilityType!!.getAbility().action}")
-            lore.addAll(abilityType!!.getAbility().desc)
-            lore.add("§8Mana Cost: §3"+abilityType!!.getAbility().manaCost)
+            lore.add("§6${itemData.ability.getAbility().prefix}: ${itemData.ability.getAbility().title} §e§l${itemData.ability.getAbility().action}")
+            lore.addAll(itemData.ability.getAbility().desc)
+            lore.add("§8Mana Cost: §3"+itemData.ability.getAbility().manaCost)
         }
         lore.add(" ")
         if(itemData.reforgable){
@@ -96,4 +57,5 @@ class SkyblockSword(itemData: ItemData, swordStats: SwordStats, abilityType: Abi
         lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} SWORD")
         return lore
     }
+
 }

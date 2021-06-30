@@ -32,7 +32,7 @@ class WitherImpact : ItemAbility {
                 val mob = entity.isSkyblockMob()!!
                 damage += DamageHandler.magicDamage(mob, e.player, this).damage
             }
-            if (nearbyEntities.size != 0) {
+            if (nearbyEntities.isNotEmpty()) {
                 e.player.sendMessage(
                     "§7Your Implosion hit §c${nearbyEntities.size} §7${if (nearbyEntities.size == 1) "enemy" else "enemies"} for §c${
                         "%,d".format(

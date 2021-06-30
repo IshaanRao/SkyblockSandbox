@@ -1,15 +1,12 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
-import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
 import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
 import com.prince.skyblocksandbox.skyblockabilities.SkyblockAbility
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Location
-import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
-import org.bukkit.event.player.PlayerInteractEvent
 import java.lang.StringBuilder
 import java.math.BigInteger
 
@@ -23,6 +20,15 @@ class DamageHandler {
         }
     }
     companion object {
+
+        private operator fun BigInteger.div(i: Int): BigInteger {
+            return this/i.toBigInteger()
+        }
+
+        operator fun Int.plus(bint:BigInteger):BigInteger {
+            return this.toBigInteger()+bint
+        }
+
         fun magicDamage(mob:SkyblockMob,player: Player,ability:ItemAbility): DamageData{
             if(!mob.entity!!.isDead) {
                 val damage = calculateMagicDamage(player = player,mob = mob,skyblockAbility = ability.ability)
@@ -61,19 +67,20 @@ class DamageHandler {
         }
         fun calculateMagicDamage(mob:SkyblockMob,player: Player,skyblockAbility: SkyblockAbility): DamageData{
             val stats = player.getStats()
-            val damage: Double = ((stats.abilityDamage+skyblockAbility.abilityDamage) * ((1+(stats.intel/100)) * skyblockAbility.multiplier))
+            val damage: Double = ((stats.abilityDamage+skyblockAbility.abilityDamage) * ((1+(stats.intelligence/100)).toDouble() * skyblockAbility.multiplier))
             return DamageData(false,BigInteger.valueOf(damage.toLong()))
         }
     }
 
     fun calculateDamage(mob:SkyblockMob,player: Player): DamageData{
         val stats = player.getStats()
-        var damage: BigInteger = (5+stats.damage).toBigInteger()*(1+(stats.str/100)).toBigInteger()*(1+(stats.extra/100)).toBigInteger()
+        var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100))
+        println(damage)
         val isCrit = (1..100).random()<=stats.critChance
         if(isCrit) {
-            damage*=(1+(stats.critDmg/100)).toBigInteger()
+            damage*=(1+(stats.critDamage.toDouble()/100))
         }
-        return DamageData(isCrit,damage)
+        return DamageData(isCrit,damage.toBigDecimal().toBigInteger())
     }
     data class DamageData(val isCrit:Boolean,val damage:BigInteger)
 }
