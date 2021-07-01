@@ -1,8 +1,8 @@
 package com.prince.skyblocksandbox.skyblockenchants
 
-import org.bukkit.enchantments.EnchantmentTarget
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
+import org.bukkit.enchantments.EnchantmentTarget
 import org.bukkit.inventory.ItemStack
 
 class EnchantProsec : Enchantment(108) {

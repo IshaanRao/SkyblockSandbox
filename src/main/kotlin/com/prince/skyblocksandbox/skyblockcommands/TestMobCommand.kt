@@ -1,14 +1,7 @@
 package com.prince.skyblocksandbox.skyblockcommands
 
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
-import com.prince.skyblocksandbox.skyblockitems.SkyblockArmor
-import com.prince.skyblocksandbox.skyblockitems.data.ArmorTypes
-import com.prince.skyblocksandbox.skyblockitems.data.ItemData
-import com.prince.skyblocksandbox.skyblockitems.data.ItemStackData
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
-import com.prince.skyblocksandbox.skyblockutils.ActionBar
-import com.prince.skyblocksandbox.skyblockutils.SkyblockRarities
-import org.bukkit.Material
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -22,7 +15,8 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         }
         if(args.size==1){
             try{
-                mobHandler.spawnMob(SkyblockZombie(BigInteger.valueOf(args[0].toLong())), sender.location)
+                mobHandler.spawnMob(SkyblockZombie(args[0].toBigInteger()), sender.location)
+                sender.sendMessage("§aSpawned test zombie with a health of "+ args[0].toBigInteger())
             }catch (e:Exception){
                 return true
             }

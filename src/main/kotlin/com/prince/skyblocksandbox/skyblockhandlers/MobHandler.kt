@@ -4,16 +4,16 @@ import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import org.bukkit.Location
-import org.bukkit.entity.*
+import org.bukkit.entity.Arrow
+import org.bukkit.entity.Entity
+import org.bukkit.entity.LivingEntity
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityCombustEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
-import java.awt.SystemColor.text
 import java.math.BigInteger
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler) : Listener {

@@ -5,8 +5,6 @@ import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.statsWithItemInHand
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.inventory.InventoryInteractEvent
-import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerItemHeldEvent
 import org.bukkit.inventory.PlayerInventory
 

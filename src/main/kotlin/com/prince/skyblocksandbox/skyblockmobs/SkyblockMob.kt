@@ -1,8 +1,6 @@
 package com.prince.skyblocksandbox.skyblockmobs
 
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
-import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
-import org.bukkit.Location
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import java.math.BigInteger

@@ -1,15 +1,12 @@
 package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.SkyblockSandbox
-import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
-import kotlin.collections.ArrayList
 
 abstract class ItemAbility {
     abstract val AbilityType:AbilityTypes

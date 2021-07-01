@@ -3,7 +3,6 @@ package com.prince.skyblocksandbox.skyblockutils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.prince.skyblocksandbox.skyblockitems.SkyblockItem
-import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import net.minecraft.server.v1_8_R3.NBTTagCompound
 import org.bukkit.Material

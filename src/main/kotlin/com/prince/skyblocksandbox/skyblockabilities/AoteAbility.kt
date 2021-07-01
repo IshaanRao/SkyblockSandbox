@@ -1,15 +1,10 @@
 package com.prince.skyblocksandbox.skyblockabilities
 
-import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import java.util.*
-import kotlin.collections.ArrayList
 
 object AoteAbility : ItemAbility() {
     override val manaCost=50

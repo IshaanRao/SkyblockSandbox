@@ -2,8 +2,6 @@ package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
-import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler.Companion.plus
-import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockhandlers.StatisticHandler
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
@@ -11,13 +9,10 @@ import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
-import sun.audio.AudioPlayer.player
 import java.math.BigInteger
 import java.util.*
-import kotlin.collections.ArrayList
 
 object WitherImpact : ItemAbility() {
     override val manaCost=300

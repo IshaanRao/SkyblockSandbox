@@ -1,14 +1,11 @@
 package com.prince.skyblocksandbox.skyblockitems
 
-import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ArmorTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
-import java.math.BigInteger
 
 class SkyblockArmor(itemData: ItemData,val armorType: ArmorTypes) : SkyblockItem(itemData,ItemTypes.ARMOR) {
     override val trueStats: ItemData

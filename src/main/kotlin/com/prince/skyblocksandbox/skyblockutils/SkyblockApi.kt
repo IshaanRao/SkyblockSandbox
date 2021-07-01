@@ -5,7 +5,6 @@ import com.google.gson.JsonObject
 import com.prince.skyblocksandbox.SkyblockSandbox
 import io.javalin.Javalin
 import org.bukkit.Bukkit
-import org.bukkit.Server
 
 object SkyblockApi {
     lateinit var app: Javalin

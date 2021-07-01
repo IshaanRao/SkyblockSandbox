@@ -7,7 +7,7 @@ import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
+
 //a
 class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD) {
     override val trueStats: ItemData

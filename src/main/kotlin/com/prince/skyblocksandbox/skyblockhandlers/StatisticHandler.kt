@@ -2,7 +2,6 @@ package com.prince.skyblocksandbox.skyblockhandlers
 
 import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
-import com.prince.skyblocksandbox.skyblockutils.plus
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.math.BigInteger
