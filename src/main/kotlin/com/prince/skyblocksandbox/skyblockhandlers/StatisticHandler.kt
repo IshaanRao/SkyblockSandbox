@@ -4,6 +4,7 @@ import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.math.roundToInt
 
@@ -76,11 +77,35 @@ object StatisticHandler : Runnable {
         }
         val stats = PlayerStats[p]!!
         if(stats.mana-mana<0.toBigInteger()){
-            stats.mana = p.getStats().intelligence
+            stats.mana = 0.toBigInteger()
         }else {
             stats.mana-=mana
         }
         PlayerStats[p] = stats
+    }
+    fun removeHealth(p: Player,health:BigInteger){
+        if(!PlayerStats.containsKey(p)){
+            return
+        }
+        val stats = PlayerStats[p]!!
+        if(stats.health-health<0.toBigInteger()){
+            //KILL PLAYER
+            p.sendMessage("§cYou died!")
+            stats.health = p.getStats().health
+        }else {
+            stats.health-=health
+        }
+        PlayerStats[p] = stats
+    }
+    fun damagePlayer(p:Player,rawDamage:BigInteger){
+        if(!PlayerStats.containsKey(p)){
+            return
+        }
+        val stats = p.getStats()
+        val reduction:BigDecimal = stats.defense.toBigDecimal()/(stats.defense.toBigDecimal()+100.0.toBigDecimal())
+        val multiplier:BigDecimal = 1.0.toBigDecimal()-reduction
+        val damage = (rawDamage.toBigDecimal()*multiplier).toBigInteger()
+        removeHealth(p,damage)
     }
     fun getPlayerStats(p: Player):Stats {
         if(!PlayerStats.containsKey(p)){

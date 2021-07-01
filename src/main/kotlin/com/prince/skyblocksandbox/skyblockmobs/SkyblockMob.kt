@@ -1,6 +1,11 @@
 package com.prince.skyblocksandbox.skyblockmobs
 
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
+import net.minecraft.server.v1_8_R3.Entity
+import net.minecraft.server.v1_8_R3.EntityLiving
+import net.minecraft.server.v1_8_R3.NBTTagCompound
+import org.bukkit.Bukkit
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
 import java.math.BigInteger
@@ -12,6 +17,7 @@ abstract class SkyblockMob(){
     abstract val level: Int
     abstract val name: String
     abstract val entityType: EntityType
+    abstract val damage: Int
     var hasSpawned = false
     var entity: LivingEntity? = null
 

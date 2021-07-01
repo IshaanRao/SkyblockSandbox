@@ -78,7 +78,6 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
                 if (e.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
                     e.isCancelled = true
                 }
-
             }
         }
     }
@@ -92,6 +91,37 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
                 dmgHandler.swordDamage(mob, e.damager as Player)
             } else if (e.damager !is Player && e.damager !is Arrow) {
                 e.isCancelled = true
+            }
+        }
+    }
+    @EventHandler
+    fun onPlayerDamage(e: EntityDamageByEntityEvent) {
+        if (!e.damager.isDead) {
+            val mob:SkyblockMob? =
+            if(e.damager is Arrow) {
+                val arrow = e.damager as Arrow
+                if(arrow.shooter is Entity) {
+                    if((arrow.shooter as Entity).isSkyblockMob()!=null){
+                        (arrow.shooter as Entity).isSkyblockMob()
+                    }else{
+                        null
+                    }
+                }else {
+                    null
+                }
+            }else{
+                if(e.damager.isSkyblockMob()!=null){
+                    e.damager.isSkyblockMob()
+                }else{
+                    null
+                }
+            }
+            if(mob==null){
+                return
+            }
+            if (e.entity is Player) {
+                e.damage=0.0
+                StatisticHandler.damagePlayer(e.entity as Player,mob.damage.toBigInteger())
             }
         }
     }

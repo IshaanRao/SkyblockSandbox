@@ -15,7 +15,7 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         }
         if(args.size==1){
             try{
-                mobHandler.spawnMob(SkyblockZombie(args[0].toBigInteger()), sender.location)
+                mobHandler.spawnMob(SkyblockZombie(), sender.location)
                 sender.sendMessage("§aSpawned test zombie with a health of "+ args[0].toBigInteger())
             }catch (e:Exception){
                 return true
