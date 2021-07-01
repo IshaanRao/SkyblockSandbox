@@ -6,6 +6,8 @@ import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockenchants.SBEnchants
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
+import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
+import io.javalin.Javalin
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
 import java.lang.reflect.Field
@@ -14,29 +16,30 @@ class SkyblockSandbox : JavaPlugin() {
 
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
-
+    lateinit var app:Javalin
     override fun onEnable() {
+
         instance = this
         log("--------------------------")
         loadVariables()
         registerEvents()
         loadCommands()
         log("--------------------------")
-        SBEnchants.customEnchants.add(SBEnchants.cubism); SBEnchants.customEnchants.add(SBEnchants.dragonHunter); SBEnchants.customEnchants.add(SBEnchants.enderSlayer); SBEnchants.customEnchants.add(SBEnchants.execute); SBEnchants.customEnchants.add(SBEnchants.firstStrike); SBEnchants.customEnchants.add(SBEnchants.giantKiller); SBEnchants.customEnchants.add(SBEnchants.impaling); SBEnchants.customEnchants.add(SBEnchants.prosecute); SBEnchants.customEnchants.add(SBEnchants.titanKiller); SBEnchants.customEnchants.add(SBEnchants.tripleStrike)
-        for (enchantment in SBEnchants.customEnchants) {
-            registerEnchantment(enchantment)
-        }
     }
     fun registerEvents(){
+        SkyblockApi.start()
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
         server.pluginManager.registerEvents(InputHandler,this)
+        server.pluginManager.registerEvents(ItemHandler(),this)
+        StatisticHandler.sbSandbox = this
         server.scheduler.scheduleSyncRepeatingTask(this,StatisticHandler,0,20)
         ActionBarManager(this)
         log("Registered Events")
     }
 
     override fun onDisable() {
+        SkyblockApi.stop()
         mobHandler.killAllMobs()
         try {
             val keyField = Enchantment::class.java.getDeclaredField("byID")

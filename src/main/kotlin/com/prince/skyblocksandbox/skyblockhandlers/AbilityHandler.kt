@@ -24,6 +24,11 @@ class AbilityHandler : Listener{
         val ability = item.itemData.ability.getAbility()
         for (action in ability.actions){
             if(action==e.action){
+                if(StatisticHandler.getPlayerStats(e.player).mana<ability.manaCost.toBigInteger()){
+                    return e.player.sendMessage("§cYou do not have enough mana to use this ability")
+                }
+                StatisticHandler.removeMana(e.player,ability.manaCost.toBigInteger())
+                e.player.sendMessage("§aUsed §6${ability.title}§a! §b(${ability.manaCost} Mana)")
                 return ability.execute(e)
             }
         }

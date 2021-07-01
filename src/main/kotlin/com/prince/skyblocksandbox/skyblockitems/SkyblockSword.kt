@@ -3,8 +3,11 @@ package com.prince.skyblocksandbox.skyblockitems
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
+import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
+import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 
 class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD) {
     override val trueStats: ItemData
@@ -15,7 +18,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
             return data
         }
 
-    override fun createLore(p: Player): List<String> {
+    override fun createLore(p: Player,stats:StatsData?): List<String> {
         val lore = ArrayList<String>()
         if(trueStats.damage!=0.toBigInteger()){
             lore.add(generateCategory("Damage",trueStats.damage, SkyblockColors.RED,trueStats.reforge.damage[itemData.rarity]!!, true))
@@ -47,7 +50,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         if(itemData.ability!=AbilityTypes.NONE){
             lore.add(" ")
             lore.add("§6${itemData.ability.getAbility().prefix}: ${itemData.ability.getAbility().title} §e§l${itemData.ability.getAbility().action}")
-            lore.addAll(itemData.ability.getAbility().desc)
+            lore.addAll(itemData.ability.getAbility().getDesc(stats ?: p.getStats()))
             lore.add("§8Mana Cost: §3"+itemData.ability.getAbility().manaCost)
         }
         lore.add(" ")

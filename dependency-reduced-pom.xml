@@ -104,6 +104,8 @@
   </dependencies>
   <properties>
     <kotlin.code.style>official</kotlin.code.style>
+    <logback_version>1.2.3</logback_version>
+    <ktor.version>1.6.1</ktor.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>1.8</maven.compiler.target>

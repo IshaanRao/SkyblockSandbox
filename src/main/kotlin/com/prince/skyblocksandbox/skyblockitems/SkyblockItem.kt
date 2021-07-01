@@ -3,6 +3,7 @@ package com.prince.skyblocksandbox.skyblockitems
 import com.google.gson.Gson
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
+import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.ColorUtils
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getBukkit
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getNbtTag
@@ -17,7 +18,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.LeatherArmorMeta
 
 abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
-    fun createItem(p: Player) : ItemStack{
+    fun createItem(p: Player,stats:StatsData?=null) : ItemStack{
         var item = ItemStack(itemData.item.mat)
         val meta = item.itemMeta
         if(itemData.item.isColored){
@@ -26,7 +27,7 @@ abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
         meta.spigot().isUnbreakable = true
         meta.displayName =
             "${itemData.rarity.getColor()}${if (itemsReforged()) "${itemData.reforge.name} " else ""}${itemData.name}"
-        meta.lore = createLore(p)
+        meta.lore = createLore(p,stats)
         item.itemMeta = meta
         item = setTags(item)
         return item
@@ -68,7 +69,7 @@ abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
         return(itemData.reforge.name!="")
     }
     abstract val trueStats:ItemData
-    abstract fun createLore(p:Player):List<String>
+    abstract fun createLore(p:Player,stats:StatsData?=null):List<String>
     fun setTags(item:ItemStack):ItemStack{
         val gson = Gson()
         val nmsItem = item.getNms()

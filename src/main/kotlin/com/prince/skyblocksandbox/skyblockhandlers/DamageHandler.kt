@@ -21,9 +21,6 @@ class DamageHandler {
     }
     companion object {
 
-        private operator fun BigInteger.div(i: Int): BigInteger {
-            return this/i.toBigInteger()
-        }
 
         operator fun Int.plus(bint:BigInteger):BigInteger {
             return this.toBigInteger()+bint
@@ -67,7 +64,7 @@ class DamageHandler {
         }
         fun calculateMagicDamage(mob:SkyblockMob,player: Player,skyblockAbility: SkyblockAbility): DamageData{
             val stats = player.getStats()
-            val damage: Double = ((stats.abilityDamage+skyblockAbility.abilityDamage) * ((1+(stats.intelligence/100)).toDouble() * skyblockAbility.multiplier))
+            val damage: Double = ((stats.abilityDamage+skyblockAbility.abilityDamage) * ((1+(stats.intelligence.toDouble()/100)) * skyblockAbility.multiplier))
             return DamageData(false,BigInteger.valueOf(damage.toLong()))
         }
     }

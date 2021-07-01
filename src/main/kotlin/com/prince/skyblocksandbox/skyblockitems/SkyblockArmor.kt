@@ -4,8 +4,10 @@ import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ArmorTypes
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
+import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import java.math.BigInteger
 
 class SkyblockArmor(itemData: ItemData,val armorType: ArmorTypes) : SkyblockItem(itemData,ItemTypes.ARMOR) {
@@ -16,7 +18,7 @@ class SkyblockArmor(itemData: ItemData,val armorType: ArmorTypes) : SkyblockItem
             data.defense = data.defense + (itemData.hpbs*2).toBigInteger()
             return data
         }
-    override fun createLore(p: Player): List<String> {
+    override fun createLore(p: Player,stats:StatsData?): List<String> {
         val lore = ArrayList<String>()
         if(trueStats.damage!=0.toBigInteger()){
             lore.add(generateCategory("Damage",trueStats.damage, SkyblockColors.RED,trueStats.reforge.damage[itemData.rarity]!!))
