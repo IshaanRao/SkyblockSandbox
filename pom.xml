@@ -21,7 +21,6 @@
     </properties>
 
     <repositories>
-
         <repository>
             <id>mavenCentral</id>
             <url>https://repo1.maven.org/maven2/</url>
@@ -131,6 +130,11 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.30</version>
+        </dependency>
+        <dependency>
+            <groupId>club.minnced</groupId>
+            <artifactId>discord-webhooks</artifactId>
+            <version>0.5.7</version>
         </dependency>
     </dependencies>
 

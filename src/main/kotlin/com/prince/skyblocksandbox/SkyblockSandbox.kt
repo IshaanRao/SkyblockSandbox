@@ -90,6 +90,8 @@ class SkyblockSandbox : JavaPlugin() {
 
     companion object {
         lateinit var instance: SkyblockSandbox
+        val version = "0.1.3"
+        val changes = listOf("Added this embed","Added auto restarter","Added mana usage")
         @JvmStatic
         fun log(msg:Any?) {
             println("[SkyblockSandbox] $msg")
