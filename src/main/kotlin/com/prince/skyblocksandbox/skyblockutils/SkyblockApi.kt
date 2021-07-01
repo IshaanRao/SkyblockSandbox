@@ -36,7 +36,7 @@ object SkyblockApi {
                     var jsonObj = gson.fromJson(json,JsonObject::class.java)
                     var changes = jsonObj.get("changelog").asJsonArray
                     changes.forEachIndexed { index, s ->
-                        description += "• `${s}`"
+                        description += "• `${s.asString}`"
                         if(index-1!=changes.size()){
                             description += "\n"
                         }
