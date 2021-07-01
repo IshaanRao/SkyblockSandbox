@@ -17,7 +17,7 @@ object SkyblockApi {
             var body = gson.fromJson(context.body(),JsonObject::class.java)
             var action = body.get("action").asString
             if(action == "completed"){
-                Bukkit.broadcastMessage("&c§l[SERVER] &bServer is restarting in 60 seconds for a §aGame Update")
+                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in 60 seconds for a §aGame Update")
             }
         }
         Thread.currentThread().contextClassLoader = classLoader
