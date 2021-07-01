@@ -5,6 +5,7 @@ import com.google.gson.JsonObject
 import com.prince.skyblocksandbox.SkyblockSandbox
 import io.javalin.Javalin
 import org.bukkit.Bukkit
+import org.bukkit.Server
 
 object SkyblockApi {
     lateinit var app: Javalin
@@ -17,7 +18,16 @@ object SkyblockApi {
             var body = gson.fromJson(context.body(),JsonObject::class.java)
             var action = body.get("action").asString
             if(action == "completed"){
-                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in 60 seconds for a §aGame Update")
+                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a60 seconds§b for a §aGame Update")
+                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a6=30 seconds§b for a §aGame Update")
+                },20L*30)
+                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a6=5 seconds§b for a §aGame Update")
+                },20L*55)
+                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                    SkyblockSandbox.instance.server.spigot().restart()
+                },20L*60)
             }
         }
         Thread.currentThread().contextClassLoader = classLoader
