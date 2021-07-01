@@ -19,10 +19,10 @@ object SkyblockApi {
             if(action == "completed"){
                 Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a60 seconds§b for a §aGame Update")
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a6=30 seconds§b for a §aGame Update")
+                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §30 seconds§b for a §aGame Update")
                 },20L*30)
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a6=5 seconds§b for a §aGame Update")
+                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a5 seconds§b for a §aGame Update")
                 },20L*55)
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
                     SkyblockSandbox.instance.server.spigot().restart()
