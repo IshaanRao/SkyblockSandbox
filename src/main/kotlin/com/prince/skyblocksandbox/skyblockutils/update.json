@@ -1,4 +1,4 @@
 {
   "version": "0.1.5",
-  "changelog": ["Made people lose health stat when hit","Added base skyblock mob","Made players not take real damage","Added data on github"]
+  "changelog": ["Attempted to fix config issue"]
 }

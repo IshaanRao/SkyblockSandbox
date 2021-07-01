@@ -7,7 +7,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.prince.skyblocksandbox.SkyblockSandbox
 import io.javalin.Javalin
+import org.apache.commons.io.IOUtils
 import org.bukkit.Bukkit
+import java.net.URL
 
 object SkyblockApi {
     lateinit var app: Javalin
@@ -30,14 +32,17 @@ object SkyblockApi {
                 },20L*55)
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
                     var description = ""
-                    SkyblockSandbox.changes.forEachIndexed { index, s ->
+                    val json = IOUtils.toString(URL("https://raw.githubusercontent.com/IshaanRao/SkyblockSandbox/master/src/main/kotlin/com/prince/skyblocksandbox/skyblockutils/update.json?token=AOL4U6F5TU6VEUKMFUGULHDA45K66"))
+                    var jsonObj = gson.fromJson(json,JsonObject::class.java)
+                    var changes = jsonObj.get("changelog").asJsonArray
+                    changes.forEachIndexed { index, s ->
                         description += "• `${s}`"
-                        if(index-1!=SkyblockSandbox.changes.size){
+                        if(index-1!=changes.size()){
                             description += "\n"
                         }
                     }
                     client.send(WebhookEmbedBuilder()
-                        .setAuthor(WebhookEmbed.EmbedAuthor("Update v${SkyblockSandbox.version}",null,null))
+                        .setAuthor(WebhookEmbed.EmbedAuthor("Update v${jsonObj.get("version")}",null,null))
                         .setTitle(WebhookEmbed.EmbedTitle("Change Log",null))
                         .setDescription(description)
                         .setColor(3077991)
