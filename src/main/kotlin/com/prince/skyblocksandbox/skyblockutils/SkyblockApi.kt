@@ -42,7 +42,7 @@ object SkyblockApi {
                         }
                     }
                     client.send(WebhookEmbedBuilder()
-                        .setAuthor(WebhookEmbed.EmbedAuthor("Update v${jsonObj.get("version")}",null,null))
+                        .setAuthor(WebhookEmbed.EmbedAuthor("Update v${jsonObj.get("version").asString}",null,null))
                         .setTitle(WebhookEmbed.EmbedTitle("Change Log",null))
                         .setDescription(description)
                         .setColor(3077991)
