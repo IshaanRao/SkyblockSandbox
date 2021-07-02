@@ -20,7 +20,6 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
 
     override fun createLore(p: Player,stats:StatsData?): List<String> {
         val lore = ArrayList<String>()
-        lore.add("${SkyblockColors.GREEN}nick is a cat that is actually a duck")
         if(trueStats.damage!=0.toBigInteger()){
             lore.add(generateCategory("Damage",trueStats.damage, SkyblockColors.RED,trueStats.reforge.damage[itemData.rarity]!!, true))
         }
