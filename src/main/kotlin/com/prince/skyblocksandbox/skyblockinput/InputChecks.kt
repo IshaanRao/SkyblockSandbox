@@ -42,7 +42,7 @@ enum class InputChecks {
             }
         }
 
-        override val invalidMessage = "Please provide an ability in the list \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade\""
+        override val invalidMessage = "Please provide a material in the list \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade\""
     },
     BOOLEAN{
         override fun passesCheck(s: String): Boolean {

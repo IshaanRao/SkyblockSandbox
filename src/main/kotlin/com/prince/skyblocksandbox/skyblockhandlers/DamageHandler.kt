@@ -1,8 +1,13 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
+import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
 import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
 import com.prince.skyblocksandbox.skyblockabilities.SkyblockAbility
+import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockSword
 import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Location
@@ -70,8 +75,20 @@ class DamageHandler {
 
     fun calculateDamage(mob:SkyblockMob,player: Player): DamageData{
         val stats = player.getStats()
-        var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100))
-        println(damage)
+        var enchantMultiplier = 0.0
+        val itemInHand = player.itemInHand
+        if(itemInHand.isSkyblockSword()){
+            val swordData = itemInHand.getSkyblockData()
+            val enchants = swordData.itemData.enchants
+            for(enchant in enchants.keys){
+                val enchantObj = enchant.obj
+                if(enchantObj.items==ItemTypes.SWORD){
+                    log(enchants.get(enchant)!!)
+                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player,enchants.get(enchant)!!)
+                }
+            }
+        }
+        var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100)+enchantMultiplier)
         val isCrit = (1..100).random()<=stats.critChance
         if(isCrit) {
             damage*=(1+(stats.critDamage.toDouble()/100))

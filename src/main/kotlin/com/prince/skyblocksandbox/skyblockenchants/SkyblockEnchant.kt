@@ -8,5 +8,9 @@ interface SkyblockEnchant {
     val levelRange: IntRange
     val name: String
     val items:ItemTypes
-    fun getAddedDamage(mob:SkyblockMob,player: Player):Double
+    val isUltimate: Boolean
+        get() = false
+    val affectsAbility: Boolean
+        get() = false
+    fun getAddedDamage(mob:SkyblockMob,player: Player,level:Int):Double
 }

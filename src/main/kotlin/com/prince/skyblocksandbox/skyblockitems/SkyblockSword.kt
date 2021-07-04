@@ -1,6 +1,7 @@
 package com.prince.skyblocksandbox.skyblockitems
 
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
+import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchant
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
@@ -47,6 +48,23 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         if(trueStats.intelligence!=0.toBigInteger()){
             lore.add(generateCategory("Intelligence",trueStats.intelligence, SkyblockColors.GREEN,trueStats.reforge.intelligence[itemData.rarity]!!))
         }
+        if(itemData.enchants.size!=0){
+            lore.add(" ")
+            var enchantLore = ArrayList<String>()
+            val firstEnch = itemData.enchants.keys.first()
+            var string = createEnchantString(firstEnch.obj,itemData.enchants.get(firstEnch)!!)
+            itemData.enchants.keys.forEachIndexed { index, skyblockEnchant ->
+                if(index!=0){
+                    if(index%3==0){
+                        enchantLore.add(string)
+                        string=""
+                    }
+                    string+=", ${createEnchantString(skyblockEnchant.obj,itemData.enchants.get(skyblockEnchant)!!)}"
+                }
+            }
+            enchantLore.add(string)
+            lore.addAll(enchantLore)
+        }
         if(itemData.ability!=AbilityTypes.NONE){
             lore.add(" ")
             lore.add("§6${itemData.ability.getAbility().prefix}: ${itemData.ability.getAbility().title} §e§l${itemData.ability.getAbility().action}")
@@ -60,5 +78,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} SWORD")
         return lore
     }
-
+    fun createEnchantString(enchant:SkyblockEnchant,level:Int):String{
+        return "§9${enchant.name} $level"
+    }
 }

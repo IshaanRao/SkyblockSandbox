@@ -3,7 +3,6 @@ package com.prince.skyblocksandbox
 import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
 import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
-import com.prince.skyblocksandbox.skyblockenchants.SBEnchants
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
@@ -16,7 +15,6 @@ class SkyblockSandbox : JavaPlugin() {
 
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
-    lateinit var app:Javalin
     override fun onEnable() {
 
         instance = this
@@ -27,7 +25,7 @@ class SkyblockSandbox : JavaPlugin() {
         log("--------------------------")
     }
     fun registerEvents(){
-        SkyblockApi.start()
+        //SkyblockApi.start()
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
         server.pluginManager.registerEvents(InputHandler,this)
@@ -39,26 +37,8 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        SkyblockApi.stop()
+       // SkyblockApi.stop()
         mobHandler.killAllMobs()
-        try {
-            val keyField = Enchantment::class.java.getDeclaredField("byID")
-            keyField.isAccessible = true
-            val byKey = keyField[null] as HashMap<Int, Enchantment>
-            for (enchantment in SBEnchants.customEnchants) {
-                if (byKey.containsKey(enchantment.id)) {
-                    byKey.remove(enchantment.id)
-                }
-            }
-            val nameField = Enchantment::class.java.getDeclaredField("byName")
-            nameField.isAccessible = true
-            val byName = nameField[null] as HashMap<String, Enchantment>
-            for (enchantment in SBEnchants.customEnchants) {
-                if (byName.containsKey(enchantment.name)) {
-                    byName.remove(enchantment.name)
-                }
-            }
-        } catch (ignored: java.lang.Exception) {}
     }
 
     fun loadCommands(){

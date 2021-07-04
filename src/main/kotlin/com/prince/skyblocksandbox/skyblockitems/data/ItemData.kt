@@ -1,6 +1,9 @@
 package com.prince.skyblocksandbox.skyblockitems.data
 
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
+import com.prince.skyblocksandbox.skyblockenchants.EnchantSharpness
+import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchant
+import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchants
 import com.prince.skyblocksandbox.skyblockutils.SkyblockRarities
 import java.math.BigInteger
 
@@ -22,7 +25,8 @@ data class ItemData(
     var extra:Int = 0,
     var ability:AbilityTypes = AbilityTypes.NONE,
     var reforge:ReforgeStats = ReforgeStats(),
-    var hpbs:Int = 0
+    var hpbs:Int = 0,
+    var enchants:HashMap<SkyblockEnchants,Int> = hashMapOf(SkyblockEnchants.SHARP to 7)
 ){
    fun getStatsData():StatsData {
        return StatsData(

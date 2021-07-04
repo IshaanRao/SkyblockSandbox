@@ -62,7 +62,8 @@ abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
                 extra = itemData.extra,
                 ability = itemData.ability,
                 reforge = itemData.reforge,
-                hpbs = itemData.hpbs
+                hpbs = itemData.hpbs,
+                enchants = itemData.enchants
             )
         }
     fun itemsReforged():Boolean{

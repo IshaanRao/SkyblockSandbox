@@ -17,6 +17,7 @@ object InputHandler: Listener {
             if(e.message.equals("cancel",true)){
                 playersInInputHandler[e.player]!!.future.complete(null)
                 playersInInputHandler.remove(e.player)
+                return
             }
             if(!chatInput.checker.passesCheck(e.message)){
                 e.player.sendMessage("§c"+chatInput.checker.invalidMessage)

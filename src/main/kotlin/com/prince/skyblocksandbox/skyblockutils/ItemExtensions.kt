@@ -16,6 +16,12 @@ object ItemExtensions {
     fun net.minecraft.server.v1_8_R3.ItemStack.getBukkit(): ItemStack {
         return CraftItemStack.asBukkitCopy(this)
     }
+    fun ItemStack.isSkyblockSword():Boolean{
+        if(!isSkyblockItem()){
+            return false
+        }
+        return getSkyblockData().itemType==ItemTypes.SWORD
+    }
     fun ItemStack.isSkyblockItem(): Boolean{
         if(this.type==Material.AIR){
             return false
