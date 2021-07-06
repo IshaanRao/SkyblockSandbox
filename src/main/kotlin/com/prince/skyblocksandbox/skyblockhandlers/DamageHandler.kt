@@ -83,7 +83,6 @@ class DamageHandler {
             for(enchant in enchants.keys){
                 val enchantObj = enchant.obj
                 if(enchantObj.items==ItemTypes.SWORD){
-                    log(enchants.get(enchant)!!)
                     enchantMultiplier+=enchantObj.getAddedDamage(mob,player,enchants.get(enchant)!!)
                 }
             }

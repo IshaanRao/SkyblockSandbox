@@ -5,7 +5,9 @@ import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
+import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
+import fr.minuskube.inv.InventoryManager
 import io.javalin.Javalin
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
@@ -16,8 +18,9 @@ class SkyblockSandbox : JavaPlugin() {
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
     override fun onEnable() {
-
         instance = this
+        invManager = InventoryManager(this)
+        invManager.init()
         log("--------------------------")
         loadVariables()
         registerEvents()
@@ -26,6 +29,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
     fun registerEvents(){
         //SkyblockApi.start()
+        server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
         server.pluginManager.registerEvents(InputHandler,this)
@@ -54,21 +58,8 @@ class SkyblockSandbox : JavaPlugin() {
         log("Loaded variables")
     }
 
-    fun registerEnchantment(enchantment: Enchantment?) {
-        var registered = true
-        try {
-            val f: Field = Enchantment::class.java.getDeclaredField("acceptingNew")
-            f.setAccessible(true)
-            f.set(null, true)
-            Enchantment.registerEnchantment(enchantment)
-        } catch (e: Exception) {
-            registered = false
-            e.printStackTrace()
-        }
-        if (registered) {}
-    }
-
     companion object {
+        lateinit var invManager: InventoryManager
         lateinit var instance: SkyblockSandbox
         @JvmStatic
         fun log(msg:Any?) {

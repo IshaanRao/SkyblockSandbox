@@ -26,7 +26,7 @@ data class ItemData(
     var ability:AbilityTypes = AbilityTypes.NONE,
     var reforge:ReforgeStats = ReforgeStats(),
     var hpbs:Int = 0,
-    var enchants:HashMap<SkyblockEnchants,Int> = hashMapOf(SkyblockEnchants.SHARP to 7)
+    var enchants:HashMap<SkyblockEnchants,Int> = HashMap()
 ){
    fun getStatsData():StatsData {
        return StatsData(

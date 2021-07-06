@@ -1,6 +1,7 @@
 package com.prince.skyblocksandbox.skyblockcommands
 
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler
+import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -16,6 +17,7 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         if(args.size==1){
             try{
                 mobHandler.spawnMob(SkyblockZombie(), sender.location)
+                EnchantInventory.inventory.open(sender)
                 sender.sendMessage("§aSpawned test zombie with a health of "+ args[0].toBigInteger())
             }catch (e:Exception){
                 return true
