@@ -14,10 +14,10 @@ class TestMobCommand(var mobHandler: MobHandler) : CommandExecutor {
         if(!sender.isOp || sender !is Player){
             return true
         }
+        sender.openInventory(EnchantInventory.getInventory())
         if(args.size==1){
             try{
                 mobHandler.spawnMob(SkyblockZombie(), sender.location)
-                EnchantInventory.inventory.open(sender)
                 sender.sendMessage("§aSpawned test zombie with a health of "+ args[0].toBigInteger())
             }catch (e:Exception){
                 return true

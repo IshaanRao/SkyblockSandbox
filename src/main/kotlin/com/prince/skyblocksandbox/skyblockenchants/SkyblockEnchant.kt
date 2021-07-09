@@ -8,6 +8,7 @@ interface SkyblockEnchant {
     val levelRange: IntRange
     val name: String
     val items:ItemTypes
+    fun descAtLevel(level: Int) : List<String>
     val isUltimate: Boolean
         get() = false
     val affectsAbility: Boolean
