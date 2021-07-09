@@ -5,13 +5,10 @@ import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
+import com.prince.skyblocksandbox.skyblockinventories.ApplyEnchantInventory
 import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
-import fr.minuskube.inv.InventoryManager
-import io.javalin.Javalin
-import org.bukkit.enchantments.Enchantment
 import org.bukkit.plugin.java.JavaPlugin
-import java.lang.reflect.Field
 
 class SkyblockSandbox : JavaPlugin() {
 
@@ -19,8 +16,6 @@ class SkyblockSandbox : JavaPlugin() {
     lateinit var damageHandler: DamageHandler
     override fun onEnable() {
         instance = this
-        invManager = InventoryManager(this)
-        invManager.init()
         log("--------------------------")
         loadVariables()
         registerEvents()
@@ -28,12 +23,13 @@ class SkyblockSandbox : JavaPlugin() {
         log("--------------------------")
     }
     fun registerEvents(){
-        SkyblockApi.start()
+        //SkyblockApi.start()
         server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
         server.pluginManager.registerEvents(InputHandler,this)
         server.pluginManager.registerEvents(ItemHandler(),this)
+        server.pluginManager.registerEvents(ApplyEnchantInventory,this)
         StatisticHandler.sbSandbox = this
         server.scheduler.scheduleSyncRepeatingTask(this,StatisticHandler,0,20)
         ActionBarManager(this)
@@ -41,7 +37,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        SkyblockApi.stop()
+        //SkyblockApi.stop()
         mobHandler.killAllMobs()
     }
 
@@ -59,7 +55,6 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     companion object {
-        lateinit var invManager: InventoryManager
         lateinit var instance: SkyblockSandbox
         @JvmStatic
         fun log(msg:Any?) {
