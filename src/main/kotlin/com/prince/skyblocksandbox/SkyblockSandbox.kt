@@ -1,6 +1,7 @@
 package com.prince.skyblocksandbox
 
 import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
+import com.prince.skyblocksandbox.skyblockcommands.EnchantCommand
 import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
 import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
 import com.prince.skyblocksandbox.skyblockhandlers.*
@@ -23,7 +24,7 @@ class SkyblockSandbox : JavaPlugin() {
         log("--------------------------")
     }
     fun registerEvents(){
-        //SkyblockApi.start()
+        SkyblockApi.start()
         server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
@@ -37,7 +38,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        //SkyblockApi.stop()
+        SkyblockApi.stop()
         mobHandler.killAllMobs()
     }
 
@@ -45,6 +46,7 @@ class SkyblockSandbox : JavaPlugin() {
         getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
         getCommand("createsword").setExecutor(CreateSwordCommand())
         getCommand("reforge").setExecutor(ReforgeCommand())
+        getCommand("enchant").setExecutor(EnchantCommand())
         log("Loaded commands")
     }
 

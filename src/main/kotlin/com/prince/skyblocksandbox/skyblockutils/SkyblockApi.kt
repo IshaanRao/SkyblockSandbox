@@ -31,20 +31,9 @@ object SkyblockApi {
                     Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a5 seconds§b for a §aGame Update")
                 },20L*55)
                 Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    var description = ""
-                    val json = IOUtils.toString(URL("https://raw.githubusercontent.com/IshaanRao/SkyblockSandbox/master/src/main/kotlin/com/prince/skyblocksandbox/skyblockutils/update.json?token=AOL4U6F5TU6VEUKMFUGULHDA45K66"))
-                    var jsonObj = gson.fromJson(json,JsonObject::class.java)
-                    var changes = jsonObj.get("changelog").asJsonArray
-                    changes.forEachIndexed { index, s ->
-                        description += "• `${s.asString}`"
-                        if(index-1!=changes.size()){
-                            description += "\n"
-                        }
-                    }
                     client.send(WebhookEmbedBuilder()
-                        .setAuthor(WebhookEmbed.EmbedAuthor("Update v${jsonObj.get("version").asString}",null,null))
-                        .setTitle(WebhookEmbed.EmbedTitle("Change Log",null))
-                        .setDescription(description)
+                        .setAuthor(WebhookEmbed.EmbedAuthor("Update",null,null))
+                        .setTitle(WebhookEmbed.EmbedTitle("Server is restarting!",null))
                         .setColor(3077991)
                         .build()
                     )
