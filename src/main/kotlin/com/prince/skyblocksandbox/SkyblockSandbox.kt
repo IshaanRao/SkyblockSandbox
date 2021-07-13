@@ -24,7 +24,8 @@ class SkyblockSandbox : JavaPlugin() {
         log("--------------------------")
     }
     fun registerEvents(){
-        SkyblockApi.start()
+        //SkyblockApi.start()
+        server.pluginManager.registerEvents(LoginHandler(),this)
         server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
         server.pluginManager.registerEvents(AbilityHandler(),this)
@@ -38,7 +39,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        SkyblockApi.stop()
+        //SkyblockApi.stop()
         mobHandler.killAllMobs()
     }
 

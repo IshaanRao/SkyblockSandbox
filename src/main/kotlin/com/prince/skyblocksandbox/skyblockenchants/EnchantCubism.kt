@@ -9,7 +9,7 @@ object EnchantCubism : SkyblockEnchant {
     override val levelRange: IntRange = 1..6
     override val name: String = "Cubism"
     override fun descAtLevel(level: Int): List<String> {
-        return listOf("§7Increases damage dealt to Creepers, Magma Cubes, and Slimes by","§a${10*level}%")
+        return listOf("§7Increases damage dealt to,","§7Slimes, Magma Cubes, and","§7Creepers by §a${10*level}%")
     }
     override val items: ItemTypes = ItemTypes.SWORD
     override fun getAddedDamage(mob: SkyblockMob, player: Player, level:Int): Double {

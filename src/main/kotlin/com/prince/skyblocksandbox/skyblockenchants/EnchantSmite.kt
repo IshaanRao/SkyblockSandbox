@@ -9,7 +9,7 @@ object EnchantSmite : SkyblockEnchant {
     override val levelRange: IntRange = 1..7
     override val name: String = "Smite"
     override fun descAtLevel(level: Int): List<String> {
-        return listOf("§7Increases damage dealt to Zombies, Zombie Pigmen, Withers, Wither Skeletons, and Skeletons by","§a${8*level}%")
+        return listOf("§7Increases damage dealt to","§7Zombies, Withers,","§7Zombie Pigmen, and","§7Skeletons by §a${8*level}%")
     }
     override val items: ItemTypes = ItemTypes.SWORD
     override fun getAddedDamage(mob: SkyblockMob, player: Player, level:Int): Double {

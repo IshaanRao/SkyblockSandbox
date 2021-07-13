@@ -9,7 +9,7 @@ object EnchantImpaling : SkyblockEnchant {
     override val levelRange: IntRange = 1..3
     override val name: String = "Impaling"
     override fun descAtLevel(level: Int): List<String> {
-        return listOf("§7Increases damage dealt to Guardians and Squids by","§a${12.5*level}%")
+        return listOf("§7Increases damage dealt to,","§7Squids and Guardians by","§a${12.5*level}%")
     }
     override val items: ItemTypes = ItemTypes.SWORD
     override fun getAddedDamage(mob: SkyblockMob, player: Player, level:Int): Double {

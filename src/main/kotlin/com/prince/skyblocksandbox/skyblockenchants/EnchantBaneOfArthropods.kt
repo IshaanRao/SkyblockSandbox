@@ -9,7 +9,7 @@ object EnchantBaneOfArthropods : SkyblockEnchant {
     override val levelRange: IntRange = 1..7
     override val name: String = "Bane of Arthropods"
     override fun descAtLevel(level: Int): List<String> {
-        return listOf("§7Increases damage dealt to Cave Spiders, Spiders, and Silverfish by","§a${8*level}%")
+        return listOf("§7Increases damage dealt to","§7Silverfish, Spiders, and","§7Cave Spiders by §a${8*level}%")
     }
     override val items: ItemTypes = ItemTypes.SWORD
     override fun getAddedDamage(mob: SkyblockMob, player: Player, level:Int): Double {

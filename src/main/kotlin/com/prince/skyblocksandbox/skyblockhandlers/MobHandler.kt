@@ -13,11 +13,13 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityCombustEvent
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.FoodLevelChangeEvent
 import java.math.BigInteger
 
 
 class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler) : Listener {
-
+    val playerDamageEventsCancelled:List<EntityDamageEvent.DamageCause> = listOf(EntityDamageEvent.DamageCause.FIRE,
+        EntityDamageEvent.DamageCause.FIRE_TICK,EntityDamageEvent.DamageCause.FALL,EntityDamageEvent.DamageCause.DROWNING,EntityDamageEvent.DamageCause.BLOCK_EXPLOSION,EntityDamageEvent.DamageCause.SUFFOCATION)
     fun registerMob(mob: SkyblockMob) {
         mobs.add(mob)
     }
@@ -95,6 +97,30 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         }
     }
     @EventHandler
+    fun cancelPlayerDamage(e: EntityDamageEvent){
+        if(e.entity !is Player){
+            return
+        }
+        if(playerDamageEventsCancelled.contains(e.cause)){
+            e.isCancelled = true
+        }
+        if(e.cause == EntityDamageEvent.DamageCause.VOID){
+            StatisticHandler.killPlayer(e.entity as Player)
+            e.isCancelled = true
+            return
+        }
+    }
+    @EventHandler
+    fun onFoodDepletion(e:FoodLevelChangeEvent){
+        e.isCancelled = true
+    }
+    @EventHandler
+    fun cancelPlayerHits(e: EntityDamageByEntityEvent){
+        if(e.entity is Player && e.damager is Player){
+            e.isCancelled = true
+        }
+    }
+    @EventHandler
     fun onPlayerDamage(e: EntityDamageByEntityEvent) {
         if (!e.damager.isDead) {
             val mob:SkyblockMob? =
@@ -121,7 +147,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
             }
             if (e.entity is Player) {
                 e.damage=0.0
-                StatisticHandler.damagePlayer(e.entity as Player,mob.damage.toBigInteger())
+                StatisticHandler.damagePlayer(e.entity as Player,mob.damage.toBigInteger(),mob)
             }
         }
     }
