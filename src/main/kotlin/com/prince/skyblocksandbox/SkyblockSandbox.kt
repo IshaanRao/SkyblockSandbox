@@ -1,14 +1,10 @@
 package com.prince.skyblocksandbox
 
-import com.prince.skyblocksandbox.skyblockcommands.CreateSwordCommand
-import com.prince.skyblocksandbox.skyblockcommands.EnchantCommand
-import com.prince.skyblocksandbox.skyblockcommands.ReforgeCommand
-import com.prince.skyblocksandbox.skyblockcommands.TestMobCommand
+import com.prince.skyblocksandbox.skyblockcommands.*
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
 import com.prince.skyblocksandbox.skyblockinventories.ApplyEnchantInventory
 import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
-import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
 import org.bukkit.plugin.java.JavaPlugin
 
 class SkyblockSandbox : JavaPlugin() {
@@ -44,10 +40,11 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     fun loadCommands(){
-        getCommand("testmob").setExecutor(TestMobCommand(mobHandler))
-        getCommand("createsword").setExecutor(CreateSwordCommand())
-        getCommand("reforge").setExecutor(ReforgeCommand())
-        getCommand("enchant").setExecutor(EnchantCommand())
+        getCommand("spawnmob").executor = SpawnMobCommand(mobHandler)
+        getCommand("spawnmob").tabCompleter = SpawnMobCompletions()
+        getCommand("createsword").executor = CreateSwordCommand()
+        getCommand("reforge").executor = ReforgeCommand()
+        getCommand("enchant").executor = EnchantCommand()
         log("Loaded commands")
     }
 

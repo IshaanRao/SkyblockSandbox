@@ -29,7 +29,7 @@ enum class SkyblockWorlds {
                     return
                 }
             }
-            p.teleport(p.world.spawnLocation)
+            p.teleport(SkyblockHub.getSpawnLocation())
         }
     }
 }
