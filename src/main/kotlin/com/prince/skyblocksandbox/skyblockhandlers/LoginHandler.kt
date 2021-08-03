@@ -10,5 +10,6 @@ class LoginHandler: Listener {
     fun onPlayerJoin(e:PlayerJoinEvent){
         SkyblockWorlds.spawnPlayer(e.player)
         e.player.health = 20.0
+        e.player.saturation = 20.0F
     }
 }
