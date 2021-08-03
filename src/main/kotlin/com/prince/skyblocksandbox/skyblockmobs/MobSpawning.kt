@@ -20,10 +20,6 @@ object MobSpawning {
     var scheduler = 0
     val mobs = HashMap<SpawningNode,SkyblockMob>()
     init {
-        if(spawningConfig.config.get("SpawningNodes")==null){
-            spawningConfig.config.set("SpawningNodes.${UUID.randomUUID()}",SpawningNode(SkyblockMobs.ZOMBIE,SkyblockWorlds.SkyblockHub.getSpawnLocation()))
-            spawningConfig.save()
-        }
         start()
     }
     fun stop(){
