@@ -1,7 +1,9 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
 import com.prince.skyblocksandbox.SkyblockSandbox
+import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
+import com.prince.skyblocksandbox.skyblockutils.SkyblockWorlds
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.math.BigDecimal
@@ -83,15 +85,40 @@ object StatisticHandler : Runnable {
         }
         PlayerStats[p] = stats
     }
+    fun killPlayer(p: Player){
+        val stats = PlayerStats[p]!!
+        p.sendMessage("§cYou died!")
+        SkyblockWorlds.spawnPlayer(p)
+        stats.health = p.getStats().health
+        PlayerStats[p] = stats
+    }
+    fun killPlayer(p: Player,cause:String){
+        val stats = PlayerStats[p]!!
+        p.sendMessage("§cYou died!")
+        Bukkit.broadcastMessage("§a${p.displayName} §7was killed by $cause")
+        SkyblockWorlds.spawnPlayer(p)
+        stats.health = p.getStats().health
+        PlayerStats[p] = stats
+    }
     fun removeHealth(p: Player,health:BigInteger){
         if(!PlayerStats.containsKey(p)){
             return
         }
         val stats = PlayerStats[p]!!
         if(stats.health-health<0.toBigInteger()){
-            //KILL PLAYER
-            p.sendMessage("§cYou died!")
-            stats.health = p.getStats().health
+            killPlayer(p)
+        }else {
+            stats.health-=health
+        }
+        PlayerStats[p] = stats
+    }
+    fun removeHealth(p: Player,health:BigInteger,damagedBy: SkyblockMob){
+        if(!PlayerStats.containsKey(p)){
+            return
+        }
+        val stats = PlayerStats[p]!!
+        if(stats.health-health<0.toBigInteger()){
+            killPlayer(p,"§c${damagedBy.name}")
         }else {
             stats.health-=health
         }
@@ -106,6 +133,16 @@ object StatisticHandler : Runnable {
         val multiplier:BigDecimal = 1.0.toBigDecimal()-reduction
         val damage = (rawDamage.toBigDecimal()*multiplier).toBigInteger()
         removeHealth(p,damage)
+    }
+    fun damagePlayer(p:Player,rawDamage:BigInteger,damagedBy: SkyblockMob){
+        if(!PlayerStats.containsKey(p)){
+            return
+        }
+        val stats = p.getStats()
+        val reduction:BigDecimal = stats.defense.toBigDecimal()/(stats.defense.toBigDecimal()+100.0.toBigDecimal())
+        val multiplier:BigDecimal = 1.0.toBigDecimal()-reduction
+        val damage = (rawDamage.toBigDecimal()*multiplier).toBigInteger()
+        removeHealth(p,damage,damagedBy)
     }
     fun getPlayerStats(p: Player):Stats {
         if(!PlayerStats.containsKey(p)){

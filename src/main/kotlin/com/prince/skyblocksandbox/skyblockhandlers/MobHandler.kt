@@ -2,7 +2,9 @@ package com.prince.skyblocksandbox.skyblockhandlers
 
 import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
+import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Entity
@@ -10,16 +12,22 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityCombustEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.*
 import java.math.BigInteger
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler) : Listener {
-
+    val playerDamageEventsCancelled:List<EntityDamageEvent.DamageCause> = listOf(EntityDamageEvent.DamageCause.FIRE,
+        EntityDamageEvent.DamageCause.FIRE_TICK,EntityDamageEvent.DamageCause.FALL,EntityDamageEvent.DamageCause.DROWNING,EntityDamageEvent.DamageCause.BLOCK_EXPLOSION,EntityDamageEvent.DamageCause.SUFFOCATION)
     fun registerMob(mob: SkyblockMob) {
-        mobs.add(mob)
+        var uuid = UUID.randomUUID()
+        while(mobs.containsKey(uuid)){
+            uuid = UUID.randomUUID()
+        }
+        mobs.put(uuid,mob)
     }
     fun spawnMob(mob:SkyblockMob,loc: Location){
         if(!mob.hasSpawned) {
@@ -35,11 +43,19 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
 
     }
     companion object {
-        var mobs = ArrayList<SkyblockMob>();
+        var mobs = HashMap<UUID,SkyblockMob>();
         fun Entity.isSkyblockMob(): SkyblockMob? {
-            for (mob in mobs) {
+            for (mob in mobs.values) {
                 if (mob.entity == this) {
                     return mob
+                }
+            }
+            return null
+        }
+        fun SkyblockMob.getId(): UUID? {
+            for (key in mobs.keys) {
+                if(this==mobs[key]){
+                    return key
                 }
             }
             return null
@@ -54,18 +70,22 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
                 } catch (ignored: InterruptedException) {
 
                 }
-                val mobsToRemove = ArrayList<SkyblockMob>()
-                for (mob in mobs) {
+                val mobsToRemove = ArrayList<UUID>()
+                for (set in mobs.entries) {
+                    val mob = set.value
+                    val uuid = set.key
                     if (mob.hasSpawned) {
                         if (mob.currentHealth <= BigInteger.valueOf(0) || mob.entity!!.isDead) {
-                            mobsToRemove.add(mob)
+                            mobsToRemove.add(uuid)
                             mob.entity!!.health = 0.0
                         } else {
                             mob.loadName()
                         }
                     }
                 }
-                mobs.removeAll(mobsToRemove)
+                for(uuid in mobsToRemove) {
+                    mobs.remove(uuid)
+                }
             }
         }.start()
     }
@@ -95,33 +115,57 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         }
     }
     @EventHandler
+    fun portalEvent(e: EntityPortalEvent){
+        if(e.entity !is Player){
+            e.isCancelled = true
+        }
+    }
+    @EventHandler
+    fun cancelPlayerDamage(e: EntityDamageEvent){
+        if(e.entity !is Player){
+            return
+        }
+        if(playerDamageEventsCancelled.contains(e.cause)){
+            e.isCancelled = true
+        }
+        if(e.cause == EntityDamageEvent.DamageCause.VOID){
+            StatisticHandler.killPlayer(e.entity as Player)
+            e.isCancelled = true
+            return
+        }
+    }
+    @EventHandler
+    fun onFoodDepletion(e:FoodLevelChangeEvent){
+        e.isCancelled = true
+    }
+    @EventHandler
+    fun cancelPlayerHits(e: EntityDamageByEntityEvent){
+        if(e.entity is Player && e.damager is Player){
+            e.isCancelled = true
+        }
+    }
+    @EventHandler
     fun onPlayerDamage(e: EntityDamageByEntityEvent) {
         if (!e.damager.isDead) {
             val mob:SkyblockMob? =
             if(e.damager is Arrow) {
                 val arrow = e.damager as Arrow
                 if(arrow.shooter is Entity) {
-                    if((arrow.shooter as Entity).isSkyblockMob()!=null){
                         (arrow.shooter as Entity).isSkyblockMob()
-                    }else{
-                        null
-                    }
                 }else {
                     null
                 }
             }else{
-                if(e.damager.isSkyblockMob()!=null){
-                    e.damager.isSkyblockMob()
-                }else{
-                    null
-                }
+                e.damager.isSkyblockMob()
             }
             if(mob==null){
                 return
             }
             if (e.entity is Player) {
-                e.damage=0.0
-                StatisticHandler.damagePlayer(e.entity as Player,mob.damage.toBigInteger())
+                if((e.entity as Player).gameMode != GameMode.CREATIVE) {
+                    e.damage = 0.0
+                    StatisticHandler.damagePlayer(e.entity as Player, mob.damage.toBigInteger(), mob)
+                }
             }
         }
     }
@@ -134,7 +178,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
     }
 
     fun killAllMobs() {
-        for (mob in mobs) {
+        for (mob in mobs.values) {
             if (mob.hasSpawned) {
                 mob.entity!!.remove()
 

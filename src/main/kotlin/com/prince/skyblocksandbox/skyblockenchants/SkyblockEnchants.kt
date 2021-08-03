@@ -1,7 +1,7 @@
 package com.prince.skyblocksandbox.skyblockenchants
 
 enum class SkyblockEnchants(var obj: SkyblockEnchant){
-    SHARP(EnchantSharpness),GIANT_KILLER(EnchantGiantKiller);
+    SHARP(EnchantSharpness),SMITE(EnchantSmite),BANE(EnchantBaneOfArthropods),CUBISM(EnchantCubism),ENDER_SLAYER(EnchantEnderSlayer),DRAGON_HUNTER(EnchantDragonHunter),IMPALING(EnchantImpaling),GIANT_KILLER(EnchantGiantKiller);
     companion object {
         fun getEnchantFromName(name: String): SkyblockEnchant?{
             for(ench in values()){

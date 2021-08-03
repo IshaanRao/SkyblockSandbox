@@ -1,6 +1,5 @@
 package com.prince.skyblocksandbox.skyblockenchants
 
-import com.prince.skyblocksandbox.skyblockhandlers.StatisticHandler
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
