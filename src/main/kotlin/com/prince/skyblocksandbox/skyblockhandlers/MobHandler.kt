@@ -4,6 +4,7 @@ import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
+import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Arrow
 import org.bukkit.entity.Entity
@@ -11,10 +12,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityCombustEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.FoodLevelChangeEvent
+import org.bukkit.event.entity.*
 import java.math.BigInteger
 import java.util.*
 import kotlin.collections.ArrayList
@@ -117,6 +115,12 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         }
     }
     @EventHandler
+    fun portalEvent(e: EntityPortalEvent){
+        if(e.entity !is Player){
+            e.isCancelled = true
+        }
+    }
+    @EventHandler
     fun cancelPlayerDamage(e: EntityDamageEvent){
         if(e.entity !is Player){
             return
@@ -147,27 +151,21 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
             if(e.damager is Arrow) {
                 val arrow = e.damager as Arrow
                 if(arrow.shooter is Entity) {
-                    if((arrow.shooter as Entity).isSkyblockMob()!=null){
                         (arrow.shooter as Entity).isSkyblockMob()
-                    }else{
-                        null
-                    }
                 }else {
                     null
                 }
             }else{
-                if(e.damager.isSkyblockMob()!=null){
-                    e.damager.isSkyblockMob()
-                }else{
-                    null
-                }
+                e.damager.isSkyblockMob()
             }
             if(mob==null){
                 return
             }
             if (e.entity is Player) {
-                e.damage=0.0
-                StatisticHandler.damagePlayer(e.entity as Player,mob.damage.toBigInteger(),mob)
+                if((e.entity as Player).gameMode != GameMode.CREATIVE) {
+                    e.damage = 0.0
+                    StatisticHandler.damagePlayer(e.entity as Player, mob.damage.toBigInteger(), mob)
+                }
             }
         }
     }

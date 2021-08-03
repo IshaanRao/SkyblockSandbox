@@ -14,8 +14,8 @@ import java.math.BigInteger
 
 
 class SkyblockZombieVillager : SkyblockMob() {
-    override var startingHealth: BigInteger = BigInteger.valueOf(100)
-    override val name = "Zombie"
+    override var startingHealth: BigInteger = BigInteger.valueOf(120)
+    override val name = "Zombie Villager"
     override val level = 1
     override val damage: Int
         get() = 24
@@ -23,7 +23,7 @@ class SkyblockZombieVillager : SkyblockMob() {
     override fun load() {
         val zombieEntity = entity as Zombie
         if(zombieEntity.isBaby){
-            zombieEntity.isBaby = false;
+            zombieEntity.isBaby = false
         }
         zombieEntity.isVillager = true
         zombieEntity.equipment.boots = ItemStack(Material.LEATHER_BOOTS)
@@ -31,7 +31,7 @@ class SkyblockZombieVillager : SkyblockMob() {
         zombieEntity.equipment.chestplate = ItemStack(Material.LEATHER_CHESTPLATE)
         zombieEntity.equipment.helmet = ItemStack(Material.LEATHER_HELMET)
         val attributes = ((zombieEntity as CraftEntity).handle as EntityInsentient).getAttributeInstance(GenericAttributes.MOVEMENT_SPEED)
-        attributes.value = 0.46
+        attributes.value =  0.3450000062584877
     }
 
 }
