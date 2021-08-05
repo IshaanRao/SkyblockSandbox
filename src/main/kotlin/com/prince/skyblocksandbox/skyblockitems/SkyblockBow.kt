@@ -9,8 +9,7 @@ import com.prince.skyblocksandbox.skyblockutils.SkyblockColors
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.entity.Player
 
-//a
-class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD) {
+class SkyblockBow(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.BOW) {
     override val trueStats: ItemData
         get() {
             val data = statsWithReforge
@@ -18,8 +17,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
             data.strength = data.strength + (itemData.hpbs*2).toBigInteger()
             return data
         }
-
-    override fun createLore(p: Player,stats:StatsData?): List<String> {
+    override fun createLore(p: Player, stats: StatsData?): List<String> {
         val lore = ArrayList<String>()
         if(trueStats.damage!=0.toBigInteger()){
             lore.add(generateCategory("Damage",trueStats.damage, SkyblockColors.RED,trueStats.reforge.damage[itemData.rarity]!!, true))
@@ -80,10 +78,10 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         if(itemData.reforgable){
             lore.add("§8This item can be reforged!")
         }
-        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} SWORD")
+        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} BOW")
         return lore
-    }
-    fun createEnchantString(enchant:SkyblockEnchant,level:Int):String{
+    }fun createEnchantString(enchant: SkyblockEnchant, level:Int):String{
         return "§9${enchant.name} $level"
     }
+
 }

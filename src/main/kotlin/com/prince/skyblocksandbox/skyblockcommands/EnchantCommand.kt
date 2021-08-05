@@ -2,6 +2,7 @@ package com.prince.skyblocksandbox.skyblockcommands
 
 import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -12,7 +13,8 @@ class EnchantCommand : CommandExecutor {
         if(sender !is Player){
             return true
         }
-        sender.openInventory(EnchantInventory.getInventory())
+        println(sender.itemInHand.getSkyblockData().itemData.damage)
+        //sender.openInventory(EnchantInventory.getInventory())
         return true
     }
 }

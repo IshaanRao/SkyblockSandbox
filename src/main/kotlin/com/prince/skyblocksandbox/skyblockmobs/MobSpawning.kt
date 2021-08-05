@@ -20,7 +20,7 @@ object MobSpawning {
     var scheduler = 0
     val mobs = HashMap<SpawningNode,SkyblockMob>()
     init {
-        start()
+        Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{ start()},20)
     }
     fun stop(){
         Bukkit.getScheduler().cancelTask(scheduler)
