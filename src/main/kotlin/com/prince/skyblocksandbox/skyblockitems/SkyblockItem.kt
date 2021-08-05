@@ -60,7 +60,7 @@ abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
                 speed = itemData.speed + itemData.reforge.speed[itemData.rarity]!!,
                 abilityDamage = itemData.abilityDamage,
                 extra = itemData.extra,
-                ability = itemData.ability,
+                abilities = itemData.abilities,
                 reforge = itemData.reforge,
                 hpbs = itemData.hpbs,
                 enchants = itemData.enchants

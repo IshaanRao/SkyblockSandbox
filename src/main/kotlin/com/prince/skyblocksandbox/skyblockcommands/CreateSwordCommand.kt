@@ -57,6 +57,8 @@ class CreateSwordCommand : CommandExecutor{
                 sender.sendMessage("§6Set weapon rarity to §a${rarity.name}")
                 var reforgeable:Boolean = (ChatInput(sender,InputChecks.BOOLEAN,"§aPlease enter if you want this item to be reforgeable (true or false)").start() as String).toBoolean()
                 sender.sendMessage("§6Set if weapon is reforgeable to §a$reforgeable")
+                val abilities = ArrayList<AbilityTypes>()
+                abilities.add(ability)
                 val sword = SkyblockSword(ItemData(
                     name = itemName,
                     rarity = rarity,
@@ -67,7 +69,7 @@ class CreateSwordCommand : CommandExecutor{
                     critDamage = critDamage.toBigInteger(),
                     critChance = critChance,
                     intelligence = intel.toBigInteger(),
-                    ability = ability
+                    abilities = abilities
                 ))
                 sender.sendMessage("You have received your $itemName")
                 sender.inventory.addItem(sword.createItem(sender))

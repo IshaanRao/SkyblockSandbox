@@ -4,11 +4,14 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 enum class SkyblockMobs {
-    ZOMBIE,ZOMBIEVILLAGER;
+    ZOMBIE,ZOMBIEVILLAGER,CRYPTGHOUL,GOLDENGHOUL,SKELETON;
     fun getMob() : SkyblockMob {
         return when (this) {
             ZOMBIE -> SkyblockZombie()
             ZOMBIEVILLAGER -> SkyblockZombieVillager()
+            CRYPTGHOUL -> SkyblockCryptGhoul()
+            GOLDENGHOUL -> SkyblockGoldenGhoul()
+            SKELETON -> SkyblockSkeleton()
         }
     }
     companion object {

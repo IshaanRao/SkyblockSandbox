@@ -11,10 +11,12 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.*
 import java.math.BigInteger
 import java.util.*
+import kotlin.ConcurrentModificationException
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
@@ -71,18 +73,24 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
 
                 }
                 val mobsToRemove = ArrayList<UUID>()
-                for (set in mobs.entries) {
-                    val mob = set.value
-                    val uuid = set.key
-                    if (mob.hasSpawned) {
-                        if (mob.currentHealth <= BigInteger.valueOf(0) || mob.entity!!.isDead) {
-                            mobsToRemove.add(uuid)
-                            mob.entity!!.health = 0.0
-                        } else {
-                            mob.loadName()
+                val mobEntries = mobs.entries
+                try {
+                    for (set in mobEntries) {
+                        val mob = set.value
+                        val uuid = set.key
+                        if (mob.hasSpawned) {
+                            try {
+                                if (mob.currentHealth <= BigInteger.valueOf(0) || mob.entity!!.isDead) {
+                                    mobsToRemove.add(uuid)
+                                    mob.entity!!.health = 0.0
+                                } else {
+                                    mob.loadName()
+                                }
+                            } catch (ignored: NullPointerException) {
+                            }
                         }
                     }
-                }
+                }catch (ignored:ConcurrentModificationException){}
                 for(uuid in mobsToRemove) {
                     mobs.remove(uuid)
                 }
@@ -95,7 +103,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         if (!e.entity.isDead) {
             val mob = e.entity.isSkyblockMob()
             if (mob != null) {
-                if (e.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                if (e.cause != EntityDamageEvent.DamageCause.ENTITY_ATTACK&&e.cause!=EntityDamageEvent.DamageCause.PROJECTILE) {
                     e.isCancelled = true
                 }
             }
@@ -111,6 +119,13 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
                 dmgHandler.swordDamage(mob, e.damager as Player)
             } else if (e.damager !is Player && e.damager !is Arrow) {
                 e.isCancelled = true
+            } else if(e.damager is Arrow){
+                val arrow = (e.damager as Arrow)
+                if(arrow.shooter is Player){
+                    val shooter = (arrow.shooter as Player)
+                    e.damage = 0.0
+                    dmgHandler.bowDamage(mob,shooter,arrow.isCritical)
+                }
             }
         }
     }

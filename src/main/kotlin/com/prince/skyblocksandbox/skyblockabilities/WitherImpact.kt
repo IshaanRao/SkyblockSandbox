@@ -4,6 +4,7 @@ import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockhandlers.DamageHandler
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockhandlers.StatisticHandler
+import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Bukkit
@@ -18,9 +19,9 @@ object WitherImpact : ItemAbility() {
     override val manaCost=300
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
     override val AbilityType=AbilityTypes.WITHER_IMPACT
-    override val action = "RIGHT CLICK"
-    override val prefix = "Item Ability"
-    override val title = "Wither Impact"
+    override val title = "§6Item Ability: Wither Impact §e§lRIGHT CLICK"
+    override val name = "Wither Impact"
+    override val itemType = ItemTypes.SWORD
     override fun getDesc(stats:StatsData) : List<String> {
         val damage = ((stats.abilityDamage+ ability.abilityDamage) * ((1+(stats.intelligence.toDouble()/100)) * ability.multiplier)).toBigDecimal().toBigInteger()
         return listOf("§7Teleport §a10 Blocks§7 ahead of","§7you. Then implode dealing","§c${damage}§7 damage to nearby","§7enemies. Also applies the wither","§7shield scroll abilities reducing","§7damage taken and granting an","§7absorption shield for §e5§7 seconds.")
@@ -29,7 +30,12 @@ object WitherImpact : ItemAbility() {
     override fun execute(e: PlayerInteractEvent) {
         if(!playerOnCooldown(e.player)) {
             startCooldown(e.player,2)
-            val loc = e.player.getTargetBlock(null as Set<Material?>?, 10).location
+            val loc:Location
+            try {
+                loc = e.player.getTargetBlock(null as Set<Material?>?, 10).location
+            }catch (e:Exception){
+                return
+            }
             val tpLoc = Location(loc.world, loc.x, loc.y, loc.z, e.player.location.yaw, e.player.location.pitch)
             e.player.teleport(tpLoc)
             val nearbyEntities =

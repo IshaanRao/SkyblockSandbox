@@ -1,6 +1,5 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
-import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
 import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
 import com.prince.skyblocksandbox.skyblockabilities.SkyblockAbility
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
@@ -10,6 +9,7 @@ import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockSword
 import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
+import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStatsForArrow
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.math.BigInteger
@@ -23,9 +23,47 @@ class DamageHandler {
             mob.loadName()
         }
     }
+    fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean){
+        if(!mob.entity!!.isDead) {
+            val damage = calculateBowDamage(mob, player,canCrit);
+            createDmgHolo(mob.entity!!.location,damage)
+            mob.currentHealth-=damage.damage
+            mob.loadName()
+        }
+    }
     companion object {
 
 
+        fun termAbilityDamage(mob:SkyblockMob,player:Player){
+            if(!mob.entity!!.isDead) {
+                val damage = calculateTermDamage(mob, player)
+                createDmgHolo(mob.entity!!.location,damage)
+                mob.currentHealth-=damage.damage
+                mob.loadName()
+            }
+        }
+        fun calculateTermDamage(mob: SkyblockMob, player: Player): DamageData{
+            val stats = player.getStatsForArrow()
+            var enchantMultiplier = 0.0
+            val itemInHand = player.itemInHand
+            if(itemInHand.isSkyblockItem()){
+                val swordData = itemInHand.getSkyblockData()
+                val enchants = swordData.itemData.enchants
+                for(enchant in enchants.keys){
+                    val enchantObj = enchant.obj
+                    if(enchantObj.items==ItemTypes.BOW){
+                        enchantMultiplier+=enchantObj.getAddedDamage(mob,player, enchants[enchant]!!)
+                    }
+                }
+            }
+            var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100)+enchantMultiplier)
+            var isCrit = true
+            if(isCrit) {
+                damage*=(1+(stats.critDamage.toDouble()/100))
+            }
+            damage*=2
+            return DamageData(isCrit,damage.toBigDecimal().toBigInteger())
+        }
         operator fun Int.plus(bint:BigInteger):BigInteger {
             return this.toBigInteger()+bint
         }
@@ -73,6 +111,31 @@ class DamageHandler {
         }
     }
 
+    fun calculateBowDamage(mob: SkyblockMob, player: Player, canCrit: Boolean): DamageData{
+        val stats = player.getStatsForArrow()
+        var enchantMultiplier = 0.0
+        val itemInHand = player.itemInHand
+        if(itemInHand.isSkyblockItem()){
+            val swordData = itemInHand.getSkyblockData()
+            val enchants = swordData.itemData.enchants
+            for(enchant in enchants.keys){
+                val enchantObj = enchant.obj
+                if(enchantObj.items==ItemTypes.BOW){
+                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player,enchants.get(enchant)!!)
+                }
+            }
+        }
+        var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100)+enchantMultiplier)
+        var isCrit = (1..100).random()<=stats.critChance
+        if(!canCrit){
+            isCrit = false
+        }
+        if(isCrit) {
+            damage*=(1+(stats.critDamage.toDouble()/100))
+        }
+        return DamageData(isCrit,damage.toBigDecimal().toBigInteger())
+    }
+
     fun calculateDamage(mob:SkyblockMob,player: Player): DamageData{
         val stats = player.getStats()
         var enchantMultiplier = 0.0
@@ -94,5 +157,7 @@ class DamageHandler {
         }
         return DamageData(isCrit,damage.toBigDecimal().toBigInteger())
     }
+
+
     data class DamageData(val isCrit:Boolean,val damage:BigInteger)
 }

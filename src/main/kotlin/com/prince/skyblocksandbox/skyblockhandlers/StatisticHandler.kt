@@ -37,6 +37,8 @@ object StatisticHandler : Runnable {
                     stats.mana=playerCurrIntel+regenAmt
                 }
             }
+            player.health = 20.0
+            player.foodLevel = 20
         }
     }
     fun addAbsorption(p: Player,absorption:BigInteger,time:Long=0L) {
@@ -105,7 +107,7 @@ object StatisticHandler : Runnable {
             return
         }
         val stats = PlayerStats[p]!!
-        if(stats.health-health<0.toBigInteger()){
+        if((stats.health+stats.absorption)-health<0.toBigInteger()){
             killPlayer(p)
         }else {
             stats.health-=health
@@ -117,7 +119,7 @@ object StatisticHandler : Runnable {
             return
         }
         val stats = PlayerStats[p]!!
-        if(stats.health-health<0.toBigInteger()){
+        if((stats.health+stats.absorption)-health<0.toBigInteger()){
             killPlayer(p,"§c${damagedBy.name}")
         }else {
             stats.health-=health

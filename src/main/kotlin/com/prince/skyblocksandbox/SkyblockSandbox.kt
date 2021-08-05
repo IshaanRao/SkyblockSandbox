@@ -8,6 +8,7 @@ import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
 import com.prince.skyblocksandbox.skyblockmobs.MobSpawning
 import com.prince.skyblocksandbox.skyblockutils.Config
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
+import org.bukkit.Bukkit
 import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.configuration.serialization.ConfigurationSerialization
 import org.bukkit.plugin.java.JavaPlugin
@@ -17,13 +18,16 @@ class SkyblockSandbox : JavaPlugin() {
     lateinit var damageHandler: DamageHandler
     lateinit var spawningNodeConfig: Config
     override fun onEnable() {
-        ConfigurationSerialization.registerClass(MobSpawning.SpawningNode::class.java, "SpawningNode")
-        instance = this
-        log("--------------------------")
-        loadVariables()
-        registerEvents()
-        loadCommands()
-        log("--------------------------")
+        Bukkit.getScheduler().scheduleSyncDelayedTask(this,{
+            ConfigurationSerialization.registerClass(MobSpawning.SpawningNode::class.java, "SpawningNode")
+            instance = this
+            log("--------------------------")
+            loadVariables()
+            registerEvents()
+            loadCommands()
+            log("--------------------------")
+        },1)
+
     }
     fun registerEvents(){
         SkyblockApi.start()
@@ -34,6 +38,7 @@ class SkyblockSandbox : JavaPlugin() {
         server.pluginManager.registerEvents(InputHandler,this)
         server.pluginManager.registerEvents(ItemHandler(),this)
         server.pluginManager.registerEvents(ApplyEnchantInventory,this)
+        server.pluginManager.registerEvents(SpawnHandler(),this)
         MobSpawning
         StatisticHandler.sbSandbox = this
         server.scheduler.scheduleSyncRepeatingTask(this,StatisticHandler,0,20)

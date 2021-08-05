@@ -1,15 +1,17 @@
 package com.prince.skyblocksandbox.skyblockmobs
 
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
-import net.minecraft.server.v1_8_R3.Entity
-import net.minecraft.server.v1_8_R3.EntityLiving
-import net.minecraft.server.v1_8_R3.NBTTagCompound
-import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
+import net.minecraft.server.v1_8_R3.AttributeInstance
+import net.minecraft.server.v1_8_R3.EntityInsentient
+import net.minecraft.server.v1_8_R3.GenericAttributes
+import net.minecraft.server.v1_8_R3.Navigation
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
+import java.lang.reflect.Field
 import java.math.BigInteger
 import java.util.*
+
 
 abstract class SkyblockMob(){
     var currentHealth: BigInteger =  BigInteger.valueOf(1)
@@ -23,13 +25,15 @@ abstract class SkyblockMob(){
 
     fun defaultLoad(){
         if(hasSpawned){
+            entity!!.canPickupItems = false
+            (entity!! as CraftLivingEntity).handle.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).value = 10.0
             loadName()
             entity!!.isCustomNameVisible = true
             return
         }
         throw SkyblockMobSpawnException("Tried to load mob that hasnt been spawned")
     }
-    fun loadName(){
+    open fun loadName(){
         if(hasSpawned){
             entity!!.customName = "§8[§7Lv$level§8] §c$name ${if(currentHealth<=(startingHealth/BigInteger.valueOf(2))) "§e" else "§a"}${if(currentHealth<=BigInteger.valueOf(0)) 0 else currentHealth}§f/§a$startingHealth§c❤"
         }

@@ -18,8 +18,17 @@ object SkyblockStats {
         health = 100.toBigInteger()
     )
     fun Player.getStats():StatsData {
-        var data = baseData
+        val data = baseData
         data.add(itemInHand.getStats(ItemTypes.SWORD))
+        data.add(inventory.helmet.getStats(ItemTypes.ARMOR))
+        data.add(inventory.chestplate.getStats(ItemTypes.ARMOR))
+        data.add(inventory.leggings.getStats(ItemTypes.ARMOR))
+        data.add(inventory.boots.getStats(ItemTypes.ARMOR))
+        return data
+    }
+    fun Player.getStatsForArrow():StatsData {
+        val data = baseData
+        data.add(itemInHand.getStats(ItemTypes.BOW))
         data.add(inventory.helmet.getStats(ItemTypes.ARMOR))
         data.add(inventory.chestplate.getStats(ItemTypes.ARMOR))
         data.add(inventory.leggings.getStats(ItemTypes.ARMOR))
@@ -43,6 +52,7 @@ object SkyblockStats {
             health = 100.toBigInteger()
         )
         data.add(item.getStats(ItemTypes.SWORD))
+        data.add(item.getStats(ItemTypes.BOW))
         data.add(inventory.helmet.getStats(ItemTypes.ARMOR))
         data.add(inventory.chestplate.getStats(ItemTypes.ARMOR))
         data.add(inventory.leggings.getStats(ItemTypes.ARMOR))
