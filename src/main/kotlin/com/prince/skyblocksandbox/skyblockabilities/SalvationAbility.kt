@@ -17,6 +17,8 @@ object SalvationAbility : ItemAbility() {
     override val AbilityType=AbilityTypes.SALVATION
     override val title = "§6Ability: Salvation §e§lRIGHT CLICK"
     override val name: String = "Salvation"
+    override val noUseMessage: Boolean
+        get() = true
     override val itemType = ItemTypes.BOW
     override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Can be casted after landing §63 §7hits.","§7Shoot a beam penetrating up","§7to §e5 §7foes and dealing §c2x","§7the damage an arrow would.","§7The beam always crits.")}
     override fun execute(e: PlayerInteractEvent) {

@@ -31,5 +31,13 @@ enum class SkyblockWorlds {
             }
             p.teleport(SkyblockHub.getSpawnLocation())
         }
+        fun spawnLocation(p:Player):Location{
+            for(world in values()){
+                if(p.world.equals(world.getWorld())){
+                    return world.getSpawnLocation()
+                }
+            }
+            return SkyblockHub.getSpawnLocation()
+        }
     }
 }

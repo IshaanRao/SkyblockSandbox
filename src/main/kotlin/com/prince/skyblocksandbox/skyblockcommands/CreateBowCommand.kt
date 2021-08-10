@@ -3,6 +3,7 @@ package com.prince.skyblocksandbox.skyblockcommands
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockinput.ChatInput
 import com.prince.skyblocksandbox.skyblockinput.InputChecks
+import com.prince.skyblocksandbox.skyblockitems.SkyblockBow
 import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemStackData
@@ -15,8 +16,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import java.util.*
 
-
-class CreateSwordCommand : CommandExecutor{
+class CreateBowCommand : CommandExecutor {
     val peopleUsing = ArrayList<Player>()
     override fun onCommand(sender: CommandSender, cmd1: Command, label: String, args: Array<out String>): Boolean {
 
@@ -24,18 +24,15 @@ class CreateSwordCommand : CommandExecutor{
             return true
         }
         if(peopleUsing.contains(sender)){
-            sender.sendMessage("§cYou are already using the sword creator!")
+            sender.sendMessage("§cYou are already using the bow creator!")
             return true
         }
         Thread {
             try {
                 peopleUsing.add(sender)
-                sender.sendMessage("§2Welcome to the Sword Creater type `cancel` at any time to cancel (Automatically cancels after 30 seconds without a response)")
-                val itemName:String = (ChatInput(sender,InputChecks.STRING,"§aPlease enter your weapon name").start() as String)
+                sender.sendMessage("§2Welcome to the Bow Creator type `cancel` at any time to cancel (Automatically cancels after 30 seconds without a response)")
+                val itemName:String = (ChatInput(sender, InputChecks.STRING,"§aPlease enter your weapon name").start() as String)
                 sender.sendMessage("§6Set weapon name to `$itemName`")
-                val matString:String = (ChatInput(sender,InputChecks.MAT,"§aPlease enter your material, \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade").start() as String)
-                val mat = Material.valueOf(matString.toUpperCase())
-                sender.sendMessage("§6Set weapon material to §a${mat.name}")
                 val damage:Int = (ChatInput(sender, InputChecks.INT, "§aPlease enter your weapon damage").start() as String).toInt()
                 sender.sendMessage("§6Set weapon damage to §a$damage")
                 val strength:Int = (ChatInput(sender, InputChecks.INT, "§aPlease enter your weapons strength").start() as String).toInt()
@@ -53,7 +50,7 @@ class CreateSwordCommand : CommandExecutor{
                 }catch (e:Exception){
                     ability = AbilityTypes.NONE
                 }
-                if(ability!=AbilityTypes.NONE&&ability.getAbility().itemType!=ItemTypes.SWORD){
+                if(ability!=AbilityTypes.NONE&&ability.getAbility().itemType!= ItemTypes.BOW){
                     ability = AbilityTypes.NONE
                 }
                 sender.sendMessage("§6Set weapon ability to §a${if (ability!=AbilityTypes.NONE) ability.name else "None"}")
@@ -65,10 +62,10 @@ class CreateSwordCommand : CommandExecutor{
                 if(ability!=AbilityTypes.NONE) {
                     abilities.add(ability)
                 }
-                val sword = SkyblockSword(ItemData(
+                val sword = SkyblockBow(ItemData(
                     name = itemName,
                     rarity = rarity,
-                    item = ItemStackData(mat),
+                    item = ItemStackData(Material.BOW),
                     reforgable = reforgeable,
                     damage = damage.toBigInteger(),
                     strength = strength.toBigInteger(),
@@ -89,6 +86,4 @@ class CreateSwordCommand : CommandExecutor{
         }.start()
         return true
     }
-
-
 }

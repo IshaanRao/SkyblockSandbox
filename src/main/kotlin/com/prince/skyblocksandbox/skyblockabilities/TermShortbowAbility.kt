@@ -13,17 +13,15 @@ import sun.audio.AudioPlayer.player
 
 object TermShortbowAbility : ItemAbility() {
     override val manaCost=0
-    override val actions = listOf(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK)
+    override val actions = listOf(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR,Action.RIGHT_CLICK_BLOCK)
     override val AbilityType=AbilityTypes.TERMSHORTBOW
     override val title = "§6Shortbow: Instantly shoots!"
     override val name: String = "N/A"
     override val itemType = ItemTypes.BOW
     override val specialAbility = true
+    override val noUseMessage = true
     override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Shoots §b3 §7arrows at once","§7Can damage endermen")}
     override fun execute(e: PlayerInteractEvent) {
-        if(playerOnCooldown(e.player)){
-            return
-        }
         if(e.action=== Action.RIGHT_CLICK_BLOCK||e.action=== Action.RIGHT_CLICK_AIR){
             e.isCancelled = true
         }

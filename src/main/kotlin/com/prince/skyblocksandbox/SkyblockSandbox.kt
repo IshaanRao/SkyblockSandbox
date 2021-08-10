@@ -3,8 +3,7 @@ package com.prince.skyblocksandbox
 import com.prince.skyblocksandbox.skyblockcommands.*
 import com.prince.skyblocksandbox.skyblockhandlers.*
 import com.prince.skyblocksandbox.skyblockinput.InputHandler
-import com.prince.skyblocksandbox.skyblockinventories.ApplyEnchantInventory
-import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
+import com.prince.skyblocksandbox.skyblockinventories.*
 import com.prince.skyblocksandbox.skyblockmobs.MobSpawning
 import com.prince.skyblocksandbox.skyblockutils.Config
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
@@ -30,7 +29,7 @@ class SkyblockSandbox : JavaPlugin() {
 
     }
     fun registerEvents(){
-        SkyblockApi.start()
+        //SkyblockApi.start()
         server.pluginManager.registerEvents(LoginHandler(),this)
         server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
@@ -38,6 +37,9 @@ class SkyblockSandbox : JavaPlugin() {
         server.pluginManager.registerEvents(InputHandler,this)
         server.pluginManager.registerEvents(ItemHandler(),this)
         server.pluginManager.registerEvents(ApplyEnchantInventory,this)
+        server.pluginManager.registerEvents(ItemsInventory,this)
+        server.pluginManager.registerEvents(SwordsInventory,this)
+        server.pluginManager.registerEvents(BowsInventory,this)
         server.pluginManager.registerEvents(SpawnHandler(),this)
         MobSpawning
         StatisticHandler.sbSandbox = this
@@ -47,7 +49,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        SkyblockApi.stop()
+        //SkyblockApi.stop()
         mobHandler.killAllMobs()
     }
 
@@ -55,10 +57,13 @@ class SkyblockSandbox : JavaPlugin() {
         getCommand("spawnmob").executor = SpawnMobCommand(mobHandler)
         getCommand("spawnmob").tabCompleter = SpawnMobCompletions()
         getCommand("createsword").executor = CreateSwordCommand()
+        getCommand("createbow").executor = CreateBowCommand()
         getCommand("reforge").executor = ReforgeCommand()
         getCommand("enchant").executor = EnchantCommand()
         getCommand("nodes").executor = NodesCommand()
         getCommand("nodes").tabCompleter = NodesCommand.NodesCommandCompletions()
+        getCommand("test").executor = TestCommand()
+        getCommand("items").executor = ItemsCommand()
         log("Loaded commands")
     }
 

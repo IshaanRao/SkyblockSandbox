@@ -16,11 +16,10 @@ object JujuShortbowAbility : ItemAbility() {
     override val name: String = "N/A"
     override val itemType = ItemTypes.BOW
     override val specialAbility = true
+    override val noUseMessage: Boolean
+        get() = true
     override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Hits §c3 §7mobs on impact","§7Can damage endermen")}
     override fun execute(e: PlayerInteractEvent) {
-        if(playerOnCooldown(e.player)){
-            return
-        }
         if(e.action===Action.RIGHT_CLICK_BLOCK||e.action===Action.RIGHT_CLICK_AIR){
             e.isCancelled = true
         }

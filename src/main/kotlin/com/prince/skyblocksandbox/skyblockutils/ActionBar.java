@@ -4,6 +4,7 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 //https://bukkit.org/threads/1-8-actionbar-packets.385244/
 public class ActionBar {
@@ -13,6 +14,7 @@ public class ActionBar {
     public ActionBar(String text) {
         PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"" + text + "\"}"), (byte) 2);
         this.packet = packet;
+
     }
 
     public void sendToPlayer(Player p) {
