@@ -1,8 +1,11 @@
 package com.prince.skyblocksandbox.skyblockutils
 
 import org.bukkit.Location
+import org.bukkit.block.Block
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.FallingBlock
+import org.bukkit.inventory.ItemStack
 
 object SkyblockHolograms {
     fun createHologram(loc: Location,name: String): ArmorStand {
@@ -21,5 +24,15 @@ object SkyblockHolograms {
             Thread.sleep(time)
             holo.remove()
         }.start()
+    }
+    fun createFloatingBlock(loc: Location,item: ItemStack):ArmorStand{
+        val hologram: ArmorStand = loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND) as ArmorStand
+        hologram.setGravity(false)
+        hologram.canPickupItems = false
+        hologram.isVisible = false
+        hologram.isMarker = true
+        val fallingBlock = loc.world.spawnFallingBlock(loc,item.type,item.durability.toByte())
+        hologram.passenger = fallingBlock
+        return hologram
     }
 }

@@ -36,18 +36,6 @@ class SpawnMobCommand(var mobHandler: MobHandler) : CommandExecutor{
             val mob = SkyblockMobs.valueOf(args[0].uppercase(Locale.getDefault())).getMob()
             mobHandler.spawnMob(mob,sender.location)
             sender.sendMessage("${ChatColor.GREEN}Spawned ${ChatColor.AQUA}${mob.name}${ChatColor.GREEN}, ID: ${ChatColor.AQUA}${mob.getId()}")
-            val abilities = ArrayList<AbilityTypes>()
-            abilities.add(AbilityTypes.TERMSHORTBOW)
-            abilities.add(AbilityTypes.SALVATION)
-            sender.inventory.addItem(SkyblockBow(ItemData(
-                name = "Terminator",
-                rarity = SkyblockRarities.LEGENDARY,
-                item = ItemStackData(Material.BOW),
-                strength = 50.toBigInteger(),
-                damage = 310.toBigInteger(),
-                critDamage = 250.toBigInteger(),
-                abilities = abilities
-            )).createItem(sender))
         }catch(e:IllegalArgumentException) {
             sender.sendMessage("${ChatColor.RED}Invalid Mob: /spawnmob <mob>")
             return true

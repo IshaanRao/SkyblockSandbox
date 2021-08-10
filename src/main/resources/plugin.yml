@@ -11,3 +11,6 @@ commands:
   reforge:
   enchant:
   nodes:
+  items:
+  createbow:
+  test:

@@ -23,7 +23,7 @@ data class ItemData(
     var speed:Int = 0,
     var abilityDamage:Double = 0.0,
     var extra:Int = 0,
-    var abilities:ArrayList<AbilityTypes>? = ArrayList(),
+    var abilities:List<AbilityTypes>? = ArrayList(),
     var reforge:ReforgeStats = ReforgeStats(),
     var hpbs:Int = 0,
     var enchants:HashMap<SkyblockEnchants,Int> = HashMap()

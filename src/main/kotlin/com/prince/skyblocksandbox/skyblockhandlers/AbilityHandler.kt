@@ -27,18 +27,24 @@ class AbilityHandler : Listener{
         for(abilityEnum in abilities) {
             val ability = abilityEnum.getAbility()
             if(ability.playerOnCooldown(e.player)){
+                if(!ability.noUseMessage) {
+                    e.player.sendMessage("§cThis ability is currently on cooldown")
+                }
                 return
             }
             for (action in ability.actions) {
                 if (action == e.action) {
                     if(!ability.specialAbility) {
                         if (StatisticHandler.getPlayerStats(e.player).mana < ability.manaCost.toBigInteger()) {
-                            return e.player.sendMessage("§cYou do not have enough mana to use this ability")
+                            e.player.sendMessage("§cYou do not have enough mana to use this ability")
+                            continue
                         }
                         StatisticHandler.removeMana(e.player, ability.manaCost.toBigInteger())
-                        e.player.sendMessage("§aUsed §6${ability.name}§a! §b(${ability.manaCost} Mana)")
+                        if(!ability.noUseMessage) {
+                            e.player.sendMessage("§aUsed §6${ability.name}§a! §b(${ability.manaCost} Mana)")
+                        }
                     }
-                    return ability.execute(e)
+                    ability.execute(e)
                 }
             }
         }

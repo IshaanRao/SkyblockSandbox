@@ -17,6 +17,7 @@ abstract class ItemAbility {
     abstract val actions:List<Action>
     abstract val manaCost:Int
     abstract val itemType:ItemTypes
+    open val noUseMessage = false
     open val specialAbility = false
     open val ability:SkyblockAbility
         get() =  SkyblockAbility(0,0.0)
