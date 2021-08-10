@@ -102,10 +102,12 @@ object YetiSwordAbility : ItemAbility() {
         val yMove = moveTo.y-mainStand.location.y
         val zMove = moveTo.z-mainStand.location.z
         for(stand in stands){
-            val passenger: Entity = stand.passenger
-            stand.eject()
-            stand.teleport(stand.location.add(xMove,yMove,zMove))
-            stand.passenger = passenger
+            try {
+                val passenger: Entity = stand.passenger
+                stand.eject()
+                stand.teleport(stand.location.add(xMove, yMove, zMove))
+                stand.passenger = passenger
+            }catch (ignored:NullPointerException){}
         }
     }
 }
