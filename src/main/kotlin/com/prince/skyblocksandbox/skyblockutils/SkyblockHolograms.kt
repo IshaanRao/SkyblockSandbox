@@ -32,6 +32,7 @@ object SkyblockHolograms {
         hologram.isVisible = false
         hologram.isMarker = true
         val fallingBlock = loc.world.spawnFallingBlock(loc,item.type,item.durability.toByte())
+        fallingBlock.dropItem = false
         hologram.passenger = fallingBlock
         return hologram
     }
