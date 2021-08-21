@@ -26,7 +26,7 @@ object YetiSwordAbility : ItemAbility() {
     override val name: String = "Terrain Toss"
     override val itemType = ItemTypes.SWORD
     override fun getDesc(stats: StatsData) : List<String> {
-        val damage = ((stats.abilityDamage+ GiantSwordAbility.ability.abilityDamage) * ((1+(stats.intelligence.toDouble()/100))* GiantSwordAbility.ability.multiplier)).toBigDecimal().toBigInteger()
+        val damage = ((stats.abilityDamage+ ability.abilityDamage) * ((1+(stats.intelligence.toDouble()/100))* ability.multiplier)).toBigDecimal().toBigInteger()
         return listOf("§7Throws a chunk of terrain in the","§7direction you are facing! Deals","§7up to §c${damage} §7damage.")
     }
     override val ability = SkyblockAbility(15000,0.3)

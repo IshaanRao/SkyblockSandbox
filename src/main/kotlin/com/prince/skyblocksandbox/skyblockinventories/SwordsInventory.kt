@@ -70,6 +70,27 @@ object SwordsInventory : SkyblockInventory() {
             strength = 170.toBigInteger(),
             abilities = listOf(AbilityTypes.TERRAINTOSS)
         )))
+
+        swords.add(SkyblockSword(ItemData(
+            name = "Axe of the Shredded",
+            rarity = SkyblockRarities.LEGENDARY,
+            reforgable = true,
+            item = ItemStackData(Material.DIAMOND_AXE),
+            damage = 140.toBigInteger(),
+            strength = 115.toBigInteger(),
+            abilities = listOf(AbilityTypes.AOTSLORE,AbilityTypes.AOTSTHROW)
+        )))
+
+        swords.add(SkyblockSword(ItemData(
+            name = "Midas Staff",
+            rarity = SkyblockRarities.LEGENDARY,
+            reforgable = true,
+            item = ItemStackData(Material.GOLD_SPADE),
+            damage = 130.toBigInteger(),
+            strength = 150.toBigInteger(),
+            intelligence = 50.toBigInteger(),
+            abilities = listOf(AbilityTypes.MOLTENWAVE)
+        )))
     }
     override fun getInventory(): Inventory {
         return Bukkit.createInventory(null,9,"b")
