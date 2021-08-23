@@ -10,7 +10,8 @@ enum class AbilityTypes(private var ability:ItemAbility?=null){
     TERRAINTOSS(YetiSwordAbility),
     AOTSTHROW(AotsThrowAbility),
     AOTSLORE(AotsLoreAbility),
-    MOLTENWAVE(MoltenWaveAbility)
+    MOLTENWAVE(MoltenWaveAbility),
+    BONEMERANG(BonemerangAbility)
     ,NONE;
     fun getAbility() : ItemAbility{
         return ability!!

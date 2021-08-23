@@ -43,6 +43,15 @@ class DamageHandler {
             mob.loadName()
         }
     }
+    fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean,multiplier: Double){
+        if(!mob.entity!!.isDead) {
+            val damage = calculateBowDamage(mob, player,canCrit);
+            damage.damage = (damage.damage.toBigDecimal()*multiplier.toBigDecimal()).toBigInteger()
+            createDmgHolo(mob.entity!!.location,damage)
+            mob.currentHealth-=damage.damage
+            mob.loadName()
+        }
+    }
     companion object {
 
 
