@@ -24,7 +24,7 @@ import java.math.BigInteger
 object GiantSwordAbility : ItemAbility() {
     override val manaCost=100
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.GIANTSSLAM
+    override val abilityType=AbilityTypes.GIANTSSLAM
     override val title = "§6Ability: Giant's Slam §e§lRIGHT CLICK"
     override val name: String = "Giant's Slam"
     override val itemType = ItemTypes.SWORD

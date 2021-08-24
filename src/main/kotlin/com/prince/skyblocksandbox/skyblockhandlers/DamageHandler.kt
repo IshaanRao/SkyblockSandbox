@@ -37,7 +37,7 @@ class DamageHandler {
     }
     fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean){
         if(!mob.entity!!.isDead) {
-            val damage = calculateBowDamage(mob, player,canCrit);
+            val damage = calculateBowDamage(mob, player,canCrit)
             createDmgHolo(mob.entity!!.location,damage)
             mob.currentHealth-=damage.damage
             mob.loadName()
@@ -45,7 +45,7 @@ class DamageHandler {
     }
     fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean,multiplier: Double){
         if(!mob.entity!!.isDead) {
-            val damage = calculateBowDamage(mob, player,canCrit);
+            val damage = calculateBowDamage(mob, player,canCrit)
             damage.damage = (damage.damage.toBigDecimal()*multiplier.toBigDecimal()).toBigInteger()
             createDmgHolo(mob.entity!!.location,damage)
             mob.currentHealth-=damage.damage
@@ -78,7 +78,7 @@ class DamageHandler {
                 }
             }
             var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100)+enchantMultiplier)
-            var isCrit = true
+            val isCrit = true
             if(isCrit) {
                 damage*=(1+(stats.critDamage.toDouble()/100))
             }
@@ -100,24 +100,22 @@ class DamageHandler {
             return DamageData(false, BigInteger.valueOf(0))
         }
         fun createDmgHolo(loc: Location, damage: DamageData) {
-            val damageString: String;
-            if (damage.isCrit) {
+            val damageString: String = if (damage.isCrit) {
                 val string = "✧${damage.damage}✧"
                 val sb = StringBuilder()
                 string.forEachIndexed { index, c ->
                     sb.append(getColorFromIndex(index)).append(c)
                 }
-                damageString = sb.toString()
+                sb.toString()
             } else {
-                damageString = "§7${damage.damage}"
+                "§7${damage.damage}"
             }
             SkyblockHolograms.createHologramAndDelete(loc.add(0.0, 1.0, 0.0), damageString, 500)
 
         }
 
         fun getColorFromIndex(index:Int):String{
-            val indexUsed = index%6
-            return when(indexUsed){
+            return when(index%6){
                 0,1->"§f"
                 2->"§e"
                 3->"§6"
@@ -142,7 +140,7 @@ class DamageHandler {
             for(enchant in enchants.keys){
                 val enchantObj = enchant.obj
                 if(enchantObj.items==ItemTypes.BOW){
-                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player,enchants.get(enchant)!!)
+                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player, enchants[enchant]!!)
                 }
             }
         }
@@ -167,7 +165,7 @@ class DamageHandler {
             for(enchant in enchants.keys){
                 val enchantObj = enchant.obj
                 if(enchantObj.items==ItemTypes.SWORD){
-                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player,enchants.get(enchant)!!)
+                    enchantMultiplier+=enchantObj.getAddedDamage(mob,player, enchants[enchant]!!)
                 }
             }
         }

@@ -16,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable
 object BonemerangAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.BONEMERANG
+    override val abilityType=AbilityTypes.BONEMERANG
     override val title = "§6Ability: Swing §e§lRIGHT CLICK"
     override val name: String = "Swing"
     override val itemType = ItemTypes.BOW

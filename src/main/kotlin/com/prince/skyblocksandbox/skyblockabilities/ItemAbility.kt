@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import java.util.*
 
 abstract class ItemAbility {
-    abstract val AbilityType:AbilityTypes
+    abstract val abilityType:AbilityTypes
     abstract val title:String
     abstract val name:String
     abstract fun getDesc(stats:StatsData):List<String>

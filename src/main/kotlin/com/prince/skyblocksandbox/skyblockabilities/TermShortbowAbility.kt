@@ -13,7 +13,7 @@ import org.bukkit.util.Vector
 object TermShortbowAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR,Action.RIGHT_CLICK_BLOCK)
-    override val AbilityType=AbilityTypes.TERMSHORTBOW
+    override val abilityType=AbilityTypes.TERMSHORTBOW
     override val title = "§6Shortbow: Instantly shoots!"
     override val name: String = "N/A"
     override val itemType = ItemTypes.BOW

@@ -34,6 +34,15 @@ object SwordsInventory : SkyblockInventory() {
     }
     fun loadSwords() {
         swords.add(SkyblockSword(ItemData(
+            name = "Rogue Sword",
+            rarity = SkyblockRarities.COMMON,
+            reforgable = true,
+            item = ItemStackData(Material.GOLD_SWORD),
+            damage = 20.toBigInteger(),
+            abilities = listOf(AbilityTypes.SPEEDBOOST)
+        )))
+
+        swords.add(SkyblockSword(ItemData(
             name = "Aspect of the End",
             rarity = SkyblockRarities.RARE,
             reforgable = true,
@@ -100,7 +109,7 @@ object SwordsInventory : SkyblockInventory() {
     }
     fun loadInventory(pageNum:Int,p:Player): Inventory {
         val inv = Bukkit.createInventory(holder,54,"§aPage $pageNum")
-        val swordPage = pages.get(pageNum)
+        val swordPage = pages[pageNum]
         swordPage.forEachIndexed { index,sword->
             inv.setItem(index,sword.createItem(p))
         }
@@ -145,7 +154,7 @@ object SwordsInventory : SkyblockInventory() {
                     return
                 }
                 val sbSword = item.getSkyblockData()
-                player.inventory.addItem(sbSword.createItem(player as Player));
+                player.inventory.addItem(sbSword.createItem(player as Player))
                 return
             }
         }

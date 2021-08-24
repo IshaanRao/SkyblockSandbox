@@ -49,14 +49,14 @@ class SkyblockBow(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.BOW) {
             lore.add(" ")
             val enchantLore = ArrayList<String>()
             val firstEnch = itemData.enchants.keys.first()
-            var string = createEnchantString(firstEnch.obj,itemData.enchants.get(firstEnch)!!)
+            var string = createEnchantString(firstEnch.obj, itemData.enchants[firstEnch]!!)
             itemData.enchants.keys.forEachIndexed { index, skyblockEnchant ->
                 if(index!=0){
                     if(index%3==0){
                         enchantLore.add(string)
                         string=""
                     }
-                    string+=", ${createEnchantString(skyblockEnchant.obj,itemData.enchants.get(skyblockEnchant)!!)}"
+                    string+=", ${createEnchantString(skyblockEnchant.obj, itemData.enchants[skyblockEnchant]!!)}"
                 }
             }
             enchantLore.add(string)
@@ -77,7 +77,7 @@ class SkyblockBow(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.BOW) {
         if(itemData.reforgable){
             lore.add("§8This item can be reforged!")
         }
-        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} BOW")
+        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity} BOW")
         return lore
     }fun createEnchantString(enchant: SkyblockEnchant, level:Int):String{
         return "§9${enchant.name} $level"

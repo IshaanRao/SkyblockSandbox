@@ -45,7 +45,7 @@ object SkyblockStats {
         return StatsData()
     }
     fun Player.statsWithItemInHand(item:ItemStack):StatsData{
-        var data = StatsData(
+        val data = StatsData(
             critChance = 30,
             intelligence = 100.toBigInteger(),
             speed = 100,
@@ -60,7 +60,7 @@ object SkyblockStats {
         return data
     }
     fun json(player: Player) {
-        val uuid: UUID = player.getUniqueId()
+        val uuid: UUID = player.uniqueId
         data class Stats(
             val id: UUID,
             val souls: Int,
@@ -68,6 +68,7 @@ object SkyblockStats {
             val foraging: Int
         )
         var jsonStats = Gson().toJson(Stats(uuid, 0, 0, 0))
+        // TODO: finish this
     }
 
 }

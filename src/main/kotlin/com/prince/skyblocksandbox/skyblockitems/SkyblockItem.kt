@@ -39,7 +39,7 @@ abstract class SkyblockItem(var itemData: ItemData, var itemType: ItemTypes) {
             additions.append(" §e(+${(2*itemData.hpbs)})")
         }
         if(reforge!=0){
-            additions.append(" §9(${this.itemData.reforge.name} +$reforge)")
+            additions.append(" §9(${this.itemData.reforge} +$reforge)")
         }
         return "§7$catname: $color+$value$additions"
     }

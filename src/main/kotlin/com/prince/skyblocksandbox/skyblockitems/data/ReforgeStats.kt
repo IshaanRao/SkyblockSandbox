@@ -7,7 +7,7 @@ data class ReforgeStats(var defense:Map<SkyblockRarities,Int> = createEmptyMap()
         fun createEmptyMap(): Map<SkyblockRarities,Int>{
             val map = HashMap<SkyblockRarities,Int>()
             for(rarity in SkyblockRarities.values()){
-                map.put(rarity,0)
+                map[rarity] = 0
             }
             return map
         }

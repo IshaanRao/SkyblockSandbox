@@ -6,6 +6,7 @@ import com.prince.skyblocksandbox.skyblockutils.SkyblockRarities
 import java.math.BigInteger
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 data class ItemData(
     var name:String,
@@ -25,7 +26,7 @@ data class ItemData(
     var abilities:List<AbilityTypes>? = ArrayList(),
     var reforge:ReforgeStats = ReforgeStats(),
     var hpbs:Int = 0,
-    var enchants:EnumMap<SkyblockEnchants,Int> = EnumMap(SkyblockEnchants::class.java)
+    var enchants:HashMap<SkyblockEnchants,Int> = HashMap()
 ){
    fun getStatsData():StatsData {
        return StatsData(

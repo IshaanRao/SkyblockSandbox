@@ -18,7 +18,7 @@ import org.bukkit.util.Vector
 object MoltenWaveAbility : ItemAbility(){
     override val manaCost=500
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.MOLTENWAVE
+    override val abilityType=AbilityTypes.MOLTENWAVE
     override val title = "§6Ability: Molten Wave §e§lRIGHT CLICK"
     override val name: String = "Molten Wave"
     override val itemType = ItemTypes.SWORD

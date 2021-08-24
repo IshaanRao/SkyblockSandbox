@@ -16,7 +16,7 @@ class NodesCommand : CommandExecutor{
         if (!sender.isOp || sender !is Player) {
             return true
         }
-        if(args.size<1){
+        if(args.isEmpty()){
             sender.sendMessage("§c/nodes add/remove/list")
             return true
         }

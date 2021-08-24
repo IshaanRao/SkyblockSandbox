@@ -44,10 +44,10 @@ class CreateBowCommand : CommandExecutor {
                 sender.sendMessage("§6Set weapon intelligence to §a$intel")
                 val abilityStr:String = ChatInput(sender,InputChecks.ABILITY,"§aPlease enter what ability you want ('none' for no ability)").start() as String//TODO(ABILITY LIST)
                 var ability:AbilityTypes
-                try{
-                    ability = AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
+                ability = try{
+                    AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
                 }catch (e:Exception){
-                    ability = AbilityTypes.NONE
+                    AbilityTypes.NONE
                 }
                 if(ability!=AbilityTypes.NONE&&ability.getAbility().itemType!= ItemTypes.BOW){
                     ability = AbilityTypes.NONE

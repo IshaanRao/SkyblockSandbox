@@ -11,7 +11,8 @@ enum class AbilityTypes(private var ability:ItemAbility?=null){
     AOTSTHROW(AotsThrowAbility),
     AOTSLORE(AotsLoreAbility),
     MOLTENWAVE(MoltenWaveAbility),
-    BONEMERANG(BonemerangAbility)
+    BONEMERANG(BonemerangAbility),
+    SPEEDBOOST(SpeedBoostAbility)
     ,NONE;
     fun getAbility() : ItemAbility{
         return ability!!

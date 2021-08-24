@@ -5,10 +5,10 @@ import com.prince.skyblocksandbox.skyblockutils.ActionBar
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import org.bukkit.Bukkit
 
-class ActionBarManager(private val sbSandbox:SkyblockSandbox) : Runnable {
+class ActionBarManager(sbSandbox:SkyblockSandbox) : Runnable {
     override fun run() {
         for(player in Bukkit.getOnlinePlayers()){
-            val stats = player.getStats();
+            val stats = player.getStats()
             val stats2 = StatisticHandler.getPlayerStats(player)
             if(stats2.absorption<=0.toBigInteger()){
                 ActionBar("§c${stats2.health}/${stats.health}❤   §a${stats.defense}❈ Defense   §b${stats2.mana}/${stats.intelligence}✎ Mana").sendToPlayer(player)

@@ -8,7 +8,7 @@ import org.bukkit.entity.LivingEntity
 import java.math.BigInteger
 
 
-abstract class SkyblockMob(){
+abstract class SkyblockMob {
     var currentHealth: BigInteger =  BigInteger.valueOf(1)
     abstract var startingHealth: BigInteger
     abstract val level: Int

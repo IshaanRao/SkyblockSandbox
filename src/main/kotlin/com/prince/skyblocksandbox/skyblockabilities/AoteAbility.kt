@@ -10,7 +10,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 object AoteAbility : ItemAbility() {
     override val manaCost=50
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK,Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.AOTE
+    override val abilityType=AbilityTypes.AOTE
     override val title = "§6Item Ability: Instant Transmission §e§lRIGHT CLICK"
     override val name: String = "Instant Transmission"
     override val itemType = ItemTypes.SWORD

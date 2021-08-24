@@ -20,7 +20,7 @@ import org.bukkit.util.Vector
 object YetiSwordAbility : ItemAbility() {
     override val manaCost=250
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.TERRAINTOSS
+    override val abilityType=AbilityTypes.TERRAINTOSS
     override val title = "§6Ability: Terrain Toss §e§lRIGHT CLICK"
     override val name: String = "Terrain Toss"
     override val itemType = ItemTypes.SWORD
@@ -38,8 +38,7 @@ object YetiSwordAbility : ItemAbility() {
             landingLoc.add(Vector(0.0,1.1,0.0))
         }
         val loc1 = player.eyeLocation.add(Vector(0.0,0.1,0.0))
-        val loc2 = landingLoc
-        val path = MathUtils.parabola(loc1,loc2,18)
+        val path = MathUtils.parabola(loc1, landingLoc, 18)
         val locationIterator = path.iterator()
 
         //Bottom Layer
@@ -96,7 +95,7 @@ object YetiSwordAbility : ItemAbility() {
         arrayList.add(SkyblockHolograms.createFloatingBlock(baseLoc.clone().add(Vector(xChange,yChange,zChange)),block))
     }
     fun moveStands(stands:List<ArmorStand>, moveTo:Location){
-        val mainStand = stands.get(0)
+        val mainStand = stands[0]
         val xMove = moveTo.x-mainStand.location.x
         val yMove = moveTo.y-mainStand.location.y
         val zMove = moveTo.z-mainStand.location.z

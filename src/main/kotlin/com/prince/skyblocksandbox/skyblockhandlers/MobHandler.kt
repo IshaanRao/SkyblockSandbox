@@ -25,7 +25,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         while(mobs.containsKey(uuid)){
             uuid = UUID.randomUUID()
         }
-        mobs.put(uuid,mob)
+        mobs[uuid] = mob
     }
     fun spawnMob(mob:SkyblockMob,loc: Location){
         if(!mob.hasSpawned) {
