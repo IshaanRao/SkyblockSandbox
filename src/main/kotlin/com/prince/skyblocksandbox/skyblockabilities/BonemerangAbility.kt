@@ -27,7 +27,7 @@ object BonemerangAbility : ItemAbility() {
         startCooldown(e.player,41)
         val player = e.player
         val playerDirection = player.location.direction
-        val hologram: ArmorStand = player.world.spawnEntity(player.location, EntityType.ARMOR_STAND) as ArmorStand
+        val hologram = player.world.spawnEntity(player.location, EntityType.ARMOR_STAND) as ArmorStand
         hologram.setGravity(false)
         hologram.canPickupItems = false
         hologram.isCustomNameVisible = false
@@ -35,24 +35,26 @@ object BonemerangAbility : ItemAbility() {
         hologram.isMarker = true
         hologram.itemInHand = ItemStack(Material.BONE)
         hologram.setArms(true)
+        player.itemInHand.type = Material.GHAST_TEAR
         var timesRan = 0
         object : BukkitRunnable() {
             override fun run() {
                 timesRan++
-                val nearbyEntities = hologram.location.add(0.0,1.0,0.0).getNearbyEntities(.150,.150,.150)
+                val nearbyEntities = hologram.getNearbyEntities(.250, 1.250, .250)
                 for(entity in nearbyEntities){
                     val mob = entity.isSkyblockMob() ?: continue
                     SkyblockSandbox.instance.damageHandler.bowDamage(mob,player,true,if(timesRan>20) 2.0 else 1.0)
                 }
                 if(timesRan<=20){
-                    hologram.rightArmPose = hologram.rightArmPose.add(0.0,-75.0,0.0)
+                    hologram.rightArmPose = hologram.rightArmPose.add(0.0,-60.0,0.0)
                     hologram.teleport(hologram.location.add(playerDirection.clone().multiply(0.700)))
                 }else if(timesRan<=40){
-                    hologram.rightArmPose = hologram.rightArmPose.add(0.0,-75.0,0.0)
+                    hologram.rightArmPose = hologram.rightArmPose.add(0.0,-60.0,0.0)
                     hologram.teleport(hologram.location.add(player.location.toVector().subtract(hologram.location.toVector()).normalize().multiply(0.700)))
                 }else{
                     hologram.remove()
                     cancel()
+                    player.itemInHand.type = Material.BONE
                     return
                 }
             }
