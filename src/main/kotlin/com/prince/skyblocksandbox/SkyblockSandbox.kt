@@ -15,6 +15,7 @@ class SkyblockSandbox : JavaPlugin() {
     lateinit var mobHandler: MobHandler
     lateinit var damageHandler: DamageHandler
     lateinit var spawningNodeConfig: Config
+
     override fun onEnable() {
         Bukkit.getScheduler().scheduleSyncDelayedTask(this,{
             ConfigurationSerialization.registerClass(MobSpawning.SpawningNode::class.java, "SpawningNode")
@@ -78,7 +79,7 @@ class SkyblockSandbox : JavaPlugin() {
         lateinit var instance: SkyblockSandbox
         @JvmStatic
         fun log(msg:Any?) {
-            println("[SkyblockSandbox] $msg")
+            instance.logger.info(msg.toString())
         }
     }
 }

@@ -1,23 +1,19 @@
 package com.prince.skyblocksandbox.skyblockinventories
 
-import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
 import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchant
 import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchants
-import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.SkullMeta
 import java.awt.Point
-import java.util.ArrayList
 
 
 object EnchantInventory : SkyblockInventory(){

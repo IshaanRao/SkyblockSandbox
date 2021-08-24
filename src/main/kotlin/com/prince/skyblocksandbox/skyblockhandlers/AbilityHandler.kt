@@ -1,6 +1,5 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
-import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Material

@@ -1,16 +1,11 @@
 package com.prince.skyblocksandbox.skyblockmobs
 
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
-import net.minecraft.server.v1_8_R3.AttributeInstance
-import net.minecraft.server.v1_8_R3.EntityInsentient
 import net.minecraft.server.v1_8_R3.GenericAttributes
-import net.minecraft.server.v1_8_R3.Navigation
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.LivingEntity
-import java.lang.reflect.Field
 import java.math.BigInteger
-import java.util.*
 
 
 abstract class SkyblockMob(){

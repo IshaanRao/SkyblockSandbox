@@ -2,8 +2,6 @@ package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
-import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 

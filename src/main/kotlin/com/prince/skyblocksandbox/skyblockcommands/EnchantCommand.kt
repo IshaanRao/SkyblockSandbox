@@ -1,7 +1,5 @@
 package com.prince.skyblocksandbox.skyblockcommands
 
-import com.prince.skyblocksandbox.skyblockinventories.EnchantInventory
-import com.prince.skyblocksandbox.skyblockmobs.SkyblockZombie
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor

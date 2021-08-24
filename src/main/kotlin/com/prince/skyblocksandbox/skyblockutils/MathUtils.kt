@@ -1,8 +1,6 @@
 package com.prince.skyblocksandbox.skyblockutils
 
 import org.bukkit.Location
-import org.bukkit.Material
-import org.bukkit.inventory.ItemStack
 import kotlin.math.abs
 
 object MathUtils {
@@ -20,7 +18,7 @@ object MathUtils {
         return locList
     }
     fun lerp(point1:Double,point2:Double,alpha:Double):Double{
-        return point1 + alpha * (point2 - point1);
+        return point1 + alpha * (point2 - point1)
     }
     fun Location.lerp(loc2: Location, alpha: Double): Location {
         val xLerp = lerp(x,loc2.x,alpha)
