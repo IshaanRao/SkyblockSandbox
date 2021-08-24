@@ -24,12 +24,13 @@ class SkyblockSandbox : JavaPlugin() {
             loadVariables()
             registerEvents()
             loadCommands()
+            println(config.get("token"))
             log("--------------------------")
         },1)
 
     }
     fun registerEvents(){
-        //SkyblockApi.start()
+        SkyblockApi.start()
         server.pluginManager.registerEvents(LoginHandler(),this)
         server.pluginManager.registerEvents(EnchantInventory,this)
         server.pluginManager.registerEvents(mobHandler, this)
@@ -49,7 +50,7 @@ class SkyblockSandbox : JavaPlugin() {
     }
 
     override fun onDisable() {
-        //SkyblockApi.stop()
+        SkyblockApi.stop()
         mobHandler.killAllMobs()
     }
 
