@@ -35,7 +35,6 @@ object BonemerangAbility : ItemAbility() {
         hologram.isMarker = true
         hologram.itemInHand = ItemStack(Material.BONE)
         hologram.setArms(true)
-        player.itemInHand.type = Material.GHAST_TEAR
         var timesRan = 0
         object : BukkitRunnable() {
             override fun run() {
@@ -54,7 +53,6 @@ object BonemerangAbility : ItemAbility() {
                 }else{
                     hologram.remove()
                     cancel()
-                    player.itemInHand.type = Material.BONE
                     return
                 }
             }
