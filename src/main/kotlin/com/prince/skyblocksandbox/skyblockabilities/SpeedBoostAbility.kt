@@ -18,7 +18,7 @@ object SpeedBoostAbility : ItemAbility() {
     override val itemType = ItemTypes.SWORD
     override val ability = SkyblockAbility(32000,0.3)
     override fun getDesc(stats: StatsData) : List<String> {
-        return listOf("§7Increases your movement §f✦","§fSpeed §7by §a+20 §7for §a30","§seconds")
+        return listOf("§7Increases your movement §f✦","§fSpeed §7by §a+20 §7for §a30","§7seconds")
     }
 
     override fun execute(e: PlayerInteractEvent) {
