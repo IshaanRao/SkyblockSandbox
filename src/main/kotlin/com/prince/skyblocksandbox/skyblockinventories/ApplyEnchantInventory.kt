@@ -85,7 +85,6 @@ object ApplyEnchantInventory : SkyblockInventory(){
                 data.itemData.enchants[SkyblockEnchants.getEnumFromEnchant(ench)?:return] = level
                 playersForceClosed.add(player)
                 player.openInventory(EnchantInventory.getInventory(items[player]!!.createItem(player)))
-
             }
         }
     }

@@ -1,9 +1,7 @@
 package com.prince.skyblocksandbox.skyblockutils
 
-import org.bukkit.ChatColor
-
 enum class SkyblockRarities(var sbcolor: String) {
-    COMMON("§7"),
+    COMMON("§f"),
     UNCOMMON("§a"),
     RARE("§9"),
     EPIC("§5"),

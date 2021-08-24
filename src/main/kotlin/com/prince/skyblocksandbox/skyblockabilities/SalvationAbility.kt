@@ -9,6 +9,7 @@ import org.bukkit.Location
 import org.bukkit.entity.Entity
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
+import java.util.*
 
 
 object SalvationAbility : ItemAbility() {
@@ -25,7 +26,12 @@ object SalvationAbility : ItemAbility() {
         if(!playerOnCooldown(e.player)){
             startCooldown(e.player,40)
             var prev = e.player.eyeLocation
-            prev.y= prev.y-1
+
+            // previous -> prev.y= prev.y-1
+            // changed it a bit, because otherwise it will just look really weird
+            // (player would be shooting a beam from their legs)
+            prev.y = prev.y - 0.5
+
             for(i in 1..75) {
                 prev = prev.add(prev.direction.multiply(0.5))
                 spawnRedstoneParticles(prev)
