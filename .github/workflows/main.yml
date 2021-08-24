@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
       - name: Deploy Stage
-          uses: fjogeleit/http-request-action@master
-          with:
-            url: ${{ secrets.APIURL }}
-            method: 'GET'
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: ${{ secrets.APIURL }}
+          method: 'GET'
