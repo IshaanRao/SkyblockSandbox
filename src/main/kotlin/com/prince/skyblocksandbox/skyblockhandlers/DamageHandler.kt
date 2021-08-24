@@ -1,5 +1,6 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
+import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockabilities.ItemAbility
 import com.prince.skyblocksandbox.skyblockabilities.SkyblockAbility
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
@@ -11,7 +12,9 @@ import com.prince.skyblocksandbox.skyblockutils.SkyblockHolograms
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStatsForArrow
 import org.bukkit.Location
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
+import java.math.BigDecimal
 import java.math.BigInteger
 
 class DamageHandler {
@@ -23,9 +26,27 @@ class DamageHandler {
             mob.loadName()
         }
     }
+    fun swordDamage(mob:SkyblockMob,player:Player,multiplier:Double){
+        if(!mob.entity!!.isDead) {
+            val damage = calculateDamage(mob, player)
+            damage.damage = (damage.damage.toBigDecimal()*multiplier.toBigDecimal()).toBigInteger()
+            createDmgHolo(mob.entity!!.location,damage)
+            mob.currentHealth-=damage.damage
+            mob.loadName()
+        }
+    }
     fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean){
         if(!mob.entity!!.isDead) {
             val damage = calculateBowDamage(mob, player,canCrit);
+            createDmgHolo(mob.entity!!.location,damage)
+            mob.currentHealth-=damage.damage
+            mob.loadName()
+        }
+    }
+    fun bowDamage(mob:SkyblockMob,player:Player,canCrit:Boolean,multiplier: Double){
+        if(!mob.entity!!.isDead) {
+            val damage = calculateBowDamage(mob, player,canCrit);
+            damage.damage = (damage.damage.toBigDecimal()*multiplier.toBigDecimal()).toBigInteger()
             createDmgHolo(mob.entity!!.location,damage)
             mob.currentHealth-=damage.damage
             mob.loadName()
@@ -150,14 +171,26 @@ class DamageHandler {
                 }
             }
         }
-        var damage: Double = (5.0+stats.damage.toDouble())*(1.0+(stats.strength.toDouble()/100.0))*(1.0+(stats.extra/100)+enchantMultiplier)
+        var damage: BigDecimal = (5.0.toBigDecimal()+stats.damage.toBigDecimal())*(1.0.toBigDecimal()+(stats.strength.toBigDecimal()/100.0.toBigDecimal()))*(1.0.toBigDecimal()+(stats.extra.toBigDecimal()/100.toBigDecimal())+enchantMultiplier.toBigDecimal())
         val isCrit = (1..100).random()<=stats.critChance
         if(isCrit) {
-            damage*=(1+(stats.critDamage.toDouble()/100))
+            damage*=(1.0.toBigDecimal()+(stats.critDamage.toBigDecimal()/100.0.toBigDecimal()))
         }
-        return DamageData(isCrit,damage.toBigDecimal().toBigInteger())
+        if(player.itemInHand.isSkyblockItem()){
+            val item = player.itemInHand.getSkyblockData().itemData
+            val itemAbilities = item.abilities
+            if(itemAbilities!=null) {
+                if (itemAbilities.contains(AbilityTypes.AOTSLORE)) {
+                    if(mob.entityType==EntityType.ZOMBIE){
+                        damage*=2.5.toBigDecimal()
+                    }
+                    StatisticHandler.healPlayer(player,50.toBigInteger())
+                }
+            }
+        }
+        return DamageData(isCrit,damage.toBigInteger())
     }
 
 
-    data class DamageData(val isCrit:Boolean,val damage:BigInteger)
+    data class DamageData(val isCrit:Boolean, var damage:BigInteger)
 }

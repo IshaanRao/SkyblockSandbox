@@ -24,6 +24,7 @@ class SkyblockSandbox : JavaPlugin() {
             loadVariables()
             registerEvents()
             loadCommands()
+            println(config.get("token"))
             log("--------------------------")
         },1)
 

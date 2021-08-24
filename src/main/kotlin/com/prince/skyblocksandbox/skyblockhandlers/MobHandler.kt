@@ -4,6 +4,7 @@ import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
+import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.Location
 import org.bukkit.entity.Arrow
@@ -96,6 +97,16 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
                 }
             }
         }.start()
+        Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+            for(world in Bukkit.getWorlds()){
+                for(entity in world.entities){
+                    if(entity !is Player && entity.isSkyblockMob()==null){
+                        entity.remove()
+                    }
+
+                }
+            }
+        },2)
     }
 
     @EventHandler

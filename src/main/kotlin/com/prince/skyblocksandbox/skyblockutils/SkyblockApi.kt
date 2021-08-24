@@ -13,33 +13,21 @@ import java.net.URL
 
 object SkyblockApi {
     lateinit var app: Javalin
-    val client = WebhookClientBuilder("https://discord.com/api/webhooks/860061026908766238/vB23P1qXPJ0fjUqA_XOmBPteT5w2v_lrNZWutjK7knoZRM15bCNrxcVqvCQ9MpgtSSTZ").build()
     fun start() {
         val classLoader = Thread.currentThread().contextClassLoader
         Thread.currentThread().contextClassLoader = SkyblockSandbox::class.java.classLoader
         app = Javalin.create().start(2082)
-        app.post("/") { context ->
-            val gson = Gson()
-            var body = gson.fromJson(context.body(),JsonObject::class.java)
-            var action = body.get("action").asString
-            if(action == "completed"){
-                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a60 seconds§b for a §aGame Update")
-                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a30 seconds§b for a §aGame Update")
-                },20L*30)
-                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a5 seconds§b for a §aGame Update")
-                },20L*55)
-                Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
-                    client.send(WebhookEmbedBuilder()
-                        .setAuthor(WebhookEmbed.EmbedAuthor("Update",null,null))
-                        .setTitle(WebhookEmbed.EmbedTitle("Server is restarting!",null))
-                        .setColor(3077991)
-                        .build()
-                    )
-                    SkyblockSandbox.instance.server.spigot().restart()
-                },20L*60)
-            }
+        app.get("/${SkyblockSandbox.instance.config.get("token")}") { context ->
+            Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a60 seconds§b for a §aGame Update")
+            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a30 seconds§b for a §aGame Update")
+            },20L*30)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                Bukkit.broadcastMessage("§c§l[SERVER] §bServer is restarting in §a5 seconds§b for a §aGame Update")
+            },20L*55)
+            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,{
+                SkyblockSandbox.instance.server.spigot().restart()
+            },20L*60)
         }
         Thread.currentThread().contextClassLoader = classLoader
         SkyblockSandbox.log("Started Web Server")

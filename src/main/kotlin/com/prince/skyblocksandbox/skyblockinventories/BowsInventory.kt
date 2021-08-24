@@ -59,6 +59,17 @@ object BowsInventory : SkyblockInventory() {
                 abilities = listOf(AbilityTypes.TERMSHORTBOW,AbilityTypes.SALVATION)
             )
         ))
+        bows.add(SkyblockBow(
+            ItemData(
+                name = "Bonemerang",
+                rarity = SkyblockRarities.LEGENDARY,
+                reforgable = true,
+                item = ItemStackData(Material.BONE),
+                damage = 270.toBigInteger(),
+                strength = 120.toBigInteger(),
+                abilities = listOf(AbilityTypes.BONEMERANG)
+            )
+        ))
     }
     override fun getInventory(): Inventory {
         return Bukkit.createInventory(null,9,"b")

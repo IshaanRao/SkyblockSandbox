@@ -71,7 +71,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
                 lore.add(" ")
                 lore.add(ability.title)
                 lore.addAll(ability.getDesc(stats ?: p.getStats()))
-                if(!ability.specialAbility) {
+                if(!ability.specialAbility&&ability.manaCost!=0) {
                     lore.add("§8Mana Cost: §3" + ability.manaCost)
                 }
             }
