@@ -11,10 +11,10 @@ class ChatInput(val p:Player,val checker:InputChecks,val startingMsg:String) {
         p.sendMessage(startingMsg)
         future = CompletableFuture<Any?>()
         InputHandler.addPlayer(p,this)
-        try{
-            return future.get(30000,TimeUnit.MILLISECONDS)
+        return try{
+            future.get(30000,TimeUnit.MILLISECONDS)
         }catch (e:TimeoutException){
-            return null
+            null
         }
     }
 }

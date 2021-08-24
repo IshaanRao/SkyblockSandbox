@@ -34,11 +34,11 @@ enum class InputChecks {
     },
     MAT{
         override fun passesCheck(s: String): Boolean {
-            try {
+            return try {
                 val material = Material.valueOf(s.uppercase(Locale.getDefault()))
-                return (listOf(Material.DIAMOND_SWORD,Material.DIAMOND_AXE,Material.DIAMOND_SPADE,Material.GOLD_SWORD,Material.GOLD_AXE,Material.GOLD_SPADE,Material.IRON_SWORD,Material.IRON_AXE,Material.IRON_SPADE,Material.STONE_SWORD,Material.STONE_AXE,Material.STONE_SPADE,Material.WOOD_SWORD,Material.WOOD_AXE,Material.WOOD_SPADE).contains(material))
+                (listOf(Material.DIAMOND_SWORD,Material.DIAMOND_AXE,Material.DIAMOND_SPADE,Material.GOLD_SWORD,Material.GOLD_AXE,Material.GOLD_SPADE,Material.IRON_SWORD,Material.IRON_AXE,Material.IRON_SPADE,Material.STONE_SWORD,Material.STONE_AXE,Material.STONE_SPADE,Material.WOOD_SWORD,Material.WOOD_AXE,Material.WOOD_SPADE).contains(material))
             }catch (e:Exception){
-                return false
+                false
             }
         }
 

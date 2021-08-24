@@ -1,15 +1,13 @@
 package com.prince.skyblocksandbox.skyblockutils
 
 import org.bukkit.Location
-import org.bukkit.block.Block
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.FallingBlock
 import org.bukkit.inventory.ItemStack
 
 object SkyblockHolograms {
     fun createHologram(loc: Location,name: String): ArmorStand {
-        val hologram: ArmorStand = loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND) as ArmorStand
+        val hologram: ArmorStand = loc.world.spawnEntity(loc, EntityType.ARMOR_STAND) as ArmorStand
         hologram.setGravity(false)
         hologram.canPickupItems = false
         hologram.customName = name
@@ -25,8 +23,9 @@ object SkyblockHolograms {
             holo.remove()
         }.start()
     }
+    @Suppress("DEPRECATION")
     fun createFloatingBlock(loc: Location,item: ItemStack):ArmorStand{
-        val hologram: ArmorStand = loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND) as ArmorStand
+        val hologram: ArmorStand = loc.world.spawnEntity(loc, EntityType.ARMOR_STAND) as ArmorStand
         hologram.setGravity(false)
         hologram.canPickupItems = false
         hologram.isVisible = false

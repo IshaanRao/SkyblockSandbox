@@ -1,6 +1,5 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
-import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Material
@@ -20,7 +19,7 @@ class AbilityHandler : Listener{
         val item = e.player.itemInHand.getSkyblockData()
         if(item.itemData.abilities == null){
             return
-        }else if(item.itemData.abilities!!.size==0){
+        }else if(item.itemData.abilities!!.isEmpty()){
             return
         }
         val abilities = item.itemData.abilities!!

@@ -1,10 +1,7 @@
 package com.prince.skyblocksandbox.skyblockmobs
 
-import com.prince.skyblocksandbox.SkyblockSandbox.Companion.log
-import net.minecraft.server.v1_8_R3.AchievementList.d
 import net.minecraft.server.v1_8_R3.EntityInsentient
 import net.minecraft.server.v1_8_R3.GenericAttributes
-import net.minecraft.server.v1_8_R3.IMonster.d
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
 import org.bukkit.entity.EntityType

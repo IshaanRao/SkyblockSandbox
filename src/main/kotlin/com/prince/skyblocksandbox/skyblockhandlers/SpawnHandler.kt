@@ -25,7 +25,7 @@ class SpawnHandler : Listener {
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
-    fun EntityChangeBlock(event: EntityChangeBlockEvent) {
+    fun entityChangeBlock(event: EntityChangeBlockEvent) {
         if (event.entityType == EntityType.FALLING_BLOCK) {
             event.isCancelled = true
         }

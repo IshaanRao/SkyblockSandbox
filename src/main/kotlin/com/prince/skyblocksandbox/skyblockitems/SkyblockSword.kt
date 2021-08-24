@@ -1,6 +1,5 @@
 package com.prince.skyblocksandbox.skyblockitems
 
-import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockenchants.SkyblockEnchant
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
@@ -50,16 +49,16 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         }
         if(itemData.enchants.size!=0){
             lore.add(" ")
-            var enchantLore = ArrayList<String>()
+            val enchantLore = ArrayList<String>()
             val firstEnch = itemData.enchants.keys.first()
-            var string = createEnchantString(firstEnch.obj,itemData.enchants.get(firstEnch)!!)
+            var string = createEnchantString(firstEnch.obj, itemData.enchants[firstEnch]!!)
             itemData.enchants.keys.forEachIndexed { index, skyblockEnchant ->
                 if(index!=0){
                     if(index%3==0){
                         enchantLore.add(string)
                         string=""
                     }
-                    string+=", ${createEnchantString(skyblockEnchant.obj,itemData.enchants.get(skyblockEnchant)!!)}"
+                    string+=", ${createEnchantString(skyblockEnchant.obj, itemData.enchants[skyblockEnchant]!!)}"
                 }
             }
             enchantLore.add(string)
@@ -80,7 +79,7 @@ class SkyblockSword(itemData: ItemData) : SkyblockItem(itemData,ItemTypes.SWORD)
         if(itemData.reforgable){
             lore.add("§8This item can be reforged!")
         }
-        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} SWORD")
+        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity} SWORD")
         return lore
     }
     fun createEnchantString(enchant:SkyblockEnchant,level:Int):String{

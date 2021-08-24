@@ -8,13 +8,12 @@ import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.util.Vector
-import sun.audio.AudioPlayer.player
 
 
 object TermShortbowAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf(Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR,Action.RIGHT_CLICK_BLOCK)
-    override val AbilityType=AbilityTypes.TERMSHORTBOW
+    override val abilityType=AbilityTypes.TERMSHORTBOW
     override val title = "§6Shortbow: Instantly shoots!"
     override val name: String = "N/A"
     override val itemType = ItemTypes.BOW

@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 object SalvationAbility : ItemAbility() {
     override val manaCost=20
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.SALVATION
+    override val abilityType=AbilityTypes.SALVATION
     override val title = "§6Ability: Salvation §e§lRIGHT CLICK"
     override val name: String = "Salvation"
     override val noUseMessage: Boolean

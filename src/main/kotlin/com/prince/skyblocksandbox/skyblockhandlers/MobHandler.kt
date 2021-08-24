@@ -2,7 +2,6 @@ package com.prince.skyblocksandbox.skyblockhandlers
 
 import com.prince.skyblocksandbox.SkyblockSandbox
 import com.prince.skyblocksandbox.skyblockexceptions.skyblockmobs.SkyblockMobSpawnException
-import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockmobs.SkyblockMob
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -12,14 +11,10 @@ import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.*
 import java.math.BigInteger
 import java.util.*
-import kotlin.ConcurrentModificationException
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 
 class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler) : Listener {
@@ -30,7 +25,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
         while(mobs.containsKey(uuid)){
             uuid = UUID.randomUUID()
         }
-        mobs.put(uuid,mob)
+        mobs[uuid] = mob
     }
     fun spawnMob(mob:SkyblockMob,loc: Location){
         if(!mob.hasSpawned) {
@@ -46,7 +41,7 @@ class MobHandler(val sbInstance: SkyblockSandbox, val dmgHandler: DamageHandler)
 
     }
     companion object {
-        var mobs = HashMap<UUID,SkyblockMob>();
+        var mobs = HashMap<UUID,SkyblockMob>()
         fun Entity.isSkyblockMob(): SkyblockMob? {
             for (mob in mobs.values) {
                 if (mob.entity == this) {

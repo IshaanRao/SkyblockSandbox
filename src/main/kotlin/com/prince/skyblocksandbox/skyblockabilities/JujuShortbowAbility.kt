@@ -2,8 +2,6 @@ package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
-import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.entity.Arrow
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
@@ -11,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 object JujuShortbowAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR,Action.LEFT_CLICK_AIR,Action.LEFT_CLICK_BLOCK)
-    override val AbilityType=AbilityTypes.JUJUSHORTBOW
+    override val abilityType=AbilityTypes.JUJUSHORTBOW
     override val title = "§5Shortbow: Instantly shoots!"
     override val name: String = "N/A"
     override val itemType = ItemTypes.BOW

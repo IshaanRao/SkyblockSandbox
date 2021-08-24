@@ -34,7 +34,7 @@ class CreateSwordCommand : CommandExecutor{
                 val itemName:String = (ChatInput(sender,InputChecks.STRING,"§aPlease enter your weapon name").start() as String)
                 sender.sendMessage("§6Set weapon name to `$itemName`")
                 val matString:String = (ChatInput(sender,InputChecks.MAT,"§aPlease enter your material, \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade").start() as String)
-                val mat = Material.valueOf(matString.toUpperCase())
+                val mat = Material.valueOf(matString.uppercase(Locale.getDefault()))
                 sender.sendMessage("§6Set weapon material to §a${mat.name}")
                 val damage:Int = (ChatInput(sender, InputChecks.INT, "§aPlease enter your weapon damage").start() as String).toInt()
                 sender.sendMessage("§6Set weapon damage to §a$damage")
@@ -48,10 +48,10 @@ class CreateSwordCommand : CommandExecutor{
                 sender.sendMessage("§6Set weapon intelligence to §a$intel")
                 val abilityStr:String = ChatInput(sender,InputChecks.ABILITY,"§aPlease enter what ability you want ('none' for no ability)").start() as String//TODO(ABILITY LIST)
                 var ability:AbilityTypes
-                try{
-                    ability = AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
+                ability = try{
+                    AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
                 }catch (e:Exception){
-                    ability = AbilityTypes.NONE
+                    AbilityTypes.NONE
                 }
                 if(ability!=AbilityTypes.NONE&&ability.getAbility().itemType!=ItemTypes.SWORD){
                     ability = AbilityTypes.NONE
@@ -59,7 +59,7 @@ class CreateSwordCommand : CommandExecutor{
                 sender.sendMessage("§6Set weapon ability to §a${if (ability!=AbilityTypes.NONE) ability.name else "None"}")
                 val rarity:SkyblockRarities = SkyblockRarities.valueOf((ChatInput(sender,InputChecks.RARITY,"§aPlease enter what rarity you want, common,uncommon,rare,epic,legendary,mythic").start() as String).uppercase(Locale.getDefault()))
                 sender.sendMessage("§6Set weapon rarity to §a${rarity.name}")
-                var reforgeable:Boolean = (ChatInput(sender,InputChecks.BOOLEAN,"§aPlease enter if you want this item to be reforgeable (true or false)").start() as String).toBoolean()
+                val reforgeable:Boolean = (ChatInput(sender,InputChecks.BOOLEAN,"§aPlease enter if you want this item to be reforgeable (true or false)").start() as String).toBoolean()
                 sender.sendMessage("§6Set if weapon is reforgeable to §a$reforgeable")
                 val abilities = ArrayList<AbilityTypes>()
                 if(ability!=AbilityTypes.NONE) {

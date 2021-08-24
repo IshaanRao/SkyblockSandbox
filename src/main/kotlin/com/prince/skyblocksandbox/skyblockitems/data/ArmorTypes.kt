@@ -2,7 +2,7 @@ package com.prince.skyblocksandbox.skyblockitems.data
 
 import java.util.*
 
-enum class ArmorTypes(){
+enum class ArmorTypes {
     HELMET,CHESTPLATE,LEGGINGS,BOOTS;
     fun getDispName():String {
         var str = this.name

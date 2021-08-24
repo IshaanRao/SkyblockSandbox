@@ -2,15 +2,13 @@ package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
-import org.bukkit.Location
-import org.bukkit.Material
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
 object AotsLoreAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf<Action>()
-    override val AbilityType=AbilityTypes.AOTSLORE
+    override val abilityType=AbilityTypes.AOTSLORE
     override val title = "§7Heal §c50❤ §7per hit."
     override val name: String = "AotsLore"
     override val itemType = ItemTypes.SWORD

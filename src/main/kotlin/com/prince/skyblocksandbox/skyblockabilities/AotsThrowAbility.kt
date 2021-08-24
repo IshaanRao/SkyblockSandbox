@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate", "MemberVisibilityCanBePrivate", "MemberVisibilityCanBePrivate")
+
 package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.SkyblockSandbox
@@ -9,7 +11,6 @@ import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
-import org.bukkit.entity.Arrow
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
@@ -20,7 +21,7 @@ import org.bukkit.scheduler.BukkitRunnable
 object AotsThrowAbility : ItemAbility() {
     override val manaCost=20
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.AOTSTHROW
+    override val abilityType=AbilityTypes.AOTSTHROW
     override val title = "§6Ability: Throw §e§lRIGHT CLICK"
     override val name: String = "Throw"
     override val itemType = ItemTypes.SWORD
@@ -83,8 +84,7 @@ object AotsThrowAbility : ItemAbility() {
         },60)
     }
     fun getMultipliers(player: Player):Int{
-        val current = playerMultipliers[player] ?: 0
-        return when (current) {
+        return when (playerMultipliers[player] ?: 0) {
             0 -> 1
             1 -> 2
             2 -> 4

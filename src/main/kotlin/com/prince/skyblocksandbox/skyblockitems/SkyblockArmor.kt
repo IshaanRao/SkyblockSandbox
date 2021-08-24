@@ -48,7 +48,7 @@ class SkyblockArmor(itemData: ItemData,val armorType: ArmorTypes) : SkyblockItem
         if(itemData.reforgable){
             lore.add("§8This item can be reforged!")
         }
-        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity.name} ${armorType.name}")
+        lore.add("${itemData.rarity.getColor()}§l${itemData.rarity} ${armorType.name}")
         return lore
     }
 }

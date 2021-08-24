@@ -4,7 +4,6 @@ import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockinput.ChatInput
 import com.prince.skyblocksandbox.skyblockinput.InputChecks
 import com.prince.skyblocksandbox.skyblockitems.SkyblockBow
-import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemStackData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
@@ -45,10 +44,10 @@ class CreateBowCommand : CommandExecutor {
                 sender.sendMessage("§6Set weapon intelligence to §a$intel")
                 val abilityStr:String = ChatInput(sender,InputChecks.ABILITY,"§aPlease enter what ability you want ('none' for no ability)").start() as String//TODO(ABILITY LIST)
                 var ability:AbilityTypes
-                try{
-                    ability = AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
+                ability = try{
+                    AbilityTypes.valueOf(abilityStr.uppercase(Locale.getDefault()))
                 }catch (e:Exception){
-                    ability = AbilityTypes.NONE
+                    AbilityTypes.NONE
                 }
                 if(ability!=AbilityTypes.NONE&&ability.getAbility().itemType!= ItemTypes.BOW){
                     ability = AbilityTypes.NONE
@@ -56,7 +55,7 @@ class CreateBowCommand : CommandExecutor {
                 sender.sendMessage("§6Set weapon ability to §a${if (ability!=AbilityTypes.NONE) ability.name else "None"}")
                 val rarity:SkyblockRarities = SkyblockRarities.valueOf((ChatInput(sender,InputChecks.RARITY,"§aPlease enter what rarity you want, common,uncommon,rare,epic,legendary,mythic").start() as String).uppercase(Locale.getDefault()))
                 sender.sendMessage("§6Set weapon rarity to §a${rarity.name}")
-                var reforgeable:Boolean = (ChatInput(sender,InputChecks.BOOLEAN,"§aPlease enter if you want this item to be reforgeable (true or false)").start() as String).toBoolean()
+                val reforgeable:Boolean = (ChatInput(sender,InputChecks.BOOLEAN,"§aPlease enter if you want this item to be reforgeable (true or false)").start() as String).toBoolean()
                 sender.sendMessage("§6Set if weapon is reforgeable to §a$reforgeable")
                 val abilities = ArrayList<AbilityTypes>()
                 if(ability!=AbilityTypes.NONE) {

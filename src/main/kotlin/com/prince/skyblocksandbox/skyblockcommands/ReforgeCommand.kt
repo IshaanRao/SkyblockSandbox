@@ -14,7 +14,7 @@ class ReforgeCommand : CommandExecutor {
         if(!sender.isOp || sender !is Player){
             return true
         }
-        var item = sender.itemInHand
+        val item = sender.itemInHand
         if(item.type == Material.AIR){
             sender.sendMessage("§cPlease hold a skyblock item")
             return true

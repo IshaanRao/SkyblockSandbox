@@ -2,7 +2,6 @@ package com.prince.skyblocksandbox.skyblockmobs
 
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Skeleton
-import org.bukkit.entity.Zombie
 import java.math.BigInteger
 
 class SkyblockSkeleton : SkyblockMob() {

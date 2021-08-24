@@ -5,11 +5,9 @@ import com.prince.skyblocksandbox.skyblockabilities.SalvationAbility.getNearbyEn
 import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblockMob
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
-import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.Player
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.ItemStack
@@ -18,7 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable
 object BonemerangAbility : ItemAbility() {
     override val manaCost=0
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.BONEMERANG
+    override val abilityType=AbilityTypes.BONEMERANG
     override val title = "§6Ability: Swing §e§lRIGHT CLICK"
     override val name: String = "Swing"
     override val itemType = ItemTypes.BOW

@@ -20,7 +20,7 @@ object ApplyEnchantInventory : SkyblockInventory(){
     }
     val playersForceClosed = HashSet<Player>()
     fun getInventory(enchant:SkyblockEnchant,item: SkyblockItem,p:Player): Inventory {
-        items.put(p,item)
+        items[p] = item
         val inv = Bukkit.createInventory(holder,27,"§aEnchant ${enchant.name}")
         val greenGlass = ItemStack(Material.STAINED_GLASS_PANE,1,5.toShort())
         val greenGlassMeta = greenGlass.itemMeta
@@ -53,7 +53,7 @@ object ApplyEnchantInventory : SkyblockInventory(){
     fun createEnchantItem(enchant:SkyblockEnchant,level:Int): ItemStack {
         val book = ItemStack(Material.ENCHANTED_BOOK)
         val bookMeta = book.itemMeta
-        bookMeta.displayName = "§a${enchant.name} ${level}"
+        bookMeta.displayName = "§a${enchant.name} $level"
         val lore = enchant.descAtLevel(level).toMutableList()
         lore.add("")
         lore.add("§eClick to enchant!")
@@ -65,7 +65,6 @@ object ApplyEnchantInventory : SkyblockInventory(){
     override fun onClick(e: InventoryClickEvent) {
         val player:Player = e.whoClicked as Player
         val topInv = player.openInventory.topInventory
-        val playerInv = player.inventory
         val slot = e.slot
         if(!isInventory(topInv)) return
         e.isCancelled = true
@@ -83,7 +82,7 @@ object ApplyEnchantInventory : SkyblockInventory(){
                 val enchString = displayName.split(" ").subList(0,displayName.split(" ").size-1).joinToString(" ")
                 val ench = SkyblockEnchants.getEnchantFromName(enchString) ?: return
                 val data = items[player]!!
-                data.itemData.enchants.put(SkyblockEnchants.getEnumFromEnchant(ench)?:return,level)
+                data.itemData.enchants[SkyblockEnchants.getEnumFromEnchant(ench)?:return] = level
                 playersForceClosed.add(player)
                 player.openInventory(EnchantInventory.getInventory(items[player]!!.createItem(player)))
 

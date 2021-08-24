@@ -8,10 +8,13 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.math.BigDecimal
 import java.math.BigInteger
+import java.util.*
+import kotlin.collections.HashMap
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 object StatisticHandler : Runnable {
-    var PlayerStats:HashMap<Player,Stats> = HashMap()
+    var PlayerStats:HashMap<UUID, Stats> = HashMap()
     var tick = 0
     lateinit var sbSandbox: SkyblockSandbox
     override fun run() {
@@ -22,10 +25,10 @@ object StatisticHandler : Runnable {
             }
             val playerMaxHealth = player.getStats().health
             val playerMaxIntel = player.getStats().intelligence
-            if(!PlayerStats.containsKey(player)){
-                PlayerStats[player] = Stats(playerMaxHealth,playerMaxIntel,0.toBigInteger(),0)
+            if(!PlayerStats.containsKey(player.uniqueId)){
+                PlayerStats[player.uniqueId] = Stats(playerMaxHealth,playerMaxIntel,0.toBigInteger(),0)
             }else{
-                val stats = PlayerStats[player]!!
+                val stats = PlayerStats[player.uniqueId]!!
                 val playerCurrIntel = stats.mana
                 val healAmt = 1.5 + (playerMaxHealth.toDouble()/100.0)
                 val roundedHealAmt = healAmt.roundToInt().toBigInteger()
@@ -41,21 +44,25 @@ object StatisticHandler : Runnable {
             player.foodLevel = 20
         }
     }
-    fun addAbsorption(p: Player,absorption:BigInteger,time:Long=0L) {
-        if(!PlayerStats.containsKey(p)){
+    fun addAbsorption(p: Player,absorption:BigInteger,time:Long=-1L) {
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val healthStats = PlayerStats[p]!!
+        val healthStats = PlayerStats[p.uniqueId]!!
         healthStats.absorption+=absorption
-        if(time!=0L){
-            //TODO Make absorption expire
+        if(time > 0){
+            Bukkit.getScheduler().scheduleSyncDelayedTask(SkyblockSandbox.instance,
+            {
+                // havent tested, not sure if works fine
+                removeAbsorption(p, absorption)
+            }, time)
         }
     }
     fun removeAbsorption(p:Player,absorption:BigInteger){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val healthStats = PlayerStats[p]!!
+        val healthStats = PlayerStats[p.uniqueId]!!
         if(healthStats.absorption-absorption<0.toBigInteger()){
             healthStats.absorption = 0.toBigInteger()
         }else{
@@ -63,71 +70,71 @@ object StatisticHandler : Runnable {
         }
     }
     fun healPlayer(p: Player,heal:BigInteger){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         if(stats.health>p.getStats().health||stats.health+heal>p.getStats().health){
             stats.health = p.getStats().health
         }else {
             stats.health = stats.health+heal
         }
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
 
     }
     fun removeMana(p:Player,mana:BigInteger){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         if(stats.mana-mana<0.toBigInteger()){
             stats.mana = 0.toBigInteger()
         }else {
             stats.mana-=mana
         }
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
     }
     fun killPlayer(p: Player){
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         p.sendMessage("§cYou died!")
         SkyblockWorlds.spawnPlayer(p)
         stats.health = p.getStats().health
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
     }
     fun killPlayer(p: Player,cause:String){
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         p.sendMessage("§cYou died!")
         Bukkit.broadcastMessage("§a${p.displayName} §7was killed by $cause")
         SkyblockWorlds.spawnPlayer(p)
         stats.health = p.getStats().health
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
     }
     fun removeHealth(p: Player,health:BigInteger){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         if((stats.health+stats.absorption)-health<0.toBigInteger()){
             killPlayer(p)
         }else {
             stats.health-=health
         }
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
     }
     fun removeHealth(p: Player,health:BigInteger,damagedBy: SkyblockMob){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
-        val stats = PlayerStats[p]!!
+        val stats = PlayerStats[p.uniqueId]!!
         if((stats.health+stats.absorption)-health<0.toBigInteger()){
             killPlayer(p,"§c${damagedBy.name}")
         }else {
             stats.health-=health
         }
-        PlayerStats[p] = stats
+        PlayerStats[p.uniqueId] = stats
     }
     fun damagePlayer(p:Player,rawDamage:BigInteger){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
         val stats = p.getStats()
@@ -137,7 +144,7 @@ object StatisticHandler : Runnable {
         removeHealth(p,damage)
     }
     fun damagePlayer(p:Player,rawDamage:BigInteger,damagedBy: SkyblockMob){
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return
         }
         val stats = p.getStats()
@@ -147,10 +154,10 @@ object StatisticHandler : Runnable {
         removeHealth(p,damage,damagedBy)
     }
     fun getPlayerStats(p: Player):Stats {
-        if(!PlayerStats.containsKey(p)){
+        if(!PlayerStats.containsKey(p.uniqueId)){
             return Stats(100.toBigInteger(),100.toBigInteger(),0.toBigInteger(),0)
         }
-        return PlayerStats[p]!!
+        return PlayerStats[p.uniqueId]!!
     }
     data class Stats(var health: BigInteger,var mana:BigInteger,var absorption:BigInteger,var dmgReduction:Int)
 }

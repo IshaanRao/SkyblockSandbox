@@ -2,7 +2,6 @@ package com.prince.skyblocksandbox.skyblockinventories
 
 import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockitems.SkyblockBow
-import com.prince.skyblocksandbox.skyblockitems.SkyblockSword
 import com.prince.skyblocksandbox.skyblockitems.data.ItemData
 import com.prince.skyblocksandbox.skyblockitems.data.ItemStackData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
@@ -79,7 +78,7 @@ object BowsInventory : SkyblockInventory() {
     }
     fun loadInventory(pageNum:Int,p: Player): Inventory {
         val inv = Bukkit.createInventory(holder,54,"§aPage $pageNum")
-        val bowPage = pages.get(pageNum)
+        val bowPage = pages[pageNum]
         bowPage.forEachIndexed { index,bow->
             inv.setItem(index,bow.createItem(p))
         }
@@ -124,7 +123,7 @@ object BowsInventory : SkyblockInventory() {
                     return
                 }
                 val sbBow = item.getSkyblockData()
-                player.inventory.addItem(sbBow.createItem(player as Player));
+                player.inventory.addItem(sbBow.createItem(player as Player))
                 return
             }
         }

@@ -18,7 +18,7 @@ import java.util.*
 object WitherImpact : ItemAbility() {
     override val manaCost=300
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.WITHER_IMPACT
+    override val abilityType=AbilityTypes.WITHER_IMPACT
     override val title = "§6Item Ability: Wither Impact §e§lRIGHT CLICK"
     override val name = "Wither Impact"
     override val itemType = ItemTypes.SWORD

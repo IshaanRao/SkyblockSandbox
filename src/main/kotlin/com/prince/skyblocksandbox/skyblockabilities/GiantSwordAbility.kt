@@ -6,7 +6,6 @@ import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblo
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
 import net.minecraft.server.v1_8_R3.NBTTagCompound
-import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
@@ -25,7 +24,7 @@ import java.math.BigInteger
 object GiantSwordAbility : ItemAbility() {
     override val manaCost=100
     override val actions = listOf(Action.RIGHT_CLICK_BLOCK, Action.RIGHT_CLICK_AIR)
-    override val AbilityType=AbilityTypes.GIANTSSLAM
+    override val abilityType=AbilityTypes.GIANTSSLAM
     override val title = "§6Ability: Giant's Slam §e§lRIGHT CLICK"
     override val name: String = "Giant's Slam"
     override val itemType = ItemTypes.SWORD
