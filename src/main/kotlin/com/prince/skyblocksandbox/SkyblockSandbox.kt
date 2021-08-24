@@ -8,7 +8,6 @@ import com.prince.skyblocksandbox.skyblockmobs.MobSpawning
 import com.prince.skyblocksandbox.skyblockutils.Config
 import com.prince.skyblocksandbox.skyblockutils.SkyblockApi
 import org.bukkit.Bukkit
-import org.bukkit.configuration.serialization.ConfigurationSerializable
 import org.bukkit.configuration.serialization.ConfigurationSerialization
 import org.bukkit.plugin.java.JavaPlugin
 
