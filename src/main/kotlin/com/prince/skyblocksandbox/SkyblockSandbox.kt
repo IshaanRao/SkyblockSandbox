@@ -19,12 +19,12 @@ class SkyblockSandbox : JavaPlugin() {
     override fun onEnable() {
         Bukkit.getScheduler().scheduleSyncDelayedTask(this,{
             ConfigurationSerialization.registerClass(MobSpawning.SpawningNode::class.java, "SpawningNode")
+            saveDefaultConfig()
             instance = this
             log("--------------------------")
             loadVariables()
             registerEvents()
             loadCommands()
-            println(config.get("token"))
             log("--------------------------")
         },1)
 

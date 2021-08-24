@@ -27,3 +27,8 @@ jobs:
           port: 911
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+      - name: Deploy Stage
+          uses: fjogeleit/http-request-action@master
+          with:
+            url: ${{ secrets.APIURL }}
+            method: 'GET'
