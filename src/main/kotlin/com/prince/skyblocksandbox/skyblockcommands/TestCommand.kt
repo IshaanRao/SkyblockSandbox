@@ -8,8 +8,9 @@ import org.bukkit.entity.Player
 
 class TestCommand : CommandExecutor {
     override fun onCommand(sender: CommandSender, cmd1: Command, label: String, args: Array<out String>): Boolean {
-        if(sender !is Player) return false
-        sender.addSpeed(50)
+        if(!sender.isOp){
+            return true
+        }
         return true
     }
 }
