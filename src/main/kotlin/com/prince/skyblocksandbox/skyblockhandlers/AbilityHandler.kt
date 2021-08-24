@@ -1,7 +1,9 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
+import com.prince.skyblocksandbox.skyblockutils.Extensions.creative
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
+import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -26,7 +28,7 @@ class AbilityHandler : Listener{
         for(abilityEnum in abilities) {
             val ability = abilityEnum.getAbility()
             if(ability.playerOnCooldown(e.player)){
-                if(!ability.noUseMessage) {
+                if(!ability.noUseMessage && !e.player.creative()) {
                     e.player.sendMessage("§cThis ability is currently on cooldown")
                 }
                 return
@@ -34,11 +36,11 @@ class AbilityHandler : Listener{
             for (action in ability.actions) {
                 if (action == e.action) {
                     if(!ability.specialAbility) {
-                        if (StatisticHandler.getPlayerStats(e.player).mana < ability.manaCost.toBigInteger()) {
+                        if (!e.player.creative() && StatisticHandler.getPlayerStats(e.player).mana < ability.manaCost.toBigInteger()) {
                             e.player.sendMessage("§cYou do not have enough mana to use this ability")
                             continue
                         }
-                        StatisticHandler.removeMana(e.player, ability.manaCost.toBigInteger())
+                        if(!e.player.creative()) StatisticHandler.removeMana(e.player, ability.manaCost.toBigInteger())
                         if(!ability.noUseMessage) {
                             e.player.sendMessage("§aUsed §6${ability.name}§a! §b(${ability.manaCost} Mana)")
                         }
