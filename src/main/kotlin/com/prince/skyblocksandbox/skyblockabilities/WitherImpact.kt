@@ -6,10 +6,10 @@ import com.prince.skyblocksandbox.skyblockhandlers.MobHandler.Companion.isSkyblo
 import com.prince.skyblocksandbox.skyblockhandlers.StatisticHandler
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
+import com.prince.skyblocksandbox.skyblockutils.Extensions.fancyTeleport
 import com.prince.skyblocksandbox.skyblockutils.SkyblockStats.getStats
-import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.Material
+import org.bukkit.*
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import java.math.BigInteger
@@ -30,14 +30,7 @@ object WitherImpact : ItemAbility() {
     override fun execute(e: PlayerInteractEvent) {
         if(!playerOnCooldown(e.player)) {
             startCooldown(e.player,2)
-            val loc:Location
-            try {
-                loc = e.player.getTargetBlock(null as Set<Material?>?, 10).location
-            }catch (e:Exception){
-                return
-            }
-            val tpLoc = Location(loc.world, loc.x, loc.y, loc.z, e.player.location.yaw, e.player.location.pitch)
-            e.player.teleport(tpLoc)
+            e.player.fancyTeleport(10)
             val nearbyEntities =
                 e.player.getNearbyEntities(6.0, 6.0, 6.0).filter { entity -> entity.isSkyblockMob() != null }
             var damage = BigInteger.valueOf(0)
@@ -45,6 +38,10 @@ object WitherImpact : ItemAbility() {
                 val mob = entity.isSkyblockMob()!!
                 damage += DamageHandler.magicDamage(mob, e.player, this).damage
             }
+
+            e.player.playEffect(e.player.location, Effect.EXPLOSION_HUGE, null)
+            e.player.playSound(e.player.location, Sound.WITHER_SHOOT, 1f, 1f)
+
             if (nearbyEntities.isNotEmpty()) {
                 e.player.sendMessage(
                     "§7Your Implosion hit §c${nearbyEntities.size} §7${if (nearbyEntities.size == 1) "enemy" else "enemies"} for §c${

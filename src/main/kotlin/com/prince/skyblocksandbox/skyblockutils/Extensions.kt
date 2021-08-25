@@ -2,12 +2,15 @@ package com.prince.skyblocksandbox.skyblockutils
 
 import net.minecraft.server.v1_8_R3.EntityInsentient
 import net.minecraft.server.v1_8_R3.EntityPlayer
-import net.minecraft.server.v1_8_R3.GenericAttributes
 import net.minecraft.server.v1_8_R3.IAttribute
 import org.bukkit.GameMode
+import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity
 import org.bukkit.entity.Entity
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import org.bukkit.util.BlockIterator
+
 
 object Extensions {
     /**
@@ -53,5 +56,44 @@ object Extensions {
      */
     fun Player.creative() : Boolean {
         return this.gameMode == GameMode.CREATIVE
+    }
+
+    /**
+     * Teleports player `distance` ahead, without him going through blocks and in blocks<br></br>
+     * Most of the code is adapted from my project `SkyblockD` (see https://github.com/Maxuss/SkyblockD )
+     * @author maxus
+     */
+    fun Player.fancyTeleport(distance: Int) {
+        teleport(this raycast distance)
+    }
+
+    /**
+     * Raycasts `distance` blocks ahead and returns farthest non-solid block.
+     * Infix, cus it look fancy
+     * @author maxus
+     */
+    infix fun LivingEntity.raycast(distance: Int) : Location {
+        return try {
+            val eyes: Location = eyeLocation;
+            val iterator = BlockIterator(location, 1.0, distance)
+            while (iterator.hasNext()) {
+                val loc = iterator.next().location
+                if (loc.block.type.isSolid) {
+                    if (loc == location) return location
+                    loc.pitch = eyes.pitch
+                    loc.yaw = eyes.yaw
+                    loc.y = loc.y + 1
+                    return loc
+                }
+            }
+            val n: Location = eyeLocation.clone().add(eyeLocation.direction.multiply(distance))
+            n.pitch = eyes.pitch
+            n.yaw = eyes.yaw
+            n.y = n.y + 1
+            n
+        } catch (e: IllegalStateException) {
+            // Usually doesnt happen
+            return location
+        }
     }
 }
