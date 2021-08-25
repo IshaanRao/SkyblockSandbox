@@ -19,6 +19,7 @@ abstract class ItemAbility {
     abstract val itemType:ItemTypes
     open val noUseMessage = false
     open val specialAbility = false
+    open val mustSneak = false
     open val ability:SkyblockAbility
         get() =  SkyblockAbility(0,0.0)
     val onCooldown: ArrayList<UUID> = ArrayList()
