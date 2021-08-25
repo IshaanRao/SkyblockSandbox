@@ -33,7 +33,7 @@ class CreateSwordCommand : CommandExecutor{
                 sender.sendMessage("§2Welcome to the Sword Creater type `cancel` at any time to cancel (Automatically cancels after 30 seconds without a response)")
                 val itemName:String = (ChatInput(sender,InputChecks.STRING,"§aPlease enter your weapon name").start() as String)
                 sender.sendMessage("§6Set weapon name to `$itemName`")
-                val matString:String = (ChatInput(sender,InputChecks.MAT,"§aPlease enter your material, \nAccepted Materials: diamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade").start() as String)
+                val matString:String = (ChatInput(sender,InputChecks.MAT,"§aPlease enter your material\nAccepted Materials:\ndiamond_sword,diamond_axe,diamond_spade,gold_sword,gold_axe,gold_spade,iron_sword,iron_axe,iron_spade,stone_sword,stone_axe,stone_spade,wood_sword,wood_axe,wood_spade").start() as String)
                 val mat = Material.valueOf(matString.uppercase(Locale.getDefault()))
                 sender.sendMessage("§6Set weapon material to §a${mat.name}")
                 val damage:Int = (ChatInput(sender, InputChecks.INT, "§aPlease enter your weapon damage").start() as String).toInt()
