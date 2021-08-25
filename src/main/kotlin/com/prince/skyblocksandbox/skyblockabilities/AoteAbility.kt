@@ -16,9 +16,9 @@ object AoteAbility : ItemAbility() {
     override val title = "§6Item Ability: Instant Transmission §e§lRIGHT CLICK"
     override val name: String = "Instant Transmission"
     override val itemType = ItemTypes.SWORD
-    override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Teleport §a8 Blocks §7ahead of","§7you and gain §a+50 §f✦ Speed","§7for §a3 seconds")}
+    override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Teleport §a11 Blocks §7ahead of","§7you and gain §a+50 §f✦ Speed","§7for §a3 seconds")}
     override fun execute(e: PlayerInteractEvent) {
-        e.player.fancyTeleport(8)
+        e.player.fancyTeleport(11)
         e.player.playSound(e.player.location, Sound.ENDERMAN_TELEPORT, 1f, 1f)
     }
 }
