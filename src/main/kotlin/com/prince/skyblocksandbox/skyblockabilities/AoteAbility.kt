@@ -2,6 +2,8 @@ package com.prince.skyblocksandbox.skyblockabilities
 
 import com.prince.skyblocksandbox.skyblockitems.data.ItemTypes
 import com.prince.skyblocksandbox.skyblockitems.data.StatsData
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
+import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.event.block.Action
@@ -14,11 +16,11 @@ object AoteAbility : ItemAbility() {
     override val title = "§6Item Ability: Instant Transmission §e§lRIGHT CLICK"
     override val name: String = "Instant Transmission"
     override val itemType = ItemTypes.SWORD
-    override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Teleport §a8 Blocks §7ahead of","§7you and gain §a+50 §f✦ Speed","§7for §a3 seconds")}
+    override fun getDesc(stats: StatsData) : List<String> { return listOf("§7Teleport §a11 Blocks §7ahead of","§7you and gain §a+50 §f✦ Speed","§7for §a3 seconds")}
     override fun execute(e: PlayerInteractEvent) {
         val loc:Location
         try {
-            loc = e.player.getTargetBlock(null as Set<Material?>?, 8).location
+            loc = e.player.getTargetBlock(null as Set<Material?>?, 11).location
         }catch (e:Exception){
             return
         }

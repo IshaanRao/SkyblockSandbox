@@ -1,5 +1,6 @@
 package com.prince.skyblocksandbox.skyblockhandlers
 
+import com.prince.skyblocksandbox.skyblockabilities.AbilityTypes
 import com.prince.skyblocksandbox.skyblockutils.Extensions.creative
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.getSkyblockData
 import com.prince.skyblocksandbox.skyblockutils.ItemExtensions.isSkyblockItem
@@ -36,6 +37,8 @@ class AbilityHandler : Listener{
             for (action in ability.actions) {
                 if (action == e.action) {
                     if(!ability.specialAbility) {
+                        if(ability.mustSneak&&!e.player.isSneaking) continue
+                        if(abilities.contains(AbilityTypes.ETHERTRANSMISSION)&&abilityEnum==AbilityTypes.AOTE&&e.player.isSneaking) continue;
                         if (!e.player.creative() && StatisticHandler.getPlayerStats(e.player).mana < ability.manaCost.toBigInteger()) {
                             e.player.sendMessage("§cYou do not have enough mana to use this ability")
                             continue
